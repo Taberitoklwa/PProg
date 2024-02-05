@@ -15,6 +15,15 @@
 #include "game.h"
 #include "types.h"
 
+/**
+ * @brief Updates the game state based on the user command
+ *
+ * This function is responsible for updating the game state based on the user command received.
+ *
+ * @param game The game object
+ * @param cmd The command received from the user
+ * @return The status of the update operation (OK if successful, ERROR otherwise)
+ **/
 Status game_actions_update(Game *game, Command cmd);
 
 #endif
