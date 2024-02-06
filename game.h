@@ -167,8 +167,8 @@ Bool game_get_finished(Game *game);
 
 Status game_set_finished(Game *game, Bool finished);
 
-/**
- * @brief 
+/** 
+ * @brief It prints information about the current state of a game
  * 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  

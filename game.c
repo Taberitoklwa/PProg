@@ -39,10 +39,13 @@ Status game_create(Game *game) {
 }
 
 Status game_create_from_file(Game *game, char *filename) {
+
+  /*Error Control*/
   if (game_create(game) == ERROR) {
     return ERROR;
   }
 
+  /*Error Control*/
   if (game_load_spaces(game, filename) == ERROR) {
     return ERROR;
   }
@@ -105,6 +108,8 @@ Status game_set_object_location(Game *game, Id id) {
     return ERROR;
   }
 
+  /* It is setting the object location in the game structure to the
+  given id */
   game->object_location = id;
   space_set_object(game_get_space(game, id), TRUE);
   
@@ -114,6 +119,8 @@ Status game_set_object_location(Game *game, Id id) {
 Command game_get_last_command(Game *game) { return game->last_cmd; }
 
 Status game_set_last_command(Game *game, Command command) {
+  /* It is setting the last command in the game structure to the
+  introduced command */
   game->last_cmd = command;
 
   return OK;
@@ -130,12 +137,18 @@ Status game_set_finished(Game *game, Bool finished) {
 void game_print(Game *game) {
   int i = 0;
 
+  /*Header(Separator line)*/
+
   printf("\n\n-------------\n\n");
+
+  /*It iterates through each space in the game, printing information about each space.*/
 
   printf("=> Spaces: \n");
   for (i = 0; i < game->n_spaces; i++) {
     space_print(game->spaces[i]);
   }
+
+  /*It prints the location of the game's object and the player.*/
 
   printf("=> Object location: %d\n", (int)game->object_location);
   printf("=> Player location: %d\n", (int)game->player_location);
