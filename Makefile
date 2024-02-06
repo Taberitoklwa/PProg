@@ -1,35 +1,41 @@
-CC = gcc
+CC=gcc
+CFLAGS=-Wall -pedantic -ansi -g -DDEBUG
+CLIB= -lscreen -L.
 
-BINARY = anthill
+.PHONY: clean_objects clean_program clean all
 
-OBJS = game.o command.o game_actions.o game_loop.o game_reader.o graphic_engine.o space.o
+all: anthill
 
-all: $(BINARY)
+##############################################
+anthill: command.o game.o game_actions.o game_loop.o graphic_engine.o space.o
+	$(CC) -o $@ $^ $(CLIB)
 
-antill: $(OBJS)
-	$(CC) -o $(BINARY) $(OBJS)
+##############################################
+game_loop.o: game_loop.c command.h game.h space.h types.h game_actions.h graphic_engine.h
+	$(CC) $(CFLAGS) -c $<
 
-game.o: game.c game.h game_reader.h
-	$(CC) -c game.c
+command.o: command.c command.h
+	$(CC) $(CFLAGS) -c $<
 
-command.o: command.h
-	$(CC) -c command.c
+game.o: game.c game.h command.h space.h types.h
+	$(CC) $(CFLAGS) -c $<
 
-game_actions.o: game_actions.h game.h
-	$(CC) -c game_actions.c
+game_actions.o: game_actions.c game_actions.h command.h game.h space.h types.h
+	$(CC) $(CFLAGS) -c $<
 
-game_loop.o: game_actions.h game.h command.h graphic_engine.h
-	$(CC) -c game_loop.c
+graphic_engine.o: graphic_engine.c graphic_engine.h game.h command.h space.h types.h libscreen.h
+	$(CC) $(CFLAGS) -c $<
 
-game_reader.o: game.h game_reader.h
-	$(CC) -c game_reader.c
- 
-graphic_engine.o: graphic_engine.h command.h libscreen.h space.h types.h
-	$(CC) -c graphic_engine.c
-	
-space.o: space.h
-	$(CC) -c space.c
+space.o: space.c space.h types.h
+	$(CC) $(CFLAGS) -c $<
 
+##############################################
+clean_objects:
+	@echo "Cleaning objects..."
+	@rm -f *.o
 
-clean: 
-	rm -f $(BINARY) $(OBJS)
+clean_program:
+	@echo "Cleaning program..."
+	@rm -f anthill
+
+clean: clean_objects clean_program
