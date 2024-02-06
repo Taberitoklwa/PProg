@@ -11,6 +11,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+/*It defines commonly used acros and enumerations */
+
 #define WORD_SIZE 1000
 #define NO_ID -1
 

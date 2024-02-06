@@ -24,8 +24,10 @@ Status game_create(Game *game) {
   int i;
 
   for (i = 0; i < MAX_SPACES; i++) {
-    game->spaces[i] = NULL;
+    game->spaces[i] = NULL; 
   }
+
+  /* Assigns default values ​​to the different fields of the structure */
 
   game->n_spaces = 0;
   game->player_location = NO_ID;
@@ -55,6 +57,8 @@ Status game_create_from_file(Game *game, char *filename) {
 Status game_destroy(Game *game) {
   int i = 0;
 
+  /*Destroys the different spaces by freeing their allocated memory*/
+
   for (i = 0; i < game->n_spaces; i++) {
     space_destroy(game->spaces[i]);
   }
@@ -71,6 +75,9 @@ Space *game_get_space(Game *game, Id id) {
 
   for (i = 0; i < game->n_spaces; i++) {
     if (id == space_get_id(game->spaces[i])) {
+
+      /*When it finds that the space id matches one of the defined spaces it returns a pointer to the space structure*/
+
       return game->spaces[i];
     }
   }

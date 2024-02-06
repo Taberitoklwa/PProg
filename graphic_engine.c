@@ -15,6 +15,9 @@
 
 #include "command.h"
 #include "libscreen.h"
+
+
+
 #include "space.h"
 #include "types.h"
 
@@ -27,7 +30,7 @@
 #define HEIGHT_FDB 3
 
 struct _Graphic_engine {
-  Area *map, *descript, *banner, *help, *feedback;
+  Area *map, *descript, *banner, *help, *feedback; /* <Pointers to an area type structure> */
 };
 
 Graphic_engine *graphic_engine_create() {
@@ -37,11 +40,15 @@ Graphic_engine *graphic_engine_create() {
     return ge;
   }
 
+
+
   screen_init(HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + HEIGHT_FDB + 4, WIDTH_MAP + WIDTH_DES + 3);
   ge = (Graphic_engine *)malloc(sizeof(Graphic_engine));
   if (ge == NULL) {
     return NULL;
   }
+
+  /* <Initialize the members of the structure by calling the screen_area_init function> */
 
   ge->map = screen_area_init(1, 1, WIDTH_MAP, HEIGHT_MAP);
   ge->descript = screen_area_init(WIDTH_MAP + 2, 1, WIDTH_DES, HEIGHT_MAP);
@@ -65,7 +72,10 @@ void graphic_engine_destroy(Graphic_engine *ge) {
   free(ge);
 }
 
+
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
+
+  /* Assigns default values ​​to the different Id type variables, pointers, chars etc. */
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID;
   Space *space_act = NULL;
   char obj = '\0';
