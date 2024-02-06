@@ -8,7 +8,7 @@
  * @copyright GNU Public License
  */
 
-#include "space.h"
+#include "player.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,8 +19,8 @@
  *
  * This struct stores all the information of a space.
  */
-struct _Space {
-  Id id;                    /*!< Id number of the space, it must be unique */
+struct _Player {
+  Id id;                    /*!< Id number of the player, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the space */
   Id north;                 /*!< Id of the space at the north */
   Id south;                 /*!< Id of the space at the south */

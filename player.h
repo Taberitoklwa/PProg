@@ -13,7 +13,7 @@
 
 #include "types.h"
 
-typedef struct _Space Space;
+typedef struct _Player Player;
 
 /**
  * @brief It creates a new space, allocating memory and initializing its members
@@ -22,7 +22,7 @@ typedef struct _Space Space;
  * @param id the identification number for the new space
  * @return a new space, initialized
  */
-Space* space_create(Id id);
+Player* space_create(Id id);
 
 /**
  * @brief It destroys a space, freeing the allocated memory
