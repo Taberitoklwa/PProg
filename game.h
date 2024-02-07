@@ -23,7 +23,7 @@ typedef struct _Game {
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
   Command last_cmd; 
-  Bool finished; /*!< Whether it is finished or not */
+  Bool finished; /*!< Whether it is finished or not>!*/
 } Game;
 
 /**
@@ -149,7 +149,7 @@ Status game_set_last_command(Game *game, Command command);
  * @brief It is used to retrieve the current state of the game
 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
- * @return It returns a boolean value  `finished`
+ * @return It returns a boolean value `finished`
  
  */
 

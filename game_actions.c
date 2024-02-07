@@ -67,7 +67,7 @@ Status game_actions_update(Game *game, Command cmd) {
  * @brief Handles unknown commands in the game
  *
  *
- * @param game The game object
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  **/
 
 void game_actions_unknown(Game *game) {}
@@ -75,7 +75,7 @@ void game_actions_unknown(Game *game) {}
  * @brief Handles the exit command in the game
  *
  *
- * @param game The game object
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  **/
 void game_actions_exit(Game *game) {}
 /**
@@ -83,12 +83,12 @@ void game_actions_exit(Game *game) {}
  *
  * This function updates the player's location to the next space to the south if possible.
  *
- * @param game The game object
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  **/
 
 void game_actions_next(Game *game) {
   Id current_id = NO_ID; /*Initializes an id to NO_ID*/
-  Id space_id = NO_ID; /*Initializes space if to NO_ID*/
+  Id space_id = NO_ID; /*Initializes space id to NO_ID*/
 
   space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (space_id == NO_ID) {

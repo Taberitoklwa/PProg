@@ -29,6 +29,12 @@ graphic_engine.o: graphic_engine.c graphic_engine.h game.h command.h space.h typ
 space.o: space.c space.h types.h
 	$(CC) $(CFLAGS) -c $<
 
+object.o: object.c object.h types.h
+	$(CC) $(CFLAGS) -c $<
+
+player.o: player.c player.h types.h
+	$(CC) $(CFLAGS) -c $<
+
 ##############################################
 clean_objects:
 	@echo "Cleaning objects..."

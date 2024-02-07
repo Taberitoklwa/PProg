@@ -20,9 +20,9 @@
  *
  * This function is responsible for updating the game state based on the user command received.
  *
- * @param game The game object
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  * @param cmd The command received from the user
- * @return The status of the update operation (OK if successful, ERROR otherwise)
+ * @return OK, if everything goes well or ERROR if there was some mistake
  **/
 Status game_actions_update(Game *game, Command cmd);
 

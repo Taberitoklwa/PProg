@@ -23,6 +23,7 @@
 Status game_create(Game *game) {
   int i;
 
+  /*  Initializing all the elements of the space pointers array to `NULL` */
   for (i = 0; i < MAX_SPACES; i++) {
     game->spaces[i] = NULL; 
   }
