@@ -25,10 +25,6 @@ struct _Object {
   Id id;                    /*!< Id number of the object, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the object */
   char description[WORD_SIZE +1]; /*!< Description of the object */
-  Id north;                 /*!< Id of the object at the north */
-  Id south;                 /*!< Id of the object at the south */
-  Id east;                  /*!< Id of the object at the east */
-  Id west;                  /*!< Id of the object at the west */
   Bool portable;              /*!< Whether the object is portable or not */
 };
 
@@ -108,67 +104,6 @@ const char* object_get_name(Object* object) {
   return object->name;
 }
 
-Status object_set_north(Object* object, Id id) {
-  if (!object || id == NO_ID) {
-    return ERROR;
-  }
-  object->north = id;
-  return OK;
-}
-
-Id object_get_north(Object* object) {
-  if (!object) {
-    return NO_ID;
-  }
-  return object->north;
-}
-
-Status object_set_south(Object* object, Id id) {
-  if (!object || id == NO_ID) {
-    return ERROR;
-  }
-  object->south = id;
-  return OK;
-}
-
-Id space_get_south(Object* object) {
-  if (!object) {
-    return NO_ID;
-  }
-  return object->south;
-}
-
-
-Status object_set_east(Object* object, Id id) {
-  if (!object || id == NO_ID) {
-    return ERROR;
-  }
-  object->east = id;
-  return OK;
-}
-
-Id object_get_east(Object* object) {
-  if (!object) {
-    return NO_ID;
-  }
-  return object->east;
-}
-
-Status object_set_west(Object* object, Id id) {
-  if (!object || id == NO_ID) {
-    return ERROR;
-  }
-  object->west = id;
-  return OK;
-}
-
-Id object_get_west(Object* object) {
-  if (!object) {
-    return NO_ID;
-  }
-  return object->west;
-}
-
 Status object_set_portable(Object* object, Bool value) {
   if (!object) {
     return ERROR;
@@ -186,32 +121,6 @@ Status object_print(Object* object) {
   }
   /* 1. Print the id and the name of the object */
   fprintf(stdout, "--> object (Id: %ld; Name: %s)\n", object->id, object->name);
-
-  /* 2. For each direction, print its link */
-  idaux = object_get_north(object);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> North link: %ld.\n", idaux);
-  } else {
-    fprintf(stdout, "---> No north link.\n");
-  }
-  idaux = object_get_south(object);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> South link: %ld.\n", idaux);
-  } else {
-    fprintf(stdout, "---> No south link.\n");
-  }
-  idaux = object_get_east(object);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> East link: %ld.\n", idaux);
-  } else {
-    fprintf(stdout, "---> No east link.\n");
-  }
-  idaux = object_get_west(object);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> West link: %ld.\n", idaux);
-  } else {
-    fprintf(stdout, "---> No west link.\n");
-  }
 
   return OK;
 }
