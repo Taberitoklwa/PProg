@@ -48,10 +48,6 @@ Object* object_create(Id id) {
   newObject->id = id;
   newObject->name[0] = '\0';
   newObject->description[0] = '\0';
-  newObject->north = NO_ID;
-  newObject->south = NO_ID;
-  newObject->east = NO_ID;
-  newObject->west = NO_ID;
   newObject->portable = FALSE;
 
   return newObject;
@@ -113,7 +109,7 @@ Status object_set_portable(Object* object, Bool value) {
 }
 
 Status object_print(Object* object) {
-  Id idaux = NO_ID;
+  /*Borrado Id idaux = NO_ID; */
 
   /* Error Control */
   if (!object) {

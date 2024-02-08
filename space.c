@@ -158,7 +158,9 @@ Status space_set_object(Space* space, Id id) {
   return OK;
 }
 
-Bool space_get_object(Space* space) {
+/*Mirar si esta bieeen  (Antes era de tipo booleano)*/
+
+Id space_get_object(Space* space) {
   if (!space) {
     return FALSE;
   }
