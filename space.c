@@ -162,7 +162,7 @@ Status space_set_object(Space* space, Id id) {
 
 Id space_get_object(Space* space) {
   if (!space) {
-    return FALSE;
+    return NO_ID;
   }
   return space->object;
 }
