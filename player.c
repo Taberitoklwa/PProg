@@ -1,212 +1,142 @@
 /**
- * @brief It implements the space module
+ * @brief It implements the Player module
  *
- * @file space.c
+ * @file Player.c
  * @author Profesores PPROG
  * @version 3.5
  * @date 26-01-2024
  * @copyright GNU Public License
  */
 
-#include "space.h"
+#include "player.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 /**
- * @brief Space
+ * @brief Player
  *
- * This struct stores all the information of a space.
+ * This struct stores all the information of a Player.
  */
-struct _Space {
-  Id id;                    /*!< Id number of the space, it must be unique */
-  char name[WORD_SIZE + 1]; /*!< Name of the space */
-  Id north;                 /*!< Id of the space at the north */
-  Id south;                 /*!< Id of the space at the south */
-  Id east;                  /*!< Id of the space at the east */
-  Id west;                  /*!< Id of the space at the west */
-  Bool object;              /*!< Whether the space has an object or not */
+struct _Player {
+  Id id;                    /*!< Id number of the Player, it must be unique */
+  char name[WORD_SIZE + 1]; /*!< Name of the Player */                
+  Id location; /*!<Id of the players location*/
+  Id object;  /*!< Whether the Player has an object an if so, which one */
 };
 
-/** space_create allocates memory for a new space
+/** Player_create allocates memory for a new Player
  *  and initializes its members
  */
-Space* space_create(Id id) {
-  Space* newSpace = NULL;
+Player* player_create(Id id) {
+  Player* newPlayer = NULL;
 
   /* Error control */
   if (id == NO_ID) return NULL;
 
-  newSpace = (Space*)malloc(sizeof(Space));
-  if (newSpace == NULL) {
+  newPlayer = (Player*)malloc(sizeof(Player));
+  if (newPlayer == NULL) {
     return NULL;
   }
 
-  /* Initialization of an empty space*/
-  newSpace->id = id;
-  newSpace->name[0] = '\0';
-  newSpace->north = NO_ID;
-  newSpace->south = NO_ID;
-  newSpace->east = NO_ID;
-  newSpace->west = NO_ID;
-  newSpace->object = FALSE;
+  /* Initialization of an empty Player*/
+  newPlayer->id = id;
+  newPlayer->name[0] = '\0';
+  newPlayer->location = NO_ID;
+  newPlayer->object = NO_ID;
 
-  return newSpace;
+  return newPlayer;
 }
 
-Status space_destroy(Space* space) {
-  if (!space) {
+Status Player_destroy(Player* Player) {
+  if (!Player) {
     return ERROR;
   }
 
-  free(space);
-  space = NULL;
+  free(Player);
+  Player = NULL;
   return OK;
 }
 
-Id space_get_id(Space* space) {
-  if (!space) {
+Id Player_get_id(Player* Player) {
+  if (!Player) {
     return NO_ID;
   }
-  return space->id;
+  return Player->id;
 }
 
-Status space_set_name(Space* space, char* name) {
-  if (!space || !name) {
+Status Player_set_name(Player* Player, char* name) {
+  if (!Player || !name) {
     return ERROR;
   }
 
-  if (!strcpy(space->name, name)) {
+  if (!strcpy(Player->name, name)) {
     return ERROR;
   }
   return OK;
 }
 
-const char* space_get_name(Space* space) {
-  if (!space) {
+const char* Player_get_name(Player* Player) {
+  if (!Player) {
     return NULL;
   }
-  return space->name;
+  return Player->name;
 }
 
-Status space_set_north(Space* space, Id id) {
-  if (!space || id == NO_ID) {
+Status Player_set_location(Player* Player, Id id) {
+  if (!Player || id == NO_ID) {
     return ERROR;
   }
-  space->north = id;
+  Player->location = id;
   return OK;
 }
 
-Id space_get_north(Space* space) {
-  if (!space) {
+Id Player_get_location(Player* Player) {
+  if (!Player) {
     return NO_ID;
   }
-  return space->north;
+  return Player->location;
 }
 
-Status space_set_south(Space* space, Id id) {
-  if (!space || id == NO_ID) {
+Status Player_set_object(Player* Player, Id id) {
+  if (!Player || id == NO_ID) {
     return ERROR;
   }
-  space->south = id;
+  Player->object = id;
   return OK;
 }
 
-Id space_get_south(Space* space) {
-  if (!space) {
+Id Player_get_object(Player* Player) {
+  if (!Player) {
     return NO_ID;
   }
-  return space->south;
+  return Player->object;
 }
 
-Status space_set_east(Space* space, Id id) {
-  if (!space || id == NO_ID) {
-    return ERROR;
-  }
-  space->east = id;
-  return OK;
-}
-
-Id space_get_east(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->east;
-}
-
-Status space_set_west(Space* space, Id id) {
-  if (!space || id == NO_ID) {
-    return ERROR;
-  }
-  space->west = id;
-  return OK;
-}
-
-Id space_get_west(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->west;
-}
-
-Status space_set_object(Space* space, Bool value) {
-  if (!space) {
-    return ERROR;
-  }
-  space->object = value;
-  return OK;
-}
-
-Bool space_get_object(Space* space) {
-  if (!space) {
-    return FALSE;
-  }
-  return space->object;
-}
-
-Status space_print(Space* space) {
+Status Player_print(Player* Player) {
   Id idaux = NO_ID;
 
   /* Error Control */
-  if (!space) {
+  if (!Player) {
     return ERROR;
   }
 
-  /* 1. Print the id and the name of the space */
-  fprintf(stdout, "--> Space (Id: %ld; Name: %s)\n", space->id, space->name);
+  /* 1. Print the id and the name of the Player */
+  fprintf(stdout, "--> Player (Id: %ld; Name: %s)\n", Player->id, Player->name);
 
   /* 2. For each direction, print its link */
-  idaux = space_get_north(space);
+  idaux = Player_get_location(Player);
   if (NO_ID != idaux) {
-    fprintf(stdout, "---> North link: %ld.\n", idaux);
+    fprintf(stdout, "---> Location: %ld.\n", idaux);
   } else {
-    fprintf(stdout, "---> No north link.\n");
+    fprintf(stdout, "---> No location.\n");
   }
-  idaux = space_get_south(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> South link: %ld.\n", idaux);
+  /* 3. Print if the player has an object and if so, its Id */
+  if (Player_get_object(Player)!=NO_ID) {
+    fprintf(stdout, "---> Object id: %ld the Player.\n",Player->object);
   } else {
-    fprintf(stdout, "---> No south link.\n");
-  }
-  idaux = space_get_east(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> East link: %ld.\n", idaux);
-  } else {
-    fprintf(stdout, "---> No east link.\n");
-  }
-  idaux = space_get_west(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> West link: %ld.\n", idaux);
-  } else {
-    fprintf(stdout, "---> No west link.\n");
-  }
-
-  /* 3. Print if there is an object in the space or not */
-  if (space_get_object(space)) {
-    fprintf(stdout, "---> Object in the space.\n");
-  } else {
-    fprintf(stdout, "---> No object in the space.\n");
+    fprintf(stdout, "---> Player has no object.\n");
   }
 
   return OK;
