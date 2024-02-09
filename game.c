@@ -37,8 +37,8 @@ Status game_create(Game *game) {
   game->player_location = NO_ID;
   game->object_location = NO_ID;
   */
-  game->object=object_create(NO_ID);
-  game->player=player_create(NO_ID);
+  game->object=object_create(1);
+  game->player=player_create(1);
   game->last_cmd = NO_CMD;  
   game->finished = FALSE;
 
