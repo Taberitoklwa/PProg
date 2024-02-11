@@ -12,11 +12,11 @@
 #define COMMAND_H
 
 #define N_CMDT 2 /*Number of types of commands*/
-#define N_CMD 5 /*Number of commands*/
+#define N_CMD 7 /*Number of commands*/
 
 typedef enum { CMDS, CMDL } CommandType; /*Enumeration for command type (short or long)*/
 
-typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK } Command; /*Enumeration for command values*/
+typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, TAKE, DROP } Command; /*Enumeration for command values*/
 
 /**
  * @brief Reads user input and returns the corresponding command

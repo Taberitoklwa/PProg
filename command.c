@@ -17,7 +17,7 @@
 #define CMD_LENGHT 30 /*Maximum lenght of command string*/
 
 /*Array to map command enum values to their string representations*/
-char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}};
+char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}, {"t", "Take"}, {"d", "Drop"}};
 
 Command command_get_user_input() {
   Command cmd = NO_CMD; /*Initializes command variable to default value NO_CMD*/
