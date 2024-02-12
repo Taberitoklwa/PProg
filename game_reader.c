@@ -22,7 +22,7 @@
  */
 
 
-Status game_load_spaces(Game *game, char *filename) {
+Status game_reader_load_spaces(Game *game, char *filename) {
 
   FILE *file = NULL; /* It is declaring and initializing a pointer variable `file` of type `FILE` to `NULL`*/
   char line[WORD_SIZE] = ""; 

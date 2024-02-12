@@ -59,7 +59,7 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   /*Error Control*/
-  if (game_load_spaces(game, filename) == ERROR) {
+  if (game_reader_load_spaces(game, filename) == ERROR) {
     return ERROR;
   }
 
@@ -177,6 +177,7 @@ Status game_set_object_location(Game* game, Id id) {
 Command game_get_last_command(Game *game) { return game->last_cmd; }
 
 Status game_set_last_command(Game *game, Command command) {
+  
   /* It is setting the last command in the game structure to the
   introduced command */
   game->last_cmd = command;

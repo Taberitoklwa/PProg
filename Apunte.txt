@@ -1,0 +1,11 @@
+
+
+/**
+ * @brief It is used to get the ID of the space located at a specific position in the game
+
+ * @param game, pointer to Game structure
+ * @param position, integer
+ * @return ID of the space at the specified position
+ */
+
+Id game_get_space_id_at(Game *game, int position);
