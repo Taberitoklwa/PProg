@@ -11,7 +11,6 @@
 
 
 #include "game_reader.h"
-#include "game.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,13 +23,14 @@
 
 
 Status game_load_spaces(Game *game, char *filename) {
-  FILE *file = NULL;
-  char line[WORD_SIZE] = "";
+
+  FILE *file = NULL; /* It is declaring and initializing a pointer variable `file` of type `FILE` to `NULL`*/
+  char line[WORD_SIZE] = ""; 
   char name[WORD_SIZE] = "";
   char *toks = NULL;
   Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;/* Is declaring and initializing variables of type `Id` with the default value `NO_ID`.*/
   Space *space = NULL; /*It initializes the pointer to the space structure to null*/
-  Status status = OK;
+  Status status = OK;/* It is declaring and initializing a Status variable to OK*/
 
 
  /* Error Control */

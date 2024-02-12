@@ -31,7 +31,7 @@ Player* player_create(Id id);
  * @param Player a pointer to the Player that must be destroyed
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status Player_destroy(Player* Player);
+Status player_destroy(Player* player);
 
 /**
  * @brief It gets the id of a Player
@@ -40,7 +40,7 @@ Status Player_destroy(Player* Player);
  * @param Player a pointer to the Player
  * @return the id of Player
  */
-Id Player_get_id(Player* Player);
+Id player_get_id(Player* player);
 
 /**
  * @brief It sets the name of a Player
@@ -50,7 +50,7 @@ Id Player_get_id(Player* Player);
  * @param name a string with the name to store
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status Player_set_name(Player* Player, char* name);
+Status player_set_name(Player* player, char* name);
 
 /**
  * @brief It gets the name of a Player
@@ -59,7 +59,19 @@ Status Player_set_name(Player* Player, char* name);
  * @param Player a pointer to the Player
  * @return  a string with the name of the Player
  */
-const char* Player_get_name(Player* Player);
+const char* player_get_name(Player* player);
+
+/*********************************************/
+
+
+Status player_set_location(Player *player, Id id);
+
+
+Id player_get_location(Player *player);
+
+
+
+/**********************************/
 
 /**
  * @brief It sets whether the object the player has
@@ -69,7 +81,7 @@ const char* Player_get_name(Player* Player);
  * @param id, specifying the id of the object
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status Player_set_object(Player* Player, Id id);
+Status player_set_object(Player* player, Id id);
 
 /**
  * @brief It gets whether the Player has an object, if so, returns its Id
@@ -78,7 +90,7 @@ Status Player_set_object(Player* Player, Id id);
  * @param Player a pointer to the Player
  * @return the Players object Id
  */
-Id Player_get_object(Player* Player);
+Id player_get_object(Player* player);
 
 /**
  * @brief It prints the Player information
@@ -88,6 +100,6 @@ Id Player_get_object(Player* Player);
  * @param Player a pointer to the Player
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status Player_print(Player* Player);
+Status player_print(Player* player);
 
 #endif

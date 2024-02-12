@@ -49,92 +49,94 @@ Player* player_create(Id id) {
   return newPlayer;
 }
 
-Status Player_destroy(Player* Player) {
-  if (!Player) {
+Status player_destroy(Player *player) {
+  if (!player) {
     return ERROR;
   }
 
-  free(Player);
-  Player = NULL;
+  free(player);
+  player = NULL;
   return OK;
 }
 
-Id Player_get_id(Player* Player) {
-  if (!Player) {
+Id player_get_id(Player* player) {
+  if (!player) {
     return NO_ID;
   }
-  return Player->id;
+  return player->id;
 }
 
-Status Player_set_name(Player* Player, char* name) {
-  if (!Player || !name) {
+Status player_set_name(Player* player, char* name) {
+  if (!player || !name) {
     return ERROR;
   }
 
-  if (!strcpy(Player->name, name)) {
+  if (!strcpy(player->name, name)) {
     return ERROR;
   }
   return OK;
 }
 
-const char* Player_get_name(Player* Player) {
-  if (!Player) {
+const char* player_get_name(Player *player) {
+  if (!player) {
     return NULL;
+
   }
-  return Player->name;
+  return player->name;
 }
 
-Status Player_set_location(Player* Player, Id id) {
-  if (!Player || id == NO_ID) {
+Status player_set_location(Player *player, Id id) {
+  if (!player || id == NO_ID) {
     return ERROR;
   }
-  Player->location = id;
+  player->location = id;
   return OK;
 }
 
-Id Player_get_location(Player* Player) {
-  if (!Player) {
+Id player_get_location(Player *player) {
+  if (!player) {
     return NO_ID;
   }
-  return Player->location;
+
+  return player->location;
 }
 
-Status Player_set_object(Player* Player, Id id) {
-  if (!Player || id == NO_ID) {
+Status player_set_object(Player *player, Id id) {
+  if (!player || id == NO_ID) {
     return ERROR;
   }
-  Player->object = id;
+  player->object = id;
   return OK;
 }
 
-Id Player_get_object(Player* Player) {
-  if (!Player) {
+Id player_get_object(Player *player) {
+  if (!player) {
     return NO_ID;
   }
-  return Player->object;
+  return player->object;
 }
 
-Status Player_print(Player* Player) {
+Status player_print(Player* player) {
   Id idaux = NO_ID;
 
   /* Error Control */
-  if (!Player) {
+  if (!player) {
     return ERROR;
   }
 
   /* 1. Print the id and the name of the Player */
-  fprintf(stdout, "--> Player (Id: %ld; Name: %s)\n", Player->id, Player->name);
+  fprintf(stdout, "--> Player (Id: %ld; Name: %s)\n", player->id, player->name);
 
   /* 2. For each direction, print its link */
-  idaux = Player_get_location(Player);
+  idaux = player_get_location(player);
   if (NO_ID != idaux) {
     fprintf(stdout, "---> Location: %ld.\n", idaux);
   } else {
     fprintf(stdout, "---> No location.\n");
   }
   /* 3. Print if the player has an object and if so, its Id */
-  if (Player_get_object(Player)!=NO_ID) {
-    fprintf(stdout, "---> Object id: %ld the Player.\n",Player->object);
+  if (player_get_object(player)!=NO_ID) {
+    fprintf(stdout, "---> Object id: %ld the Player.\n",player->object);
   } else {
     fprintf(stdout, "---> Player has no object.\n");
   }

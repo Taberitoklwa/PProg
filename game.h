@@ -14,16 +14,20 @@
 #include "command.h"
 #include "space.h"
 #include "types.h"
+#include "object.h"
+#include "player.h"
 
 #define MAX_SPACES 100
 
+/*Cambiar URGENTE*/
+
 typedef struct _Game {
-  Id player_location; /*!< Id number of the player location */
-  Id object_location; /*!< Id number of the object location */
+  Object* object; /*!< Id number of the player location */
+  Player* player; /*!< Id number of the object location */
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
   Command last_cmd; 
-  Bool finished; /*!< Whether it is finished or not */
+  Bool finished; /*!< Whether it is finished or not>!*/
 } Game;
 
 /**
@@ -88,6 +92,7 @@ Space *game_get_space(Game *game, Id id);
  
  */
 
+/*Id game_get_player_location(Game *game);*/
 
 Id game_get_player_location(Game *game);
 
@@ -100,6 +105,8 @@ Id game_get_player_location(Game *game);
  
  */
 
+/*Status game_set_player_location(Game *game, Id id);*/
+
 Status game_set_player_location(Game *game, Id id);
 
 /**
@@ -109,6 +116,8 @@ Status game_set_player_location(Game *game, Id id);
  * @return the ID of the object at the specified position
  
  */
+
+/*Id game_get_object_location(Game *game);*/
 
 Id game_get_object_location(Game *game);
 
@@ -120,6 +129,8 @@ Id game_get_object_location(Game *game);
  * @return OK, if everything goes well or ERROR if there was some mistake
  
  */
+
+/*Status  game_set_object_location(Game *game, Id id);*/
 
 Status  game_set_object_location(Game *game, Id id);
 
@@ -149,7 +160,7 @@ Status game_set_last_command(Game *game, Command command);
  * @brief It is used to retrieve the current state of the game
 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
- * @return It returns a boolean value  `finished`
+ * @return It returns a boolean value `finished`
  
  */
 
