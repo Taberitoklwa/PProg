@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "types.h"
+#include "object.h"
 
 /**
  * @brief Object
@@ -27,8 +27,6 @@ struct _Object {
   char description[WORD_SIZE +1]; /*!< Description of the object */
   Bool portable;              /*!< Whether the object is portable or not */
 };
-
-typedef struct _Object Object;
 
 /** object_create allocates memory for a new object
  *  and initializes its members

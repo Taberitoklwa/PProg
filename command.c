@@ -8,11 +8,11 @@
  * @copyright GNU Public License
  */
 
-#include "command.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
+
+#include "command.h"
 
 #define CMD_LENGHT 30 /*Maximum lenght of command string*/
 
