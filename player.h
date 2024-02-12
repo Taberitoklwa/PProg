@@ -2,7 +2,7 @@
  * @brief It defines the Player interface
  *
  * @file Player.h
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  * @version 3.5
  * @date 26-01-2024
  * @copyright GNU Public License
@@ -17,7 +17,7 @@ typedef struct _Player Player;
 
 /**
  * @brief It creates a new Player, allocating memory and initializing its members
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param id the identification number for the new Player
  * @return a new Player, initialized
@@ -26,7 +26,7 @@ Player* player_create(Id id);
 
 /**
  * @brief It destroys a Player, freeing the allocated memory
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param Player a pointer to the Player that must be destroyed
  * @return OK, if everything goes well or ERROR if there was some mistake
@@ -35,7 +35,7 @@ Status player_destroy(Player* player);
 
 /**
  * @brief It gets the id of a Player
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param Player a pointer to the Player
  * @return the id of Player
@@ -44,7 +44,7 @@ Id player_get_id(Player* player);
 
 /**
  * @brief It sets the name of a Player
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param Player a pointer to the Player
  * @param name a string with the name to store
@@ -54,7 +54,7 @@ Status player_set_name(Player* player, char* name);
 
 /**
  * @brief It gets the name of a Player
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param Player a pointer to the Player
  * @return  a string with the name of the Player
@@ -75,7 +75,7 @@ Id player_get_location(Player *player);
 
 /**
  * @brief It sets whether the object the player has
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param Player a pointer to the Player
  * @param id, specifying the id of the object
@@ -85,7 +85,7 @@ Status player_set_object(Player* player, Id id);
 
 /**
  * @brief It gets whether the Player has an object, if so, returns its Id
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param Player a pointer to the Player
  * @return the Players object Id
@@ -94,7 +94,7 @@ Id player_get_object(Player* player);
 
 /**
  * @brief It prints the Player information
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  *
  * This fucntion shows the id and name of the Player, the Players location id and the Players object id.
  * @param Player a pointer to the Player

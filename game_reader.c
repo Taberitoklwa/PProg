@@ -85,33 +85,3 @@ Status game_load_spaces(Game *game, char *filename) {
 
 
 }
-/*
- game_add_space increases the number of spaces
-*/
-
-Status game_add_space(Game *game, Space *space) {
-  /* Error Control */
-  if ((space == NULL) || (game->n_spaces >= MAX_SPACES)) {
-    return ERROR;
-  }
-
-  game->spaces[game->n_spaces] = space;
-  game->n_spaces++;
-
-  return OK;
-}
-
-/*
- game_get_space_id_at Returns the id of the space you are currently on
- 
-*/
-
-Id game_get_space_id_at(Game *game, int position) {
-  /* Error Control */
-  if (position < 0 || position >= game->n_spaces) {
-    return NO_ID;
-  }
-
-  return space_get_id(game->spaces[position]);
-}
-

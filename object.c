@@ -2,7 +2,7 @@
  * @brief It implements the object module
  *
  * @file object.c
- * @author Recurso 1
+ * @author Diego Tabero & Marcos Leo Sonck
  * @version 3.5
  * @date 6-01-2024
  * @copyright GNU Public License
@@ -109,7 +109,6 @@ Status object_set_portable(Object* object, Bool value) {
 }
 
 Status object_print(Object* object) {
-  /*Borrado Id idaux = NO_ID; */
 
   /* Error Control */
   if (!object) {
