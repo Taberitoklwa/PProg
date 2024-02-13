@@ -11,17 +11,17 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-/*It defines commonly used acros and enumerations */
+/*It defines commonly used macros and enumerations */
 
 #define WORD_SIZE 1000
 #define NO_ID -1
 
-typedef long Id;
+typedef long Id; 
 
-typedef enum { FALSE, TRUE } Bool;
+typedef enum { FALSE, TRUE } Bool; /*<!Enumeration for boolean values*/
 
-typedef enum { ERROR, OK } Status;
+typedef enum { ERROR, OK } Status;  /*<!Enumeration for status values*/
 
-typedef enum { N, S, E, W } Direction;
+typedef enum { N, S, E, W } Direction;  /*<!Enumeration for direction values*/
 
 #endif

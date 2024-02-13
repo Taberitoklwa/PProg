@@ -28,7 +28,7 @@ struct _Object {
   Bool portable;              /*!< Whether the object is portable or not */
 };
 
-/** object_create allocates memory for a new object
+/** object_create allocates memory for a new object 
  *  and initializes its members
  */
 Object* object_create(Id id) {

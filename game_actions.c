@@ -2,9 +2,9 @@
  * @brief It implements the game update through user actions
  *
  * @file game.c
- * @author Profesores PPROG
+ * @author Profesores PPROG, Diego Tabero, Marcos Leo Sonck
  * @version 3.5
- * @date 26-01-2024
+ * @date 11-02-2024
  * @copyright GNU Public License
  */
 
@@ -123,8 +123,8 @@ void game_actions_next(Game *game) {
 
  */
   void game_actions_back(Game *game) {
-    Id current_id = NO_ID; /*Initializes an id to NO_ID*/
-    Id space_id = NO_ID; /*Initializes space if to NO_ID*/
+    Id current_id = NO_ID;
+    Id space_id = NO_ID; 
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -140,17 +140,20 @@ void game_actions_next(Game *game) {
     return;
   }
 
+
 /**
  * @brief Allows the player to take an object from their current location in the game.
- */
+ * 
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
 
+ */
 void game_actions_take(Game *game){
 
   /* Declaring variables and initializing them with the default value NO_ID or NULL(pointer) */
 
   Id object_id = NO_ID;
-  Id playerlocation_id = NO_ID;
-  Id objectlocation_id = NO_ID;
+  Id player_location_id = NO_ID;
+  Id object_location_id = NO_ID;
   Space * space = NULL;
   
 
@@ -160,23 +163,23 @@ void game_actions_take(Game *game){
     return;
   }
 
-  playerlocation_id = player_get_location(game->player);
+  player_location_id = player_get_location(game->player);
 
-  if (NO_ID == playerlocation_id) {
+  if (NO_ID == player_location_id) {
     return;
   }
 
-  objectlocation_id = game_get_object_location(game);
+  object_location_id = game_get_object_location(game);
 
-   if (NO_ID == objectlocation_id) {
+   if (NO_ID == object_location_id) {
     return;
   }
 
-  if( objectlocation_id!=playerlocation_id) {
+  if( object_location_id!=player_location_id) {
     return;
   }
 
-  space = game_get_space(game, objectlocation_id);
+  space = game_get_space(game, object_location_id);
 
   if(!space) {
     return;
@@ -199,6 +202,12 @@ void game_actions_take(Game *game){
  *  @brief Allows the player to drop an object in the current space they are in.
  * */
 
+/**
+ * @brief Allows the player to drop an object they are currently holding in the game, placing it in the current space they are in.
+ * 
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ *
+ */
 void game_actions_drop(Game *game) {
   Id object_id = NO_ID;
   Id playerlocation_id = NO_ID;
