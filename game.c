@@ -165,9 +165,6 @@ Status game_set_object_location(Game* game, Id id) {
     return ERROR;
   }
 
-  /*Mirar*/
-
-
   /* It is setting the object location in the game structure to the
   given id */
   space_set_object(game_get_space(game, id), object_get_id(game->object));

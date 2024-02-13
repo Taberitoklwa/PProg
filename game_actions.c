@@ -163,7 +163,7 @@ void game_actions_take(Game *game){
     return;
   }
 
-  player_location_id = player_get_location(game->player);
+  player_location_id = game_get_player_location(game);
 
   if (NO_ID == player_location_id) {
     return;
@@ -216,7 +216,7 @@ void game_actions_drop(Game *game) {
     return;
   }
 
-  playerlocation_id = player_get_location(game->player);
+  playerlocation_id = game_get_player_location(game);
 
   if(playerlocation_id == NO_ID) {
     return;
