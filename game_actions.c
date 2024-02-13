@@ -199,15 +199,12 @@ void game_actions_take(Game *game){
 }
 
 /**
- *  @brief Allows the player to drop an object in the current space they are in.
- * */
-
-/**
  * @brief Allows the player to drop an object they are currently holding in the game, placing it in the current space they are in.
  * 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  *
  */
+
 void game_actions_drop(Game *game) {
   Id object_id = NO_ID;
   Id playerlocation_id = NO_ID;
@@ -239,7 +236,7 @@ void game_actions_drop(Game *game) {
 
    /*Is setting the object ID of the current space to an ID, indicating that there is an object in that space because the player has dropped it.*/
 
-  space_set_object(space,object_id);
+  space_set_object(space,object_id);  
 
   return;
 }

@@ -13,7 +13,6 @@
 
 #include "command.h"
 #include "game.h"
-#include "types.h"
 
 /**
  * @brief Updates the game state based on the user command

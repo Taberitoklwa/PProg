@@ -12,7 +12,7 @@
 #ifndef GAMEREADER_H
 #define GAMEREADER_H
 
-#include "types.h"
+
 #include "game.h"
 
 /**
