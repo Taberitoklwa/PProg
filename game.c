@@ -209,9 +209,6 @@ void game_print(Game *game) {
 
   /*It prints the location of the game's object and the player.*/
 
-
-  /*********************************************************IMPRIMIRRRR y miraaaaaaaaa bieeeenr*************************************/
-
   if (player_print(game->player) == ERROR){
     return;
   }

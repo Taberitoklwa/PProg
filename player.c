@@ -104,7 +104,7 @@ Id player_get_location(Player *player) {
 }
 
 Status player_set_object(Player *player, Id id) {
-  if (!player || id == NO_ID) {
+  if (!player) {
     return ERROR;
   }
   player->object = id;
