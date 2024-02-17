@@ -186,11 +186,11 @@ void game_actions_take(Game *game){
   }
   
 
-  /*Function call that sets the object ID of the player to an ID, indicating that the player is currently holding any object. */
+  /*Function call that sets the object ID of the player to an ID, indicating that the player is currently holding an object. */
 
   player_set_object(game->player, object_id);
 
-  /*Is setting the object ID of the current space to NO_ID, indicating that there is no object in that space because the player has taken it.*/
+  /*Sets the object ID of the current space to NO_ID, indicating that there is no object in that space because the player has taken it.*/
 
   space_set_object(space,NO_ID);
 
@@ -230,11 +230,11 @@ void game_actions_drop(Game *game) {
 
 
 
-  /*Function call that sets the object ID of the player to NO_ID, indicating that the player is not currently holding any object. */
+  /*Function call that sets the object ID of the player to NO_ID, indicating that the player is not currently holding an object. */
   
   player_set_object(game->player, NO_ID);
 
-   /*Is setting the object ID of the current space to an ID, indicating that there is an object in that space because the player has dropped it.*/
+   /*Sets the object ID of the current space to an ID, indicating that there is an object in that space because the player has dropped it.*/
 
   space_set_object(space,object_id);  
 
