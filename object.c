@@ -37,6 +37,8 @@ Object* object_create(Id id) {
   /* Error control */
   if (id == NO_ID) return NULL;
 
+  /*Allocates memory for a new object and Error control*/
+
   newObject = (Object*)malloc(sizeof(Object));
   if (newObject == NULL) {
     return NULL;

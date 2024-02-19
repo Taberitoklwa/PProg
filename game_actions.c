@@ -93,7 +93,7 @@ void game_actions_exit(Game *game) {}
  *
  * This function updates the player's location to the next space to the south if possible.
  *
- * @param game, pointer to a Game structure, which represents the current state of the game being played
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  **/
 
 void game_actions_next(Game *game) {

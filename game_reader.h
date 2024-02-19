@@ -18,7 +18,7 @@
 /**
  * @brief It loads new space.
 
- * @param game, pointer to Game structure
+ * @param game,  pointer to a `Game` structure, which represents the current state of the game being played
  * @param filename, pointer to char, (string) with the filename
  * @return OK, if everything goes well or ERROR if there was some mistake
  

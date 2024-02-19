@@ -15,9 +15,6 @@
 
 #include "command.h"
 #include "libscreen.h"
-
-
-
 #include "space.h"
 #include "types.h"
 

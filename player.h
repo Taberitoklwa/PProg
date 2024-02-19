@@ -59,10 +59,8 @@ Status player_set_name(Player* player, char* name);
  * @param Player a pointer to the Player
  * @return  a string with the name of the Player
  */
+
 const char* player_get_name(Player* player);
-
-/*********************************************/
-
 
 /**
  * @brief Sets the location of a player to a given ID.
@@ -85,7 +83,7 @@ Status player_set_location(Player *player, Id id);
 Id player_get_location(Player *player);
 
 /**
- * @brief It sets whether the object the player has
+ * @brief It sets the id of the object which the player is currently holding
  * @author Diego Tabero & Marcos Leo Sonck
  *
  * @param Player, pointer to the Player

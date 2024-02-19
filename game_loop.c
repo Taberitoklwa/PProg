@@ -79,7 +79,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
 }
 
 void game_loop_run(Game game, Graphic_engine *gengine) {
-  Command command = NO_CMD; /*Declares a command variable initialized to NO_CMD*/
+  Command command = NO_CMD; 
 
   while ((command != EXIT) && (game_get_finished(&game) == FALSE)) { /*Loop until exit command is received or game is finished */
     graphic_engine_paint_game(gengine, &game); /*Paints the game on the screen using graphic engine*/

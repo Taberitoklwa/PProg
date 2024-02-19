@@ -24,13 +24,13 @@
 
 Status game_reader_load_spaces(Game *game, char *filename) {
 
-  FILE *file = NULL; /* It is declaring and initializing a pointer variable `file` of type `FILE` to `NULL`*/
+  FILE *file = NULL; 
   char line[WORD_SIZE] = ""; 
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;/* Is declaring and initializing variables of type `Id` with the default value `NO_ID`.*/
-  Space *space = NULL; /*It initializes the pointer to the space structure to null*/
-  Status status = OK;/* It is declaring and initializing a Status variable to OK*/
+  Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
+  Space *space = NULL;
+  Status status = OK;
 
 
  /* Error Control */
@@ -82,6 +82,4 @@ Status game_reader_load_spaces(Game *game, char *filename) {
   fclose(file);
 
   return status;
-
-
 }

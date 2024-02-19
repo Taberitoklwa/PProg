@@ -24,7 +24,7 @@ typedef struct _Game {
   Player* player; /*!< Id number of the object location */
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
-  Command last_cmd; 
+  Command last_cmd; /*!<Last command that has been introduced>!*/
   Bool finished; /*!< Whether it is finished or not>!*/
 } Game;
 
@@ -119,8 +119,6 @@ Status game_set_player_location(Game *game, Id id);
  
  */
 
-/*Id game_get_object_location(Game *game);*/
-
 Id game_get_object_location(Game *game);
 
 /**
@@ -131,8 +129,6 @@ Id game_get_object_location(Game *game);
  * @return OK, if everything goes well or ERROR if there was some mistake
  
  */
-
-/*Status  game_set_object_location(Game *game, Id id);*/
 
 Status  game_set_object_location(Game *game, Id id);
 
@@ -154,7 +150,6 @@ Command game_get_last_command(Game *game);
  
  */
 
-
 Status game_set_last_command(Game *game, Command command);
 
 /**
@@ -162,7 +157,7 @@ Status game_set_last_command(Game *game, Command command);
 
  * @param game, pointer to a  Game structure, which represents the current state of the game being played
  * @return It returns a boolean value `finished`
- 
+ * 
  */
 
 

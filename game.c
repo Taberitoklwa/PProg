@@ -19,6 +19,14 @@
 
 /** <Private functions>*/
 
+/**
+ * @brief Returns the ID of the space at a given position in the game.
+ * 
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ * @param position. ndex of the space in the game's array of spaces for which we want to retrieve the ID.
+ * 
+ * @return the ID of the space at the specified position in the game. If the position is out of bounds, it returns NO_ID.
+ */
 Id game_get_space_id_at(Game *game, int position) {
   /* Error Control */
   if (position < 0 || position >= game->n_spaces) {
@@ -85,12 +93,6 @@ Status game_add_space(Game *game, Space *space) {
 
   return OK;
 }
-
-/*
- game_get_space_id_at Returns the id of the space you are currently on
- 
-*/
-
 
 Status game_destroy(Game *game) {
   int i = 0;
@@ -206,7 +208,7 @@ void game_print(Game *game) {
     space_print(game->spaces[i]);
   }
 
-  /*It prints the location of the game's object and the player.*/
+  /*It prints the information and the location of the game's object and the player.*/
 
   if (player_print(game->player) == ERROR){
     return;

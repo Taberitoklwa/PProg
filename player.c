@@ -129,7 +129,7 @@ Status player_print(Player* player) {
   /* 1. Print the id and the name of the Player */
   fprintf(stdout, "--> Player (Id: %ld; Name: %s)\n", player->id, player->name);
 
-  /* 2. For each direction, print its link */
+  /* 2. Print its location ID */
   idaux = player_get_location(player);
   if (NO_ID != idaux) {
     fprintf(stdout, "---> Location: %ld.\n", idaux);

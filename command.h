@@ -22,7 +22,7 @@ typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, TAKE, DROP } Command; /*E
  * @brief Reads user input and returns the corresponding command
  * 
  * This function reads a line of user input from stdin, tokenizes it, and matches it against
- * the command mappings to determine the corresponding command value.
+ * the command mappings to determine the corresponding command value
  * 
  * @return The command value corresponding to the user input, or NO_CMD if no valid command is found
  **/

@@ -20,7 +20,7 @@ command.o: command.c command.h
 game_reader.o: game_reader.c game_reader.h
 	$(CC) $(CFLAGS) -c $<
 
-game.o: game.c game.h game_reader.h command.h space.h types.h
+game.o: game.c game.h game_reader.h command.h space.h types.h object.h types.h
 	$(CC) $(CFLAGS) -c $<
 
 game_actions.o: game_actions.c game_actions.h command.h game.h space.h types.h
