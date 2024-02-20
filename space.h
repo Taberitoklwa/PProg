@@ -161,6 +161,31 @@ Status space_set_object(Space* space, Id value);
 Id space_get_object(Space* space);
 
 /**
+ * @brief It adds an object to the space
+ * @author Marcos Leo
+ *
+ * @param space a pointer to the space
+ * @param id the id of the object that wants to be added
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+
+Status space_add_object(Space* space, Id id);
+
+
+
+/**
+ * @brief It gives the ids of the objects in the given space
+ * @author Marcos Leo
+ *
+ * @param space a pointer to the space
+ * @return an array containing the ids
+ */
+long* space_get_objects(Space* space);
+
+
+
+
+/**
  * @brief It prints the space information
  * @author Profesores PPROG
  *

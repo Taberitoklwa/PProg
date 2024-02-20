@@ -9,6 +9,7 @@
  */
 
 #include "space.h"
+#include "set.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +27,7 @@ struct _Space {
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
-  Id object;              /*!< Whether the space has an object or not */
+  Set *objects;              /*!< Set of objects in the space */
 };
 
 /** space_create allocates memory for a new space
@@ -50,13 +51,23 @@ Space* space_create(Id id) {
   newSpace->south = NO_ID;
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
-  newSpace->object = NO_ID;
+  newSpace->objects = set_create();
+
+  if(!newSpace->objects){
+
+    return NULL;
+  }
 
   return newSpace;
 }
 
 Status space_destroy(Space* space) {
   if (!space) {
+    return ERROR;
+  }
+
+  if(!set_destroy(space->objects)){
+
     return ERROR;
   }
 
@@ -150,19 +161,74 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-Status space_set_object(Space* space, Id id) {
+/* ¡PENDIENTE DE REVISAR SI SE NECESITA BORRAR!
+Status space_set_object(Space* space, Id id) { 
   if (!space) {
     return ERROR;
   }
   space->object = id;
   return OK;
 }
+*/
 
-Id space_get_object(Space* space) {
+/* ¡HAY QUE REVISAR QUE OPCION ES CORRECTA!
+Set* space_get_objects(Space* space) {
   if (!space) {
     return NO_ID;
   }
-  return space->object;
+  return space->objects;
+}
+*/
+
+long* space_get_objects(Space* space) {
+
+  if(!space || !space->objects) {
+    return NULL;
+  }
+
+  int n,i;
+
+  n = set_get_nids(space->objects);
+
+  if(n<=0){
+    return NULL;
+  }
+
+  long* ids = NULL;
+
+  ids = (long*) malloc(n*sizeof(long));
+
+  if(!ids){
+    return NULL;
+
+  }
+
+  for(i=0;i<n;i++){
+
+    ids[i] = set_get_id(space->objects,i);
+    /*¡REVISAR SI HACE FALTA ROMPER SI SE RECIVE NO_ID!*/
+
+  }
+
+  return ids;
+
+
+}
+
+
+Status space_add_object(Space* space, Id id) {
+
+  if (!space || id == NO_ID || !space->objects) {
+    return ERROR;
+  }
+
+  if(!set_add_id(space->objects, id)){
+
+    return ERROR;
+  }
+
+  return OK;
+
 }
 
 Status space_print(Space* space) {
@@ -202,12 +268,13 @@ Status space_print(Space* space) {
     fprintf(stdout, "---> No west link.\n");
   }
 
-  /* 3. Print if there is an object in the space or not */
-  if (space_get_object(space)!=NO_ID) {
-    fprintf(stdout, "---> Object in the space.\n");
-  } else {
-    fprintf(stdout, "---> No object in the space.\n");
-  }
+
+/* 3. Prints the set of objects in the space */
+   if(!set_print(space->objects)){
+
+    return ERROR;
+   }
+
 
   return OK;
 }
