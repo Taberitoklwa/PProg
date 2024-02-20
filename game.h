@@ -19,23 +19,20 @@
 
 #define MAX_SPACES 100
 
-/*Cambiar URGENTE*/
-
 typedef struct _Game {
   Object* object; /*!< Id number of the player location */
   Player* player; /*!< Id number of the object location */
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
-  Command last_cmd; 
+  Command last_cmd; /*!<Last command that has been introduced>!*/
   Bool finished; /*!< Whether it is finished or not>!*/
 } Game;
 
 /**
  * @brief Creates a new game.
-
+ * 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  * @return OK, if everything goes well or ERROR if there was some mistake
- 
  */
 
 Status game_create(Game *game);
@@ -51,6 +48,17 @@ Status game_create(Game *game);
 
 Status game_create_from_file(Game *game, char *filename);
 
+
+/**
+ * @brief It adds a space to the game.
+
+ * @param game, pointer to Game structure
+ * @param filename, pointer to char, (string) with the filename
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+
+Status game_add_space(Game *game, Space *space);
+
 /**
  * @brief Updates the game state based on the given command.
 
@@ -59,7 +67,6 @@ Status game_create_from_file(Game *game, char *filename);
  * @return OK, if everything goes well or ERROR if there was some mistake
  
  */
-
 
 Status game_actions_update(Game *game, Command cmd);
 
@@ -89,10 +96,8 @@ Space *game_get_space(Game *game, Id id);
 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  * @return the Id number of the player location
- 
  */
 
-/*Id game_get_player_location(Game *game);*/
 
 Id game_get_player_location(Game *game);
 
@@ -102,10 +107,7 @@ Id game_get_player_location(Game *game);
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  * @param  id, the id number of the player location 
  * @return OK, if everything goes well or ERROR if there was some mistake
- 
  */
-
-/*Status game_set_player_location(Game *game, Id id);*/
 
 Status game_set_player_location(Game *game, Id id);
 
@@ -116,8 +118,6 @@ Status game_set_player_location(Game *game, Id id);
  * @return the ID of the object at the specified position
  
  */
-
-/*Id game_get_object_location(Game *game);*/
 
 Id game_get_object_location(Game *game);
 
@@ -130,8 +130,6 @@ Id game_get_object_location(Game *game);
  
  */
 
-/*Status  game_set_object_location(Game *game, Id id);*/
-
 Status  game_set_object_location(Game *game, Id id);
 
 /**
@@ -139,7 +137,6 @@ Status  game_set_object_location(Game *game, Id id);
 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  * @return a command type variable
- 
  */
 
 Command game_get_last_command(Game *game);
@@ -153,15 +150,14 @@ Command game_get_last_command(Game *game);
  
  */
 
-
 Status game_set_last_command(Game *game, Command command);
 
 /**
  * @brief It is used to retrieve the current state of the game
 
- * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ * @param game, pointer to a  Game structure, which represents the current state of the game being played
  * @return It returns a boolean value `finished`
- 
+ * 
  */
 
 
@@ -170,7 +166,7 @@ Bool game_get_finished(Game *game);
 /**
  * @brief It is used to set is used to set the finished status of the game
  * 
- * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ * @param game, pointer to a Game structure, which represents the current state of the game being played
  * @param  finished, boolean value indicating the game is finished 
  * @return OK, if everything goes well or ERROR if there was some mistake
  

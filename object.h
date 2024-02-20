@@ -2,7 +2,7 @@
  * @brief It defines the object interface
  *
  * @file object.h
- * @author Recurso1
+ * @author Diego Tabero & Marcos Leo Sonck
  * @version 3.5
  * @date 6-02-2024
  * @copyright GNU Public License

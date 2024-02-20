@@ -2,9 +2,9 @@
  * @brief It implements the space module
  *
  * @file space.c
- * @author Profesores PPROG
+ * @author Profesores PPROG, Diego Tabero, Marcos Leo Sonck
  * @version 3.5
- * @date 26-01-2024
+ * @date 9-2-2024
  * @copyright GNU Public License
  */
 
@@ -158,8 +158,6 @@ Status space_set_object(Space* space, Id id) {
   return OK;
 }
 
-/*Mirar si esta bieeen  (Antes era de tipo booleano)*/
-
 Id space_get_object(Space* space) {
   if (!space) {
     return NO_ID;
@@ -205,7 +203,7 @@ Status space_print(Space* space) {
   }
 
   /* 3. Print if there is an object in the space or not */
-  if (space_get_object(space)) {
+  if (space_get_object(space)!=NO_ID) {
     fprintf(stdout, "---> Object in the space.\n");
   } else {
     fprintf(stdout, "---> No object in the space.\n");

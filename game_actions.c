@@ -2,19 +2,17 @@
  * @brief It implements the game update through user actions
  *
  * @file game.c
- * @author Profesores PPROG
+ * @author Profesores PPROG, Diego Tabero, Marcos Leo Sonck
  * @version 3.5
- * @date 26-01-2024
+ * @date 11-02-2024
  * @copyright GNU Public License
  */
-
-#include "game_actions.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "game.h"
+#include "game_actions.h"
 
 /**
    Private functions
@@ -115,28 +113,47 @@ void game_actions_next(Game *game) {
   return;
 }
 
-void game_actions_back(Game *game) {
-  Id current_id = NO_ID; /*Initializes an id to NO_ID*/
-  Id space_id = NO_ID; /*Initializes space if to NO_ID*/
+/**
+ * @brief Handles the back command in the game
+ * 
+ * This function updates the player's location to the next space to the north if possible
+ * 
+ * @param game A pointer to the Game struct, which contains information about the current state of the
+ * game.
 
-  space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+ */
+  void game_actions_back(Game *game) {
+    Id current_id = NO_ID;
+    Id space_id = NO_ID; 
 
-  if (NO_ID == space_id) {
+    space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+
+    if (NO_ID == space_id) {
+      return;
+    }
+
+    current_id = space_get_north(game_get_space(game, space_id)); /*Sets current_id to the id of the space north to the current space of the player */
+    if (current_id != NO_ID) {
+      game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+    }
+
     return;
   }
 
-  current_id = space_get_north(game_get_space(game, space_id)); /*Sets current_id to the id of the space north to the current space of the player */
-  if (current_id != NO_ID) {
-    game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
-  }
 
-  return;
-}
+/**
+ * @brief Allows the player to take an object from their current location in the game.
+ * 
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
 
+ */
 void game_actions_take(Game *game){
+
+  /* Declaring variables and initializing them with the default value NO_ID or NULL(pointer) */
+
   Id object_id = NO_ID;
-  Id playerlocation_id = NO_ID;
-  Id objectlocation_id = NO_ID;
+  Id player_location_id = NO_ID;
+  Id object_location_id = NO_ID;
   Space * space = NULL;
   
 
@@ -146,35 +163,47 @@ void game_actions_take(Game *game){
     return;
   }
 
-  playerlocation_id = player_get_location(game->player);
+  player_location_id = game_get_player_location(game);
 
-  if (NO_ID == playerlocation_id) {
+  if (NO_ID == player_location_id) {
     return;
   }
 
-  objectlocation_id = game_get_object_location(game);
+  object_location_id = game_get_object_location(game);
 
-   if (NO_ID == objectlocation_id) {
+   if (NO_ID == object_location_id) {
     return;
   }
 
-  if( objectlocation_id!=playerlocation_id) {
+  if( object_location_id!=player_location_id) {
     return;
   }
 
-  space = game_get_space(game, objectlocation_id);
+  space = game_get_space(game, object_location_id);
 
   if(!space) {
     return;
   }
+  
+
+  /*Function call that sets the object ID of the player to an ID, indicating that the player is currently holding an object. */
 
   player_set_object(game->player, object_id);
+
+  /*Sets the object ID of the current space to NO_ID, indicating that there is no object in that space because the player has taken it.*/
 
   space_set_object(space,NO_ID);
 
 
   return;
 }
+
+/**
+ * @brief Allows the player to drop an object they are currently holding in the game, placing it in the current space they are in.
+ * 
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ *
+ */
 
 void game_actions_drop(Game *game) {
   Id object_id = NO_ID;
@@ -187,7 +216,7 @@ void game_actions_drop(Game *game) {
     return;
   }
 
-  playerlocation_id = player_get_location(game->player);
+  playerlocation_id = game_get_player_location(game);
 
   if(playerlocation_id == NO_ID) {
     return;
@@ -199,9 +228,15 @@ void game_actions_drop(Game *game) {
     return;
   }
 
+
+
+  /*Function call that sets the object ID of the player to NO_ID, indicating that the player is not currently holding an object. */
+  
   player_set_object(game->player, NO_ID);
 
-  space_set_object(space,object_id);
+   /*Sets the object ID of the current space to an ID, indicating that there is an object in that space because the player has dropped it.*/
+
+  space_set_object(space,object_id);  
 
   return;
 }

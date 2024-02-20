@@ -2,7 +2,7 @@
  * @brief It implements the Player module
  *
  * @file Player.c
- * @author Profesores PPROG
+ * @author Diego Tabero & Marcos Leo Sonck
  * @version 3.5
  * @date 26-01-2024
  * @copyright GNU Public License
@@ -20,7 +20,7 @@
  * This struct stores all the information of a Player.
  */
 struct _Player {
-  Id id;                    /*!< Id number of the Player, it must be unique */
+  Id id;/*!< Id number of the Player, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the Player */                
   Id location; /*!<Id of the players location*/
   Id object;  /*!< Whether the Player has an object an if so, which one */
@@ -85,6 +85,7 @@ const char* player_get_name(Player *player) {
   return player->name;
 }
 
+
 Status player_set_location(Player *player, Id id) {
   if (!player || id == NO_ID) {
     return ERROR;
@@ -92,6 +93,7 @@ Status player_set_location(Player *player, Id id) {
   player->location = id;
   return OK;
 }
+
 
 Id player_get_location(Player *player) {
   if (!player) {
@@ -102,7 +104,7 @@ Id player_get_location(Player *player) {
 }
 
 Status player_set_object(Player *player, Id id) {
-  if (!player || id == NO_ID) {
+  if (!player) {
     return ERROR;
   }
   player->object = id;
@@ -127,7 +129,7 @@ Status player_print(Player* player) {
   /* 1. Print the id and the name of the Player */
   fprintf(stdout, "--> Player (Id: %ld; Name: %s)\n", player->id, player->name);
 
-  /* 2. For each direction, print its link */
+  /* 2. Print its location ID */
   idaux = player_get_location(player);
   if (NO_ID != idaux) {
     fprintf(stdout, "---> Location: %ld.\n", idaux);

@@ -15,9 +15,6 @@
 
 #include "command.h"
 #include "libscreen.h"
-
-
-
 #include "space.h"
 #include "types.h"
 
@@ -147,7 +144,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   }
 
   /* Paint in the banner area */
-  screen_area_puts(ge->banner, "    The anthill game ");
+  screen_area_puts(ge->banner, "The anthill game ");
 
   /* Paint in the help area */
   screen_area_clear(ge->help);

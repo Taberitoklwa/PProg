@@ -17,7 +17,7 @@ typedef struct _Graphic_engine Graphic_engine;
 
 
 /**
- * @brief Creates a pointer to a `Graphic_engine` structure and reserve memory for this structure, initializing all its members by calling other functions
+ * @brief Creates a pointer to a `Graphic_engine` structure
 
  *
  * @return It returns a pointer to a `Graphic_engine` structure

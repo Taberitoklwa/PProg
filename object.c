@@ -2,7 +2,7 @@
  * @brief It implements the object module
  *
  * @file object.c
- * @author Recurso 1
+ * @author Diego Tabero & Marcos Leo Sonck
  * @version 3.5
  * @date 6-01-2024
  * @copyright GNU Public License
@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "types.h"
+#include "object.h"
 
 /**
  * @brief Object
@@ -28,9 +28,7 @@ struct _Object {
   Bool portable;              /*!< Whether the object is portable or not */
 };
 
-typedef struct _Object Object;
-
-/** object_create allocates memory for a new object
+/** object_create allocates memory for a new object 
  *  and initializes its members
  */
 Object* object_create(Id id) {
@@ -38,6 +36,8 @@ Object* object_create(Id id) {
 
   /* Error control */
   if (id == NO_ID) return NULL;
+
+  /*Allocates memory for a new object and Error control*/
 
   newObject = (Object*)malloc(sizeof(Object));
   if (newObject == NULL) {
@@ -109,7 +109,6 @@ Status object_set_portable(Object* object, Bool value) {
 }
 
 Status object_print(Object* object) {
-  /*Borrado Id idaux = NO_ID; */
 
   /* Error Control */
   if (!object) {
