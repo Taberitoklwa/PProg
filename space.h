@@ -172,6 +172,15 @@ Id space_get_object(Space* space);
 Status space_add_object(Space* space, Id id);
 
 
+/**
+ * @brief It sets wether the object is in the space or not
+ * @author Marcos Leo
+ *
+ * @param space a pointer to the space
+ * @param id the id of the object 
+ * @return TRUE, if everything the object is in the space or FALSE if it isn´t or the was an error
+ */
+Bool space_is_object_contained(Space *space, Id id);
 
 /**
  * @brief It gives the ids of the objects in the given space

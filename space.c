@@ -180,6 +180,8 @@ Set* space_get_objects(Space* space) {
 }
 */
 
+
+
 long* space_get_objects(Space* space) {
 
   if(!space || !space->objects) {
@@ -212,9 +214,22 @@ long* space_get_objects(Space* space) {
 
   return ids;
 
-
 }
 
+Bool space_is_object_contained(Space *space, Id id){
+
+  if(!space || id == NO_ID || set_is_empty(space->objects) ){
+
+    return FALSE;
+  }
+
+  if(set_id_belongs(space->objects,id){
+    return TRUE;
+  }else{
+    return FALSE;
+  }
+
+}
 
 Status space_add_object(Space* space, Id id) {
 
