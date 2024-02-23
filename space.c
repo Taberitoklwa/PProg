@@ -223,7 +223,7 @@ Bool space_is_object_contained(Space *space, Id id){
     return FALSE;
   }
 
-  if(set_id_belongs(space->objects,id){
+  if(set_id_belongs(space->objects,id)){
     return TRUE;
   }else{
     return FALSE;
