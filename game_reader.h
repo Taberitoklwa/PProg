@@ -25,4 +25,14 @@
  */
 Status game_reader_load_spaces(Game *game, char *filename);
 
+/**
+ * @brief It loads new objects.
+
+ * @param game,  pointer to a `Game` structure, which represents the current state of the game being played
+ * @param filename, pointer to char, (string) with the filename
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ 
+ */
+Status game_reader_load_objects(Game *game, char *filename);
+
 #endif

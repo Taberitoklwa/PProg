@@ -22,7 +22,8 @@
 #define MAX_OBJECTS 10
 
 typedef struct _Game {
-  Object* object[MAX_OBJECTS]; /*!< Id number of the player location */
+  Object* objects[MAX_OBJECTS]; /*!< Id number of the player location */
+  int n_objects;
   Player* player; /*!< Id number of the object location */
   Character* character;
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
@@ -115,6 +116,15 @@ Id game_get_player_location(Game *game);
 Status game_set_player_location(Game *game, Id id);
 
 /**
+ * @brief It adds an object to the game.
+
+ * @param game, pointer to Game structure
+ * @param filename, pointer to char, (string) with the filename
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status game_add_object(Game *game, Object *object);
+
+/**
  * @brief  It is used to get the current location of the object in the game
 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
@@ -124,19 +134,30 @@ Status game_set_player_location(Game *game, Id id);
 
 /*Id game_get_object_location(Game *game);*/
 
-
 Id game_get_object_location(Game *game);
+
+/**
+ * @brief Retrieves a specific object in the game based on its ID
+
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ * @param  id, the id number of the object  
+ * @return It returns a pointer to Object structure (a especific object in the game based on its ID)
+ 
+ */
+
+Object* game_get_object(Game *game, Id id);
 
 /**
  * @brief Set the current location of the object in the game
 
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
  * @param  id, the id number of the object location 
+ * @param object, pointer to the object 
  * @return OK, if everything goes well or ERROR if there was some mistake
  
  */
 
-Status  game_set_object_location(Game *game, Id id);
+Status  game_set_object_location(Game *game, Object*object, Id id);
 
 /**
  * @brief Retrieves the last command that was executed in the game

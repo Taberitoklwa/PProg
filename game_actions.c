@@ -157,7 +157,7 @@ void game_actions_take(Game *game){
   Space * space = NULL;
   
 
-  object_id = object_get_id(game->object[0]);
+  object_id = object_get_id(game->objects[0]);
 
   if (NO_ID == object_id) {
     return;

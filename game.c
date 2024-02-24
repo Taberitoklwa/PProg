@@ -50,11 +50,12 @@ Status game_create(Game *game) {
 
   for (i = 0; i < MAX_OBJECTS; i++)
     {
-      game->object[i] = NULL;
+      game->objects[i] = NULL;
     }
 
   /* Assigns default values ​​to the different fields of the structure */
 
+  game->n_objects = 0;
   game->n_spaces = 0;
   game->last_cmd = NO_CMD;  
   game->finished = FALSE;
@@ -74,6 +75,10 @@ Status game_create_from_file(Game *game, char *filename) {
     return ERROR;
   }
 
+  if (game_reader_load_objects(game,filename) == ERROR){
+    return ERROR;
+  }
+
   game->player = player_create(1);
   if( game->player == NULL){
       return ERROR;
@@ -85,7 +90,6 @@ Status game_create_from_file(Game *game, char *filename) {
 
   /* The player and the object are located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));
-  game_set_object_location(game, game_get_space_id_at(game, 0));
 
   return OK;
 }
@@ -116,7 +120,7 @@ Status game_destroy(Game *game) {
   }
 
   player_destroy(game->player);
-  object_destroy(game->object[0]);
+  object_destroy(game->objects[0]);
 
 
   return OK;
@@ -145,7 +149,7 @@ Object **game_get_objects(Game *game){
     if (!game){
         return NULL;
     }
-    return game->object;
+    return game->objects;
 }
 
 int game_get_num_objects(Game *game){
@@ -156,7 +160,7 @@ int game_get_num_objects(Game *game){
     return -1;
   }
 
-  for(i=0; i< MAX_OBJECTS && game->object[i]!=NULL; i++);
+  for(i=0; i< MAX_OBJECTS && game->objects[i]!=NULL; i++);
 
 
   /*i o i-1*/
@@ -178,6 +182,18 @@ Status game_set_player_location(Game *game, Id id) {
   return OK;
 }
 
+Status game_add_object(Game *game, Object *object){
+
+  if ((object == NULL) || (game == NULL)) {
+    return ERROR;
+  }
+
+  game->objects[game->n_objects] = object;
+  game->n_objects++;
+  
+  return OK;
+
+}
 /*
 
 
@@ -205,7 +221,7 @@ Id game_get_object_location(Game *game){
 
   int i = 0;
 
-  Id object_id=object_get_id(game->object[0]);
+  Id object_id=object_get_id(game->objects[0]);
 
   for (i = 0; i < game->n_spaces; i++) {
     if (space_object_position_in_space((game->spaces[i]), object_id) >0 ){
@@ -223,15 +239,15 @@ Id game_get_object_location(Game *game){
 
 
 
-Status game_set_object_location(Game* game, Id id) {
+Status game_set_object_location(Game* game, Object* object, Id id) {
  
-  if (id == NO_ID) {
+  if (id == NO_ID || !object) {
     return ERROR;
   }
 
   /* It is setting the object location in the game structure to the
   given id */
-  space_add_object(game_get_space(game, id), object_get_id(game->object[0]));
+  space_add_object(game_get_space(game, id), object_get_id(object));
   
   return OK;
 }
