@@ -20,12 +20,14 @@
 
 #define MAX_SPACES 100
 #define MAX_OBJECTS 10
+#define MAX_CHARACTERS 10
 
 typedef struct _Game {
   Object* objects[MAX_OBJECTS]; /*!< Id number of the player location */
   int n_objects;
   Player* player; /*!< Id number of the object location */
-  Character* character;
+  Character* characters[MAX_CHARACTERS];
+  int n_characters;
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
   Command last_cmd; /*!<Last command that has been introduced>!*/

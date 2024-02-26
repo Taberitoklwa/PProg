@@ -55,3 +55,13 @@ clean_program:
 	@rm -f anthill
 
 clean: clean_objects clean_program
+
+#############################################
+
+run:
+	@echo "Anthill being runned"
+	@./anthill anthill.dat
+
+valgrind:
+	@echo "Running valgrind to detect memory leaks"
+	@:valgrind --leak-check=full ./anthill anthill.dat

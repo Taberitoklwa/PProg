@@ -53,12 +53,19 @@ Status game_create(Game *game) {
       game->objects[i] = NULL;
     }
 
+  for (i = 0; i < MAX_OBJECTS; i++)
+    {
+      game->characters[i] = NULL;
+    }
+
+
   /* Assigns default values ​​to the different fields of the structure */
 
   game->n_objects = 0;
   game->n_spaces = 0;
   game->last_cmd = NO_CMD;  
   game->finished = FALSE;
+  game->characters[i]=character_create(1);
 
   return OK;
 }
@@ -119,8 +126,15 @@ Status game_destroy(Game *game) {
     space_destroy(game->spaces[i]);
   }
 
+  for (i = 0; i < game->n_objects; i++) {
+    object_destroy(game->objects[i]);
+  }
+
+  for (i = 0; i < game->n_characters; i++) {
+    character_destroy(game->characters[i]);
+  }
+
   player_destroy(game->player);
-  object_destroy(game->objects[0]);
 
 
   return OK;

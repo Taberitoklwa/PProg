@@ -27,6 +27,7 @@ struct _Space {
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
   Set *objects_id;              /*!< Whether the space has an object or not */
+  Id character;
 };
 
 /** space_create allocates memory for a new space
@@ -51,6 +52,7 @@ Space* space_create(Id id) {
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
   newSpace->objects_id = set_create();
+  newSpace->character = NO_ID;
 
   return newSpace;
 }
