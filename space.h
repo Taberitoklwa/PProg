@@ -12,6 +12,7 @@
 #define SPACE_H
 
 #include "types.h"
+#include "set.h"
 
 typedef struct _Space Space;
 
@@ -146,8 +147,19 @@ Id space_get_west(Space* space);
  * @param value a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status space_set_object(Space* space, Id value);
 
+Id *space_get_objects(Space* space);
+
+Status space_add_object(Space* space, Id id);
+
+
+Status space_del_object(Space *space, Id id);
+
+Id * set_get_ids(Set *set);
+
+int space_get_n_objects(Space *space);
+
+int space_object_position_in_space(Space *space, Id id);
 
 /*Cambiar documentacion Urgente*/
 
@@ -158,7 +170,7 @@ Status space_set_object(Space* space, Id value);
  * @param space a pointer to the space
  * @return a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
  */
-Id space_get_object(Space* space);
+Set *space_get_set_object(Space* space);
 
 /**
  * @brief It prints the space information

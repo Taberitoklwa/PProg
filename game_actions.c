@@ -26,6 +26,10 @@ void game_actions_next(Game *game);
 
 void game_actions_back(Game *game);
 
+void game_actions_left(Game *game);
+
+void game_actions_right(Game *game);
+
 void game_actions_take(Game *game);
 
 void game_actions_drop(Game *game);
@@ -54,12 +58,27 @@ Status game_actions_update(Game *game, Command cmd) {
       game_actions_back(game);
       break;
 
+    case LEFT:
+      game_actions_left(game);
+      break;
+
+    case RIGHT:
+      game_actions_right(game);
+
     case TAKE:
       game_actions_take(game);
       break;
 
     case DROP:
       game_actions_drop(game);
+      break;
+
+    case ATTACK:
+      game_actions_attack(game);
+      break;
+
+    case CHAT:
+      game_actions_chat(game);
       break;
 
     default:
@@ -140,6 +159,64 @@ void game_actions_next(Game *game) {
     return;
   }
 
+  /**
+ * @brief Handles the left command in the game
+ * 
+ * This function updates the player's location to the next space to the west if possible
+ * 
+ * @param game A pointer to the Game struct, which contains information about the current state of the
+ * game.
+
+ */
+
+  void game_actions_left(Game *game) {
+    Id current_id = NO_ID;
+    Id space_id = NO_ID; 
+
+    space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+
+    if (NO_ID == space_id) {
+      return;
+    }
+
+    current_id = space_get_west(game_get_space(game, space_id)); /*Sets current_id to the id of the space west to the current space of the player*/
+    if (current_id != NO_ID) {
+      game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+    }
+
+    return;
+
+  }
+
+   /**
+ * @brief Handles the left command in the game
+ * 
+ * This function updates the player's location to the next space to the west if possible
+ * 
+ * @param game A pointer to the Game struct, which contains information about the current state of the
+ * game.
+
+ */
+
+  void game_actions_right(Game *game) {
+    Id current_id = NO_ID;
+    Id space_id = NO_ID; 
+
+    space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+
+    if (NO_ID == space_id) {
+      return;
+    }
+
+    current_id = space_get_east(game_get_space(game, space_id)); /*Sets current_id to the id of the space west to the current space of the player*/
+    if (current_id != NO_ID) {
+      game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+    }
+
+    return;
+
+  }
+
 
 /**
  * @brief Allows the player to take an object from their current location in the game.
@@ -157,7 +234,7 @@ void game_actions_take(Game *game){
   Space * space = NULL;
   
 
-  object_id = object_get_id(game->object);
+  object_id = object_get_id(game->objects[0]);
 
   if (NO_ID == object_id) {
     return;
@@ -192,7 +269,9 @@ void game_actions_take(Game *game){
 
   /*Sets the object ID of the current space to NO_ID, indicating that there is no object in that space because the player has taken it.*/
 
-  space_set_object(space,NO_ID);
+  /*pace_set_object(space,NO_ID);*/
+
+  space_del_object(space, object_id);
 
 
   return;
@@ -229,14 +308,32 @@ void game_actions_drop(Game *game) {
   }
 
 
-
   /*Function call that sets the object ID of the player to NO_ID, indicating that the player is not currently holding an object. */
   
   player_set_object(game->player, NO_ID);
 
    /*Sets the object ID of the current space to an ID, indicating that there is an object in that space because the player has dropped it.*/
 
-  space_set_object(space,object_id);  
+  space_add_object(space,object_id);  
+
+  return;
+
+
+void game_actions_next(Game *game) {
+  Id current_id = NO_ID; /*Initializes an id to NO_ID*/
+  Id space_id = NO_ID; /*Initializes space id to NO_ID*/
+
+  space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+  if (space_id == NO_ID) {
+    return;
+  }
+
+  current_id = space_get_south(game_get_space(game, space_id)); /*Sets current_id to the id of the space south to the current space of the player */
+  if (current_id != NO_ID) {
+    game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+  }
 
   return;
 }
+
+

@@ -11,6 +11,8 @@
 #ifndef SET_H
 #define SET_H
 
+
+#include "set.h"
 #include "types.h"
 
 #define MAX_ID 12
@@ -112,6 +114,8 @@ Bool set_is_full(Set *set);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status set_print(Set *set);
+
+Id * set_get_ids(Set *set);
 
 #endif
 

@@ -83,3 +83,58 @@ Status game_reader_load_spaces(Game *game, char *filename) {
 
   return status;
 }
+
+
+Status game_reader_load_objects(Game *game, char *filename) {
+
+  FILE *file = NULL; 
+  char line[WORD_SIZE] = ""; 
+  char name[WORD_SIZE] = "";
+  char *toks = NULL;
+  Id id = NO_ID, space = NO_ID;
+  Object *object = NULL;
+  Status status = OK;
+
+
+ /* Error Control */
+  if (!filename) {
+    return ERROR;
+  }
+
+  file = fopen(filename, "r");
+  /* Error Control */
+  if (file == NULL) {
+    return ERROR;
+  }
+
+  /* Reading lines from a file and parsing them (strtok) to extract information about game
+  spaces. */
+  while (fgets(line, WORD_SIZE, file)) {
+    if (strncmp("#o:", line, 3) == 0) {
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
+      toks = strtok(NULL, "|");
+      strcpy(name, toks);
+      toks = strtok(NULL, "|");
+      space = atol(toks);
+      
+#ifdef DEBUG
+      printf("Leido: %ld|%s|%ld\n", id, name, space);
+#endif
+      object = object_create(id);
+      if (object != NULL) {
+        game_set_object_location(game, object, space);
+        object_set_name(object, name);
+        game_add_object(game,object);
+      }
+    }
+  }
+  /* Error Control */
+  if (ferror(file)) {
+    status = ERROR;
+  }
+
+  fclose(file);
+
+  return status;
+}

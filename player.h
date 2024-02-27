@@ -101,6 +101,10 @@ Status player_set_object(Player* player, Id id);
  */
 Id player_get_object(Player* player);
 
+Status player_set_health(Player* player, int hp);
+
+int player_get_health(Player* player);
+
 /**
  * @brief It prints the Player information
  * @author Diego Tabero & Marcos Leo Sonck
