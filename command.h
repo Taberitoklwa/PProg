@@ -12,7 +12,7 @@
 #define COMMAND_H
 
 #define N_CMDT 2 /*Number of types of commands*/
-#define N_CMD 9 /*Number of commands*/
+#define N_CMD 11 /*Number of commands*/
 
 typedef enum { CMDS, CMDL } CommandType; /*Enumeration for command type (short or long)*/
 
