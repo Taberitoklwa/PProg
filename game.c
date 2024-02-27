@@ -144,6 +144,17 @@ Status game_destroy(Game *game) {
   return OK;
 }
 
+Id game_get_space_character_id(Space *space){
+
+  if(!space){
+    return NO_ID;
+  }
+
+  return space_get_character(space);
+
+}
+
+
 Space *game_get_space(Game *game, Id id) {
   int i = 0;
 

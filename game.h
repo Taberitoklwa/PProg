@@ -31,6 +31,7 @@ typedef struct _Game {
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
   Command last_cmd; /*!<Last command that has been introduced>!*/
+  Status last_cmd_status;
   Bool finished; /*!< Whether it is finished or not>!*/
 } Game;
 
@@ -160,6 +161,8 @@ Object* game_get_object(Game *game, Id id);
  */
 
 Status  game_set_object_location(Game *game, Object*object, Id id);
+
+Id game_get_space_character_id(Space *space);
 
 Object **game_get_objects(Game *game);
 

@@ -121,6 +121,7 @@ void game_actions_next(Game *game) {
 
   space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (space_id == NO_ID) {
+    game->last_cmd_status=ERROR;
     return;
   }
 
@@ -319,18 +320,18 @@ void game_actions_drop(Game *game) {
   return;
 
 
-void game_actions_next(Game *game) {
-  Id current_id = NO_ID; /*Initializes an id to NO_ID*/
-  Id space_id = NO_ID; /*Initializes space id to NO_ID*/
+void game_actions_chat(Game *game) {
+  Id player_location_id = NO_ID; /*Initializes an id to NO_ID*/
+  Id character_location_id = NO_ID; /*Initializes space id to NO_ID*/
 
-  space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+  player_location_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (space_id == NO_ID) {
     return;
   }
 
-  current_id = space_get_south(game_get_space(game, space_id)); /*Sets current_id to the id of the space south to the current space of the player */
-  if (current_id != NO_ID) {
-    game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+  character_id = game_get_space_character_id(game_get_space(game, player_location_id)); /*Sets current_id to the id of the space south to the current space of the player */
+  if (character_location_id != NO_ID) {
+
   }
 
   return;
