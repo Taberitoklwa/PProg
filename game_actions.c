@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "game_actions.h"
 
@@ -33,6 +34,11 @@ void game_actions_right(Game *game);
 void game_actions_take(Game *game);
 
 void game_actions_drop(Game *game);
+
+void game_actions_attack(Game *game);
+
+void game_actions_chat(Game *game);
+
 
 /**
    Game actions implementation
@@ -318,20 +324,14 @@ void game_actions_drop(Game *game) {
 
   return;
 
+}
 
-void game_actions_next(Game *game) {
-  Id current_id = NO_ID; /*Initializes an id to NO_ID*/
-  Id space_id = NO_ID; /*Initializes space id to NO_ID*/
+void game_actions_chat(Game *game){
+  return;
+}
 
-  space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
-  if (space_id == NO_ID) {
-    return;
-  }
+void game_actions_attack(Game *game){
 
-  current_id = space_get_south(game_get_space(game, space_id)); /*Sets current_id to the id of the space south to the current space of the player */
-  if (current_id != NO_ID) {
-    game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
-  }
 
   return;
 }
