@@ -137,7 +137,7 @@ Status game_add_object(Game *game, Object *object);
 
 /*Id game_get_object_location(Game *game);*/
 
-Id game_get_object_location(Game *game);
+Id game_get_object_location(Game *game, Object *object);
 
 /**
  * @brief Retrieves a specific object in the game based on its ID
@@ -163,6 +163,11 @@ Object* game_get_object(Game *game, Id id);
 Status  game_set_object_location(Game *game, Object*object, Id id);
 
 Id game_get_space_character_id(Space *space);
+
+int game_get_num_objects(Game *game);
+
+/*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/
+
 
 Object **game_get_objects(Game *game);
 
