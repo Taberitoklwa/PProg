@@ -335,6 +335,7 @@ void game_actions_attack(Game *game){
   Space *space = NULL;
   Character * npc = NULL;
   Player *player = NULL;
+  Id character = NO_ID;
   int attack, php, chp;
   srand(time(NULL));
   
@@ -350,7 +351,9 @@ void game_actions_attack(Game *game){
     return;
   }
 
-  npc = game_get_character(game,space_get_character(space));
+  character = game_get_space_character_id(space);
+
+  npc = game_get_character(game,character);
 
   if(!npc){
     return;
@@ -368,9 +371,9 @@ void game_actions_attack(Game *game){
     attack = rand()%10;
 
     if(attack <= 4){
-    player_set_health(player, php--);
+    player_set_health(player, (php-1));
     }else{
-    character_set_hp(npc,chp--);
+    character_set_hp(npc,(chp-1));
     }
 
     if(!php){

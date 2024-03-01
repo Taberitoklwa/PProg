@@ -159,6 +159,16 @@ Id * set_get_ids(Set *set);
 
 int space_get_n_objects(Space *space);
 
+
+/**
+ * @brief returns the id of the character in the given space
+ * @author Diego Tabero & Marcos Leo Sonck
+ *
+ * @param space a pointer to the space
+ * @return the id of the character in the space
+ */
+Id space_get_character(Space* space);
+
 int space_object_position_in_space(Space *space, Id id);
 
 /*Cambiar documentacion Urgente*/

@@ -174,6 +174,26 @@ Space *game_get_space(Game *game, Id id) {
   return NULL;
 }
 
+Character *game_get_character(Game *game, Id id){
+
+  int i;
+  if(!game){
+    return NULL;
+  }
+
+  for(i=0;i<game->n_characters;i++){
+
+    if(character_get_id(game->characters[i]) == id){
+
+      return game->characters[i];
+
+
+    }
+  }
+
+  return NULL;
+}
+
 Object **game_get_objects(Game *game){
     if (!game){
         return NULL;

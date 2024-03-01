@@ -164,6 +164,17 @@ Status  game_set_object_location(Game *game, Object*object, Id id);
 
 Id game_get_space_character_id(Space *space);
 
+/**
+ * @brief given a character id, return  a pointer pointing at the characters structure
+
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ * @param  id, the id number of the charcter 
+ * @return a pointer to the structure of the character, if everything goes well, or NULL if there was some mistake
+ 
+ */
+
+Character *game_get_character(Game *game, Id id);
+
 Object **game_get_objects(Game *game);
 
 /**
