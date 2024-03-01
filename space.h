@@ -150,7 +150,10 @@ Id space_get_west(Space* space);
 
 Id *space_get_objects(Space* space);
 
+Id space_get_object(Space* space, int i);
+
 Status space_add_object(Space* space, Id id);
+
 
 
 Status space_del_object(Space *space, Id id);
@@ -170,6 +173,10 @@ int space_get_n_objects(Space *space);
 Id space_get_character(Space* space);
 
 int space_object_position_in_space(Space *space, Id id);
+
+Id space_get_character_id(Space *space);
+
+Status space_set_objectset(Space *space, Set *set);
 
 /*Cambiar documentacion Urgente*/
 

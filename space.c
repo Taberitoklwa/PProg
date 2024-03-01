@@ -91,7 +91,7 @@ Status space_set_name(Space* space, char* name) {
   return OK;
 }
 
-Id space_get_character(Space *space){
+Id space_get_character_id(Space *space){
 
   if(!space){
     return NO_ID;

@@ -60,10 +60,11 @@ Status game_create(Game *game) {
 
 
   /* Assigns default values ​​to the different fields of the structure */
-
+  game->n_characters=0;
   game->n_objects = 0;
   game->n_spaces = 0;
   game->last_cmd = NO_CMD;  
+  game->last_cmd_status= ERROR;
   game->finished = FALSE;
 
   return OK;
@@ -86,6 +87,7 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   game->characters[0]=character_create(1);
+  game->n_characters++;
   if(game->characters[0] == NULL){
       return ERROR;
   }
@@ -150,7 +152,7 @@ Id game_get_space_character_id(Space *space){
     return NO_ID;
   }
 
-  return space_get_character(space);
+  return space_get_character_id(space);
 
 }
 
@@ -266,23 +268,26 @@ Id game_get_object_location(Game *game){
 
 */
 
-Id game_get_object_location(Game *game){ 
+Id game_get_object_location(Game *game, Object *object){ 
 
   int i = 0;
 
-  Id object_id=object_get_id(game->objects[0]);
+  Id object_id=object_get_id(object);
+
+  
 
   for (i = 0; i < game->n_spaces; i++) {
-    if (space_object_position_in_space((game->spaces[i]), object_id) >0 ){
+    if (space_object_position_in_space((game->spaces[i]), object_id) >=0 ){
 
       /*When it finds that there is an object id returns the ID of the space */
 
       return space_get_id(game->spaces[i]);
     }
+
   }
-  
+
   return NO_ID;
-  
+
  }
 
 
@@ -303,6 +308,8 @@ Status game_set_object_location(Game* game, Object* object, Id id) {
 
 
 Command game_get_last_command(Game *game) { return game->last_cmd; }
+
+/*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/
 
 Status game_set_last_command(Game *game, Command command) {
   
