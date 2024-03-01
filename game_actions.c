@@ -346,7 +346,6 @@ void game_actions_chat(Game *game){
 
   player_location_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (player_location_id == NO_ID) {
-  if (player_location_id == NO_ID) {
     return;
   }
 
@@ -359,8 +358,8 @@ void game_actions_chat(Game *game){
 
   game->last_cmd_status=OK;
   return;
-}
 
+}
 void game_actions_attack(Game *game){
   Space *space = NULL;
   Character * npc = NULL;
