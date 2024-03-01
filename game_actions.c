@@ -328,6 +328,22 @@ void game_actions_drop(Game *game) {
 }
 
 void game_actions_chat(Game *game){
+  Id player_location_id = NO_ID; /*Initializes an id to NO_ID*/
+  Id character_location_id = NO_ID; /*Initializes space id to NO_ID*/
+  game->last_cmd_status=ERROR;
+
+  player_location_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+  if (player_location_id == NO_ID) {
+    return;
+  }
+
+  character_location_id = game_get_space_character_id(game_get_space(game, player_location_id)); 
+  if (character_location_id != NO_ID) {
+    return;
+  }
+
+
+  game->last_cmd_status=OK;
   return;
 }
 
