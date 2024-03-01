@@ -127,6 +127,7 @@ void game_actions_next(Game *game) {
 
   space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (space_id == NO_ID) {
+    game->last_cmd_status=ERROR;
     return;
   }
 
