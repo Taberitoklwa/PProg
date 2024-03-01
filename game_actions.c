@@ -331,7 +331,52 @@ void game_actions_chat(Game *game){
 }
 
 void game_actions_attack(Game *game){
+  Space *space = NULL;
+  Character * npc = NULL;
+  Player *player = NULL;
+  int attack, php, chp;
+  srand(time(NULL));
+  
+  player = game->player;
 
+  if(!player){
+    return;
+  }
+
+  space = game_get_space(game,game_get_player_location(game));
+
+  if(!space){
+    return;
+  }
+
+  npc = game_get_character(game,space_get_character(space));
+
+  if(!npc){
+    return;
+  }
+
+  if(character_get_friendly(npc)){
+    return;
+  }
+
+  php = player_get_health(player);
+  chp = character_get_hp(npc);
+
+  if(chp > 0){
+
+    attack = rand()%10;
+
+    if(attack <= 4){
+    player_set_health(player, php--);
+    }else{
+    character_set_hp(npc,chp--);
+    }
+
+    if(!php){
+    game_set_finished(game,TRUE);
+    }
+
+  }
 
   return;
 }
