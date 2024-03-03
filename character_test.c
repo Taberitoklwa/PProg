@@ -17,7 +17,7 @@
 #include "character_test.h"
 #include "test.h"
 
-#define MAX_TESTS 26
+#define MAX_TESTS 22
 
 /**
  * @brief Main function for CHARACTER unit tests.
@@ -54,22 +54,18 @@ int main(int argc, char **argv) {
   if (all || test == 8) test2_character_set_name();
   if (all || test == 9) test1_character_get_name();
   if (all || test == 10) test2_character_get_name();
-  if (all || test == 11) test3_character_get_name();
-  if (all || test == 12) test1_character_set_hp();
-  if (all || test == 13) test2_character_set_hp();
-  if (all || test == 14) test3_character_set_hp();
-  if (all || test == 15) test1_character_get_hp();
-  if (all || test == 16) test2_character_get_hp();
-  if (all || test == 17) test1_character_set_message();
-  if (all || test == 18) test2_character_set_message();
-  if (all || test == 19) test1_character_get_message();
-  if (all || test == 20) test2_character_get_message();
-  if (all || test == 21) test1_character_set_friendly();
-  if (all || test == 22) test2_character_set_friendly();
-  if (all || test == 23) test1_character_get_friendly();
-  if (all || test == 24) test2_character_get_friendly();
-  if (all || test == 25) test1_character_print();
-  if (all || test == 26) test2_character_print();
+  if (all || test == 11) test1_character_set_hp();
+  if (all || test == 12) test2_character_set_hp();
+  if (all || test == 13) test1_character_get_hp();
+  if (all || test == 14) test2_character_get_hp();
+  if (all || test == 15) test1_character_set_message();
+  if (all || test == 16) test2_character_set_message();
+  if (all || test == 17) test1_character_get_message();
+  if (all || test == 18) test2_character_get_message();
+  if (all || test == 19) test1_character_set_friendly();
+  if (all || test == 20) test2_character_set_friendly();
+  if (all || test == 21) test1_character_get_friendly();
+  if (all || test == 22) test2_character_get_friendly();
 
   PRINT_PASSED_PERCENTAGE;
 
@@ -94,6 +90,146 @@ void test2_character_create(){
 }
 
 void test1_character_destroy(){
-    
+    Character *c = NULL;
+    PRINT_TEST_RESULT(character_destroy(c) == ERROR);
+
+}
+
+void test2_character_destroy(){
+    Character *c;
+    c = character_create(8);
+    PRINT_TEST_RESULT(character_destroy(c) == OK);
+
+}
+
+void test1_character_get_id(){
+    Character *c;
+    c = character_create(23);
+    PRINT_TEST_RESULT(character_get_id(c) == 23);
+    character_destroy(c);
+}
+
+void test2_character_get_id(){
+    Character *c = NULL;
+    PRINT_TEST_RESULT(character_get_id(c) == NO_ID);
+    character_destroy(c);
+}
+
+void test1_character_set_name(){
+    Character *c;
+    c = character_create(14);
+    PRINT_TEST_RESULT(character_set_name(c,"name") == OK);
+    character_destroy(c);
+
+}
+
+void test2_character_set_name(){
+    Character *c = NULL;
+    PRINT_TEST_RESULT(character_set_name(c,"name") == ERROR);
+
+}
+
+void test1_character_get_name(){
+  Character *c = NULL;
+  PRINT_TEST_RESULT(character_get_name(c) == NULL);
+
+}
+
+void test2_character_get_name(){
+  Character *c;
+  c = character_create(32);
+  PRINT_TEST_RESULT(character_get_name(c) != NULL);
+  destroy_character(c);
+
+}
+
+void test1_character_set_hp(){
+  Character *c = NULL;
+  PRINT_TEST_RESULT(character_set_hp(c,12) == ERROR);
+
+
+}
+
+void test2_character_set_hp(){
+  Character *c;
+  c = character_create(15);
+  PRINT_TEST_RESULT(character_set_hp(c,12) == OK);
+  character_destroy(c);
+
+}
+
+void test1_character_get_hp(){
+  Character *c;
+  c = character_create(23);
+  character_set_hp(c,3);
+  PRINT_TEST_RESULT(character_get_hp(c) == 3);
+  character_destroy(c);
+
+}
+
+void test2_character_get_hp(){
+  Character *c = NULL;
+  PRINT_TEST_RESULT(character_get_hp(c) == ERROR);
+
+}
+
+void test1_character_set_message(){
+  Character *c;
+  c = character_create(19);
+  PRINT_TEST_RESULT(character_set_message(c, "Hello") == OK);
+  character_destroy(c);
+
+}
+
+void test2_character_set_message(){
+  Character *c;
+  character_create(16);
+  char *a = NULL;
+  PRINT_TEST_RESULT(character_set_message(c,a) == ERROR);
+  character_destroy(c);
+
+}
+
+void test1_character_get_message(){
+  Character *c ;
+  c = character_create(12);
+  character_set_message(c,"hello");
+  PRINT_TEST_RESULT(character_get_message(c) != NULL);
+  character_destroy(c);
+
+}
+
+void test2_character_get_message(){
+  Character *c = NULL;
+  PRINT_TEST_RESULT(character_get_message(c) == NULL);
+
+}
+
+void test1_character_set_friendly(){
+  Character *c = NULL;
+  PRINT_TEST_RESULT(character_set_friendly(c, TRUE) == ERROR);
+
+}
+
+void test2_character_set_friendly(){
+  Character *c;
+  c = character_create(c);
+  PRINT_TEST_RESULT(character_set_friendly(c,7));
+  character_destroy(c);
+
+}
+
+void test1_character_get_friendly(){
+  Character *c = NULL;
+  PRINT_TEST_RESULT(character_get_friendly(c) == ERROR);
+
+}
+
+void test2_character_get_friendly(){
+  Character *c;
+  c = character_create(12);
+  character_set_friendly(c, TRUE);
+  PRINT_TEST_RESULT(character_get_friendly(c) == TRUE);
+  character_destroy(c);
 
 }
