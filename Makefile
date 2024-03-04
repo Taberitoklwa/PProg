@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -pedantic -ansi -g -DDEBUG
 CLIB= -lscreen -L.
-TEST= space_test set_test 
+TEST= space_test set_test character_test
 IFLAGS=-I.
 
 .PHONY: clean_objects clean_program clean all
@@ -52,10 +52,12 @@ space_test.o: space_test.c space.h types.h set.h test.h
 set_test.o: set_test.c set.h types.h test.h
 	$(CC) $(CFLAGS) -c $< $(IFLAGS)
 
+character_test.o: character_test.c character.h types.h test.h
+	$(CC) $(CFLAGS) -c $< $(IFLAGS)
 
 #############################################
 
-test: space_test set_test
+test: space_test set_test character_test
 
 space_test: space_test.o space.o set.o 
 	$(CC) $(CFLAGS) -o $@ $^ -L.
@@ -63,6 +65,8 @@ space_test: space_test.o space.o set.o
 set_test: set_test.o set.o 
 	$(CC) $(CFLAGS) -o $@ $^ -L.
 
+character_test: character_test.o character.o
+	$(CC) $(CFLAGS) -o $@ $^ -L.
 
 ############################################
 clean_objects:
@@ -97,6 +101,9 @@ valgrind:
 run_space_test: space_test
 	./space_test
 
-run_set_test:
+run_set_test: set_test
 	./set_test
+
+run_character_test: character_test
+	./character_test
 

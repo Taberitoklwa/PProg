@@ -82,7 +82,6 @@ void test1_character_create(){
 }
 
 void test2_character_create(){
-    int result;
     Character *c;
     c = character_create(8);
     PRINT_TEST_RESULT(character_get_id(c) == 8);
@@ -139,7 +138,6 @@ void test2_character_get_name(){
   Character *c;
   c = character_create(32);
   PRINT_TEST_RESULT(character_get_name(c) != NULL);
-  destroy_character(c);
 
 }
 
@@ -183,7 +181,7 @@ void test1_character_set_message(){
 
 void test2_character_set_message(){
   Character *c;
-  character_create(16);
+  c = character_create(16);
   char *a = NULL;
   PRINT_TEST_RESULT(character_set_message(c,a) == ERROR);
   character_destroy(c);
@@ -213,15 +211,15 @@ void test1_character_set_friendly(){
 
 void test2_character_set_friendly(){
   Character *c;
-  c = character_create(c);
-  PRINT_TEST_RESULT(character_set_friendly(c,7));
+  c = character_create(8);
+  PRINT_TEST_RESULT(character_set_friendly(c,7) == ERROR);
   character_destroy(c);
 
 }
 
 void test1_character_get_friendly(){
   Character *c = NULL;
-  PRINT_TEST_RESULT(character_get_friendly(c) == ERROR);
+  PRINT_TEST_RESULT(character_get_friendly(c) == 0);
 
 }
 
