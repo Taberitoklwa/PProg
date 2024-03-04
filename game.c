@@ -156,6 +156,26 @@ Id game_get_space_character_id(Space *space){
 
 }
 
+Character *game_get_character(Game *game, Id id){
+
+  int i;
+  if(!game){
+    return NULL;
+  }
+
+  for(i=0;i<game->n_characters;i++){
+
+    if(character_get_id(game->characters[i]) == id){
+
+      return game->characters[i];
+
+
+    }
+  }
+
+  return NULL;
+}
+
 
 Space *game_get_space(Game *game, Id id) {
   int i = 0;

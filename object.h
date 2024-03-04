@@ -62,16 +62,6 @@ Status object_set_name(Object* object, char* name);
 const char* object_get_name(Object* object);
 
 /**
- * @brief It sets whether the object has an object or not
- * @author Diego Tabero & Marcos Leo Sonck
- *
- * @param object a pointer to the object
- * @param value a boolean, specifying if in the object there is an object (TRUE) or not (FALSE)
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status object_set_portable(Object* object, Bool value);
-
-/**
  * @brief It prints the object information
  * @author Diego Tabero & Marcos Leo Sonck
  *

@@ -164,6 +164,8 @@ Status  game_set_object_location(Game *game, Object*object, Id id);
 
 Id game_get_space_character_id(Space *space);
 
+Character *game_get_character(Game *game, Id id); 
+
 int game_get_num_objects(Game *game);
 
 /*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/

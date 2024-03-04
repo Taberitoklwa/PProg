@@ -75,7 +75,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
   /* Assigns default values ​​to the different Id type variables, pointers, chars etc. */
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_east = NO_ID, id_west= NO_ID, obj_loc = NO_ID;
   Space *space_act = NULL;
-  char obj = '\0';
+  Id obj = NO_ID;
+  int objinspace;
   char str[255];
   Command last_cmd = UNKNOWN;
   Object **objects;
@@ -93,8 +94,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
     id_west = space_get_west(space_act);
     id_next = space_get_south(space_act);
 
+    n_objects=game_get_num_objects;
 
-
+    for(i=0, i<n_objects, i++){
+      if (game_get_object_location(game, game->objects[i]) == id_back)
+      obj = game_get;
+    else
+      obj = ' ';
+    }
     if (game_get_object_location(game, game->objects[0]) == id_back)
       obj = '*';
     else
