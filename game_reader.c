@@ -100,7 +100,7 @@ Status game_reader_load_objects(Game *game, char *filename) {
   if (!filename) {
     return ERROR;
   }
-
+  
   file = fopen(filename, "r");
   /* Error Control */
   if (file == NULL) {

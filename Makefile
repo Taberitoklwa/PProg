@@ -4,7 +4,7 @@ CLIB= -lscreen -L.
 TEST= space_test set_test 
 IFLAGS=-I.
 
-.PHONY: clean_objects clean_program clean all
+.PHONY: valgrind clean_objects clean_program clean all
 
 all: anthill
 
@@ -52,6 +52,9 @@ space_test.o: space_test.c space.h types.h set.h test.h
 set_test.o: set_test.c set.h types.h test.h
 	$(CC) $(CFLAGS) -c $< $(IFLAGS)
 
+character_test.o: character_test.c character.h types.h test.h
+	$(CC) $(CFLAGS) -c $< $(IFLAGS)
+
 
 #############################################
 
@@ -61,6 +64,9 @@ space_test: space_test.o space.o set.o
 	$(CC) $(CFLAGS) -o $@ $^ -L.
 
 set_test: set_test.o set.o 
+	$(CC) $(CFLAGS) -o $@ $^ -L.
+
+character_test: character_test.o character.o
 	$(CC) $(CFLAGS) -o $@ $^ -L.
 
 
@@ -82,12 +88,12 @@ clean: clean_objects clean_program clean_test
 #############################################
 
 run:
-	@echo "Anthill being runned"
+	@echo "Anthill is being runned"
 	@./anthill anthill.dat
 
 runtest: 
 	@echo "Running tests"
-	@./space_test; ./set_test
+	@./space_test; ./set_test ./character_test
 
 valgrind:
 	@echo "Running valgrind to detect memory leaks"
@@ -99,4 +105,7 @@ run_space_test: space_test
 
 run_set_test:
 	./set_test
+
+run_character_test:
+	./character_test
 
