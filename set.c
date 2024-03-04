@@ -69,7 +69,7 @@ Status set_destroy(Set *set)
 
 Id set_get_id(Set *set, int i){
 
-    if(!set){
+    if(!set || i<0){
 
         return ERROR;
 

@@ -53,19 +53,19 @@ Status game_create(Game *game) {
       game->objects[i] = NULL;
     }
 
-  for (i = 0; i < MAX_OBJECTS; i++)
+  for (i = 0; i < MAX_CHARACTERS; i++)
     {
       game->characters[i] = NULL;
     }
 
 
   /* Assigns default values ​​to the different fields of the structure */
-
+  game->n_characters=0;
   game->n_objects = 0;
   game->n_spaces = 0;
   game->last_cmd = NO_CMD;  
+  game->last_cmd_status= ERROR;
   game->finished = FALSE;
-  game->characters[i]=character_create(1);
 
   return OK;
 }
@@ -84,6 +84,12 @@ Status game_create_from_file(Game *game, char *filename) {
 
   if (game_reader_load_objects(game,filename) == ERROR){
     return ERROR;
+  }
+
+  game->characters[0]=character_create(1);
+  game->n_characters++;
+  if(game->characters[0] == NULL){
+      return ERROR;
   }
 
   game->player = player_create(1);
@@ -139,6 +145,17 @@ Status game_destroy(Game *game) {
 
   return OK;
 }
+
+Id game_get_space_character_id(Space *space){
+
+  if(!space){
+    return NO_ID;
+  }
+
+  return space_get_character_id(space);
+
+}
+
 
 Space *game_get_space(Game *game, Id id) {
   int i = 0;
@@ -231,23 +248,26 @@ Id game_get_object_location(Game *game){
 
 */
 
-Id game_get_object_location(Game *game){ 
+Id game_get_object_location(Game *game, Object *object){ 
 
   int i = 0;
 
-  Id object_id=object_get_id(game->objects[0]);
+  Id object_id=object_get_id(object);
+
+  
 
   for (i = 0; i < game->n_spaces; i++) {
-    if (space_object_position_in_space((game->spaces[i]), object_id) >0 ){
+    if (space_object_position_in_space((game->spaces[i]), object_id) >=0 ){
 
       /*When it finds that there is an object id returns the ID of the space */
 
       return space_get_id(game->spaces[i]);
     }
+
   }
-  
+
   return NO_ID;
-  
+
  }
 
 
@@ -269,6 +289,8 @@ Status game_set_object_location(Game* game, Object* object, Id id) {
 
 Command game_get_last_command(Game *game) { return game->last_cmd; }
 
+/*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/
+
 Status game_set_last_command(Game *game, Command command) {
   
   /* It is setting the last command in the game structure to the
@@ -277,6 +299,18 @@ Status game_set_last_command(Game *game, Command command) {
 
   return OK;
 }
+
+Command game_get_last_command_status(Game *game){ return game->last_cmd_status;}
+
+Status game_set_last_command_status(Game *game, Status status) {
+  
+  /* It is setting the last command in the game structure to the
+  introduced command */
+  game->last_cmd_status = status;
+
+  return OK;
+}
+
 
 Bool game_get_finished(Game *game) { return game->finished; }
 

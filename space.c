@@ -9,6 +9,7 @@
  */
 
 #include "space.h"
+#include "character.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,6 +89,16 @@ Status space_set_name(Space* space, char* name) {
     return ERROR;
   }
   return OK;
+}
+
+Id space_get_character_id(Space *space){
+
+  if(!space){
+    return NO_ID;
+  }
+
+  return space->character;
+
 }
 
 const char* space_get_name(Space* space) {
