@@ -1,4 +1,4 @@
-/**
+ /**
  * @brief It defines the space interface
  *
  * @file space.h
@@ -177,7 +177,7 @@ Status space_set_objectset(Space *space, Set *set);
  * @param space a pointer to the space
  * @return a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
  */
-Set *space_get_set_object(Space* space);
+Set *space_get_set_of_objects(Space* space);
 
 /**
  * @brief It prints the space information

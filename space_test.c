@@ -17,7 +17,7 @@
 #include "space_test.h"
 #include "test.h"
 
-#define MAX_TESTS 28
+#define MAX_TESTS 48
 
 /**
  * @brief Main function for SPACE unit tests.
@@ -72,7 +72,26 @@ int main(int argc, char **argv) {
   if (all || test == 26) test2_space_get_west();
   if (all || test == 27) test1_space_get_id();
   if (all || test == 28) test2_space_get_id();
-
+  if (all || test == 29) test1_space_destroy();
+  if (all || test == 30) test2_space_destroy();
+  if (all || test == 31) test1_space_get_objects();
+  if (all || test == 32) test2_space_get_objects();
+  if (all || test == 33) test1_space_add_object();
+  if (all || test == 34) test2_space_add_object();
+  if (all || test == 35) test1_space_del_object();
+  if (all || test == 36) test2_space_del_object();
+  if (all || test == 37) test1_space_get_n_objects();
+  if (all || test == 38) test2_space_get_n_objects();
+  if (all || test == 39) test1_space_object_position_in_space();
+  if (all || test == 40) test2_space_object_position_in_space();
+  if (all || test == 41) test1_space_get_character_id();
+  if (all || test == 42) test1_space_get_character_id();
+  if (all || test == 43) test1_space_set_objectset();
+  if (all || test == 44) test2_space_set_objectset();
+  if (all || test == 45) test1_space_get_set_of_objects();
+  if (all || test == 46) test2_space_get_set_of_objects();
+  if (all || test == 47) test1_space_print();
+  if (all || test == 48) test2_space_print();
   PRINT_PASSED_PERCENTAGE;
 
   return 1;
@@ -274,3 +293,47 @@ void test2_space_get_id() {
   Space *s = NULL;
   PRINT_TEST_RESULT(space_get_id(s) == NO_ID);
 }
+
+void test1_destroy(){}
+
+void test2_destroy(){}
+
+void test1_space_get_objects(){}
+
+void test2_space_get_objects(){}
+
+void test1_space_add_object(){}
+
+void test2_space_add_object(){}
+
+void test1_space_del_object(){}
+
+void test2_space_del_object(){}
+
+void test1_space_get_n_objects(){}
+
+void test2_space_get_n_objects(){}
+
+void test1_space_object_position_in_space(){}
+
+void test2_space_object_position_in_space(){}
+
+
+void test1_space_get_character_id(){}
+
+void test2_space_get_character_id(){}
+
+void test1_space_set_objectset(){}
+
+void test2_space_set_objectset(){}
+
+void test1_space_get_set_of_objects(){}
+
+void test2_space_get_set_of_objects(){}
+
+
+void test2_space_get_set_object(){}
+
+void test1_space_print(){}
+
+void test2_space_print(){}
