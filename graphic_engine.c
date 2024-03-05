@@ -213,6 +213,23 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
     }
   }
 
+  for(i=0; i<game->n_characters; i++){
+    if(i==0){
+      sprintf(str, "Characters:");
+      screen_area_puts(ge->descript, str);
+    }
+
+    /*Location*/
+
+    if(game->characters[i]){
+      sprintf(str, " %s : (%u)", character_get_description(game->characters[i]), character_get_hp(game->characters[i]));
+      screen_area_puts(ge->descript, str);
+    }
+
+
+
+  }
+
   
   if(character_get_message(game_get_character(game,id_act))!=NULL && game_get_last_command(game)==CHAT && game_get_last_command_status(game)==OK){
     sprintf(str, " ");

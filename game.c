@@ -101,9 +101,15 @@ Status game_create_from_file(Game *game, char *filename) {
     return ERROR;
   }
 
-  if(!character_set_message((game->characters[0]), "Wally")){
+  if(!character_set_message((game->characters[0]), "Hi")){
     return ERROR;
   }
+
+  if(!character_set_description((game->characters[0]), "/'\'oo/'\'")){
+    return ERROR;
+  }
+
+  space_set_character_id(game_get_space(game, 121), 1);
 
   game->player = player_create(1);
   if( game->player == NULL){

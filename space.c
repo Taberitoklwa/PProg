@@ -101,6 +101,16 @@ Id space_get_character_id(Space *space){
 
 }
 
+Status space_set_character_id(Space *space, Id id){
+
+  if(!space || id==NO_ID){
+    return ERROR;
+  }
+
+  return OK;
+
+}
+
 const char* space_get_name(Space* space) {
   if (!space) {
     return NULL;

@@ -22,6 +22,7 @@
 struct _Character {
   Id id;/*!< Id number of the Character, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the Character */ 
+  char description[WORD_SIZE + 1];
   char message[WORD_SIZE +1];              
   unsigned int hp; /*!<Health points of the Character*/
   Bool friendly;
@@ -84,6 +85,25 @@ const char* character_get_name(Character *character) {
 
   }
   return character->name;
+}
+
+Status character_set_description(Character* character, char* description) {
+  if (!character || !description) {
+    return ERROR;
+  }
+
+  if (!strcpy(character->description, description)) {
+    return ERROR;
+  }
+  return OK;
+}
+
+const char* character_get_description(Character *character) {
+  if (!character) {
+    return NULL;
+
+  }
+  return character->description;
 }
 
 Status character_set_message(Character* character, char* message) {

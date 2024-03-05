@@ -64,6 +64,10 @@ const char* character_get_name(Character* Character);
 
 Status character_set_hp(Character *character, int hp);
 
+Status character_set_description(Character* character, char* description);
+
+const char* character_get_description(Character *character);
+
 
 int character_get_hp(Character *character);
 
