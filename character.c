@@ -153,8 +153,6 @@ return character->friendly;
 
 
 
-
-
 Status character_print(Character* character) {
 
   /* Error Control */

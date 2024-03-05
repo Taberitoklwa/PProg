@@ -39,13 +39,13 @@ void game_actions_attack(Game *game);
 
 void game_actions_chat(Game *game);
 
-
 /**
    Game actions implementation
 */
 
 Status game_actions_update(Game *game, Command cmd) {
   game_set_last_command(game, cmd);
+  game_set_last_command_status(game, ERROR);
 
   switch (cmd) {
     case UNKNOWN:
@@ -70,6 +70,7 @@ Status game_actions_update(Game *game, Command cmd) {
 
     case RIGHT:
       game_actions_right(game);
+      break;
 
     case TAKE:
       game_actions_take(game);
@@ -124,7 +125,6 @@ void game_actions_exit(Game *game) {}
 void game_actions_next(Game *game) {
   Id current_id = NO_ID; /*Initializes an id to NO_ID*/
   Id space_id = NO_ID; /*Initializes space id to NO_ID*/
-  game->last_cmd_status=ERROR;
 
   space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (space_id == NO_ID) {
@@ -134,9 +134,10 @@ void game_actions_next(Game *game) {
   current_id = space_get_south(game_get_space(game, space_id)); /*Sets current_id to the id of the space south to the current space of the player */
   if (current_id != NO_ID) {
     game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+    game_set_last_command_status(game, OK);
   }
 
-  game->last_cmd_status=OK;
+
 
   return;
 }
@@ -153,7 +154,6 @@ void game_actions_next(Game *game) {
   void game_actions_back(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
-    game->last_cmd_status=ERROR;
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -164,10 +164,10 @@ void game_actions_next(Game *game) {
     current_id = space_get_north(game_get_space(game, space_id)); /*Sets current_id to the id of the space north to the current space of the player */
     if (current_id != NO_ID) {
       game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+      game_set_last_command_status(game, OK);
     }
 
 
-    game->last_cmd_status=OK;
     return;
   }
 
@@ -184,7 +184,6 @@ void game_actions_next(Game *game) {
   void game_actions_left(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
-    game->last_cmd_status=ERROR;
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -195,9 +194,9 @@ void game_actions_next(Game *game) {
     current_id = space_get_west(game_get_space(game, space_id)); /*Sets current_id to the id of the space west to the current space of the player*/
     if (current_id != NO_ID) {
       game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+      game_set_last_command_status(game, OK);
     }
 
-    game->last_cmd_status=OK;
     return;
 
   }
@@ -215,7 +214,6 @@ void game_actions_next(Game *game) {
   void game_actions_right(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
-    game->last_cmd_status=ERROR;
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -226,9 +224,10 @@ void game_actions_next(Game *game) {
     current_id = space_get_east(game_get_space(game, space_id)); /*Sets current_id to the id of the space west to the current space of the player*/
     if (current_id != NO_ID) {
       game_set_player_location(game, current_id); /*Updates player´s location to the previous space*/
+      game_set_last_command_status(game, OK);
     }
 
-    game->last_cmd_status=OK;
+
     return;
   }
 
@@ -247,7 +246,6 @@ void game_actions_take(Game *game){
   Id player_location_id = NO_ID;
   Id object_location_id = NO_ID;
   Space * space = NULL;
-  game->last_cmd_status=ERROR;
   
 
   object_id = object_get_id(game->objects[0]);
@@ -289,7 +287,8 @@ void game_actions_take(Game *game){
 
   space_del_object(space, object_id);
 
-  game->last_cmd_status=OK;
+  game_set_last_command_status(game, OK);
+
   return;
 }
 
@@ -333,33 +332,10 @@ void game_actions_drop(Game *game) {
 
   space_add_object(space,object_id);  
 
-  game->last_cmd_status=OK;
+  game_set_last_command_status(game, OK);
   return;
-
 }
 
-void game_actions_chat(Game *game){
-  Id player_location_id = NO_ID; /*Initializes an id to NO_ID*/
-  Id character_location_id = NO_ID; /*Initializes space id to NO_ID*/
-  game->last_cmd_status=ERROR;
-  game->last_cmd_status=ERROR;
-
-  player_location_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
-  if (player_location_id == NO_ID) {
-    return;
-  }
-
-  character_location_id = game_get_space_character_id(game_get_space(game, player_location_id)); 
-  character_location_id = game_get_space_character_id(game_get_space(game, player_location_id)); 
-  if (character_location_id != NO_ID) {
-    return;
-  }
-
-
-  game->last_cmd_status=OK;
-  return;
-
-}
 void game_actions_attack(Game *game){
   Space *space = NULL;
   Character * npc = NULL;
@@ -412,7 +388,27 @@ void game_actions_attack(Game *game){
   }
 
 
-  game->last_cmd_status=OK;
+  game_set_last_command_status(game, OK);
+  return;
+}
+
+void game_actions_chat(Game *game) {
+  Id player_location_id = NO_ID; /*Initializes an id to NO_ID*/
+  Id character_location_id = NO_ID; /*Initializes space id to NO_ID*/
+  game->last_cmd_status=ERROR;
+
+  player_location_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
+  if (player_location_id == NO_ID) {
+    return;
+  }
+
+  character_location_id = game_get_space_character_id(game_get_space(game, player_location_id)); 
+  if (character_location_id == NO_ID) {
+    return;
+  }
+
+
+  game_set_last_command_status(game, OK);
   return;
 }
 

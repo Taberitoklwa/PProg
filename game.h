@@ -23,9 +23,9 @@
 #define MAX_CHARACTERS 10
 
 typedef struct _Game {
-  Object* objects[MAX_OBJECTS]; /*!< Id number of the player location */
-  int n_objects;
   Player* player; /*!< Id number of the object location */
+   Object* objects[MAX_OBJECTS]; /*!< Id number of the player location */
+  int n_objects;
   Character* characters[MAX_CHARACTERS];
   int n_characters;
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
@@ -164,21 +164,12 @@ Status  game_set_object_location(Game *game, Object*object, Id id);
 
 Id game_get_space_character_id(Space *space);
 
+Character *game_get_character(Game *game, Id id);   
+
 int game_get_num_objects(Game *game);
 
 /*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/
 
-
-/**
- * @brief given a character id, return  a pointer pointing at the characters structure
-
- * @param game, pointer to a `Game` structure, which represents the current state of the game being played
- * @param  id, the id number of the charcter 
- * @return a pointer to the structure of the character, if everything goes well, or NULL if there was some mistake
- 
- */
-
-Character *game_get_character(Game *game, Id id);
 
 Object **game_get_objects(Game *game);
 
@@ -212,6 +203,10 @@ Status game_set_last_command(Game *game, Command command);
 
 
 Bool game_get_finished(Game *game);
+
+Status game_set_last_command_status(Game *game, Status status);
+
+Status game_get_last_command_status(Game *game);
 
 /**
  * @brief It is used to set is used to set the finished status of the game

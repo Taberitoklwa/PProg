@@ -87,9 +87,22 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   game->characters[0]=character_create(1);
-  game->n_characters++;
   if(game->characters[0] == NULL){
       return ERROR;
+  }
+  game->n_characters++;
+
+  if(!character_set_hp(game->characters[0],3)){
+    return ERROR;
+
+  }
+
+  if(!character_set_name((game->characters[0]), "Wally")){
+    return ERROR;
+  }
+
+  if(!character_set_message((game->characters[0]), "Wally")){
+    return ERROR;
   }
 
   game->player = player_create(1);
@@ -156,26 +169,6 @@ Id game_get_space_character_id(Space *space){
 
 }
 
-
-Space *game_get_space(Game *game, Id id) {
-  int i = 0;
-
-  if (id == NO_ID) {
-    return NULL;
-  }
-
-  for (i = 0; i < game->n_spaces; i++) {
-    if (id == space_get_id(game->spaces[i])) {
-
-      /*When it finds that the space id matches one of the defined spaces it returns a pointer to the space structure*/
-
-      return game->spaces[i];
-    }
-  }
-
-  return NULL;
-}
-
 Character *game_get_character(Game *game, Id id){
 
   int i;
@@ -190,6 +183,26 @@ Character *game_get_character(Game *game, Id id){
       return game->characters[i];
 
 
+    }
+  }
+
+  return NULL;
+}
+
+
+Space *game_get_space(Game *game, Id id) {
+  int i = 0;
+
+  if (id == NO_ID) {
+    return NULL;
+  }
+
+  for (i = 0; i < game->n_spaces; i++) {
+    if (id == space_get_id(game->spaces[i])) {
+
+      /*When it finds that the space id matches one of the defined spaces it returns a pointer to the space structure*/
+
+      return game->spaces[i];
     }
   }
 
@@ -285,9 +298,7 @@ Id game_get_object_location(Game *game, Object *object){
     }
 
   }
-
   return NO_ID;
-
  }
 
 
@@ -319,6 +330,18 @@ Status game_set_last_command(Game *game, Command command) {
 
   return OK;
 }
+
+Status game_get_last_command_status(Game *game){ return game->last_cmd_status;}
+
+Status game_set_last_command_status(Game *game, Status status) {
+  
+  /* It is setting the last command in the game structure to the
+  introduced command */
+  game->last_cmd_status = status;
+
+  return OK;
+}
+
 
 Bool game_get_finished(Game *game) { return game->finished; }
 

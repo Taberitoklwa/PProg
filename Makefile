@@ -1,10 +1,10 @@
 CC=gcc
 CFLAGS=-Wall -pedantic -ansi -g -DDEBUG
 CLIB= -lscreen -L.
-TEST= space_test set_test character_test
+TEST= space_test set_test 
 IFLAGS=-I.
 
-.PHONY: clean_objects clean_program clean all
+.PHONY: valgrind clean_objects clean_program clean all
 
 all: anthill
 
@@ -55,9 +55,10 @@ set_test.o: set_test.c set.h types.h test.h
 character_test.o: character_test.c character.h types.h test.h
 	$(CC) $(CFLAGS) -c $< $(IFLAGS)
 
+
 #############################################
 
-test: space_test set_test character_test
+test: space_test set_test
 
 space_test: space_test.o space.o set.o 
 	$(CC) $(CFLAGS) -o $@ $^ -L.
@@ -67,6 +68,7 @@ set_test: set_test.o set.o
 
 character_test: character_test.o character.o
 	$(CC) $(CFLAGS) -o $@ $^ -L.
+
 
 ############################################
 clean_objects:
@@ -85,13 +87,17 @@ clean: clean_objects clean_program clean_test
 
 #############################################
 
-run:
-	@echo "Anthill being runned"
+runanthill:
+	@echo "Anthill scenery is being runned"
 	@./anthill anthill.dat
+
+runcastle:
+	@echo "Castle scenery is being runned"
+	@./anthill castle.dat
 
 runtest: 
 	@echo "Running tests"
-	@./space_test; ./set_test
+	@./space_test; ./set_test ./character_test
 
 valgrind:
 	@echo "Running valgrind to detect memory leaks"
@@ -101,9 +107,9 @@ valgrind:
 run_space_test: space_test
 	./space_test
 
-run_set_test: set_test
+run_set_test:
 	./set_test
 
-run_character_test: character_test
+run_character_test:
 	./character_test
 

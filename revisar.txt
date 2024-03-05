@@ -1,0 +1,11 @@
+Hacer un control de errores exhaustivo
+Documentar todo TODOOOOOO Enumeraciones
+Nuevas funciones Mirar correspondencia entre headers y .c
+
+
+Funciones privadas Las funciones que no se utilizan fuera del .c full empty ... etc se deben de ocultar si o si
+Quitar todos los accesos a la estructura publica de game
+Modificar la estructura de command--
+Mirar exhaustivamente el test del space Preguntar si hy q modificarlo respecto a la nueva iteracion
+
+Preguntar para ver como redimensionar el mapa sin que varie dependiendo de si hay objetos o no
