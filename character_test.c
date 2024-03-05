@@ -181,8 +181,8 @@ void test1_character_set_message(){
 
 void test2_character_set_message(){
   Character *c;
-  c = character_create(16);
   char *a = NULL;
+  c = character_create(16);
   PRINT_TEST_RESULT(character_set_message(c,a) == ERROR);
   character_destroy(c);
 
