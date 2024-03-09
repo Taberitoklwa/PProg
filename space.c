@@ -28,7 +28,7 @@ struct _Space {
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
   Set *objects_id;              /*!< Whether the space has an object or not */
-  Id character;
+  Id character; 
 };
 
 /** space_create allocates memory for a new space
@@ -99,6 +99,17 @@ Id space_get_character_id(Space *space){
 
   return space->character;
 
+}
+
+Status space_set_character_id(Space *space, Id id){
+
+  if(!space){
+    return ERROR;
+  }
+
+  space->character=id;
+
+  return OK;
 }
 
 const char* space_get_name(Space* space) {

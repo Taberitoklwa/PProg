@@ -154,7 +154,7 @@ Id space_get_object(Space* space, int i);
 
 Status space_add_object(Space* space, Id id);
 
-
+Status space_set_character_id(Space *space, Id id);
 
 Status space_del_object(Space *space, Id id);
 

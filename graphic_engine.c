@@ -12,12 +12,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "command.h"
 #include "libscreen.h"
 #include "space.h"
 #include "types.h"
 
+#define WIDTH_LINE 22
 #define WIDTH_MAP 48
 #define WIDTH_DES 29
 #define WIDTH_BAN 23
@@ -73,10 +75,11 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
 
   /* Assigns default values ​​to the different Id type variables, pointers, chars etc. */
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_east = NO_ID, id_west= NO_ID, obj_loc = NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_east = NO_ID, id_west= NO_ID, obj_loc = NO_ID, idaux=NO_ID;
   Space *space_act = NULL;
-  char obj = '\0';
-  char str[255];
+  char objs[255]="";
+  char str[500]="";
+  int objsinspace=0, auxprinted=0;
   Command last_cmd = UNKNOWN;
   Object **objects;
   int nobjects;
@@ -93,68 +96,127 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
     id_west = space_get_west(space_act);
     id_next = space_get_south(space_act);
 
+    objects = game_get_objects(game);
+    nobjects = game_get_num_objects(game);
 
+    /*Mirar primitivas de object_get_id*/
 
-    if (game_get_object_location(game, game->objects[0]) == id_back)
-      obj = '*';
-    else
-      obj = ' ';
+    for(i=0, objsinspace=0; i<nobjects && objsinspace<2; i++){
+      if (game_get_object_location(game, game->objects[i]) == id_back){
+        sprintf(str, "0%ld ", object_get_id(game->objects[i]));
+        strcat(objs, str);  
+        objsinspace++;
+      }
+
+    }
+
 
     if (id_back != NO_ID) {
-      sprintf(str, "  |         %2d|", (int)id_back);
+
+      if(game_get_character(game, id_back)!=NULL && (character_get_hp(game_get_character(game, id_back))>0)){
+
+        auxprinted+=sprintf(str, "  |         %6s    %3d", character_get_name(game_get_character(game, id_back)), (int)id_back);
+
+      }
+      else{
+
+        auxprinted+=sprintf(str, "  |            %3d", (int)id_back);
+
+      }
+
+      for(; auxprinted<WIDTH_LINE; strcat(str, ""), auxprinted++);
+      strcat(str, "|");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
+
+      sprintf(str, "  |                  |");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +------------------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "        ^");
       screen_area_puts(ge->map, str);
     }
 
-    if (game_get_object_location(game, game->objects[0]) == id_act)
-      obj = '*';
-    else
-      obj = ' ';
+
+
+    for(i=0, objsinspace=0; i<nobjects && objsinspace<2; i++){
+      if (game_get_object_location(game, game->objects[i]) == id_act){
+      sprintf(str, "0%ld ", object_get_id(game->objects[i]));
+      strcat(objs, str);
+      objsinspace++;
+      }
+    }
+
 
     if (id_act != NO_ID) {
-      sprintf(str, "  +-----------+");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "  | m0^     %2d|", (int)id_act);
+      sprintf(str, "  +------------------+");
       screen_area_puts(ge->map, str);
 
+      if(game_get_character(game, id_act)!=NULL && (character_get_hp(game_get_character(game, id_act))>0)){
+
+        auxprinted+=sprintf(str, "  |  m0^      %6s    %3d", character_get_name(game_get_character(game, id_act)), (int)id_act);
+
+      }
+      else{
+
+        auxprinted+=sprintf(str, "  |  m0^        %3d", (int)id_act);
+
+      }
+
+      for(; auxprinted<WIDTH_LINE; strcat(str, ""), auxprinted++);
+      strcat(str, "|");
+      screen_area_puts(ge->map, str);
+    
+
       if (id_east != NO_ID && id_west != NO_ID){
-        sprintf(str, "<-|     %c     |-->", obj);
+        sprintf(str, "<-|  %s             |-->", objs);
         screen_area_puts(ge->map, str);
       }
       else if(id_west != NO_ID){
-        sprintf(str, "<-|     %c     |", obj);
+        sprintf(str, "<-|  %s              |", objs);
         screen_area_puts(ge->map, str);
       }
       else if(id_east != NO_ID){
-        sprintf(str, "  |     %c     |-->", obj);
+        sprintf(str, "  |  %s              |-->", objs);
         screen_area_puts(ge->map, str);
       }
       else{
-        sprintf(str, "  |     %c     |", obj);
+        sprintf(str, "  |%s               |", objs);
         screen_area_puts(ge->map, str);
       }
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +------------------+");
       screen_area_puts(ge->map, str);
     }
 
-    if (game_get_object_location(game, game->objects[0]) == id_next)
-      obj = '*';
-    else
-      obj = ' ';
+    for(i=0, objsinspace=0; i<nobjects && objsinspace<2; i++){
+      if (game_get_object_location(game, game->objects[i]) == id_next){
+      sprintf(str, "0%ld", object_get_id(game->objects[i]));
+      strcat(objs, str);
+      objsinspace++;
+      }
+    }
 
     if (id_next != NO_ID) {
       sprintf(str, "        v");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +------------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |         %2d|", (int)id_next);
+
+      if(game_get_character(game, id_next)!=NULL && (character_get_hp(game_get_character(game, id_next))>0)){
+
+        auxprinted+=sprintf(str, "  |  m0^      %6s    %3d", character_get_name(game_get_character(game, id_next)), (int)id_next);
+
+      }
+      else{
+
+        auxprinted+=sprintf(str, "  |  m0^        %3d", (int)id_next);
+
+      }
+
+      for(; auxprinted<WIDTH_LINE; strcat(str, ""), auxprinted++);
+      strcat(str, "|");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
+
+      sprintf(str, "  |%s                |", objs);
       screen_area_puts(ge->map, str);
     }
   }
@@ -164,25 +226,58 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
   
   /*Painting the object location*/
 
-  objects = game_get_objects(game);
-  nobjects = game_get_num_objects(game);
   if(nobjects>0){
     sprintf(str, " Objects location: ");
     screen_area_puts(ge->descript, str);
       for(i=0; i<nobjects; i++){
         if((obj_loc=game_get_object_location(game, objects[i]))!=NO_ID){
-              sprintf(str, " O%ld %ld", object_get_id(objects[i]), obj_loc);
+              sprintf(str, " O%ld: %ld", object_get_id(objects[i]), obj_loc);
               screen_area_puts(ge->descript, str);
         }
 
     }
   }
 
-  if(last_cmd==CHAT && game->last_cmd_status==OK){
-    sprintf(str, "Message: hello"),
+  sprintf(str," ");
+  screen_area_puts(ge->descript, str);
+
+  sprintf(str, "Characters:");
+  screen_area_puts(ge->descript, str);
+
+  for(i=0; i<game->n_characters; i++){
+  
+    sprintf(str, " %s (%d)", character_get_name(game->characters[i]), character_get_hp(game->characters[i]));
+    screen_area_puts(ge->descript, str);
+
+  }
+
+  sprintf(str," ");
+  screen_area_puts(ge->descript, str);
+
+  if(game->player){
+    sprintf(str, "Player: %d (%d)", (int)game_get_player_location(game), player_get_health(game->player));
+    screen_area_puts(ge->descript, str);
+    /*Cambiar*/
+    
+    if((idaux=player_get_object(game->player))!=NO_ID){
+      sprintf(str, "Player has the object O%d", (int)idaux);
+      screen_area_puts(ge->descript, str);
+    }
+    else{
+      sprintf(str, "Player has no object");
+      screen_area_puts(ge->descript, str);
+    }
+  }
+
+  
+  if(character_get_message(game_get_character(game,id_act))!=NULL && game_get_last_command(game)==CHAT && game_get_last_command_status(game)==OK){
+    sprintf(str, " ");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "Message: %s", character_get_message(game_get_character(game,id_act)));
     screen_area_puts(ge->descript, str);
   }
 
+  /*MIRAAAAR BIEN, SI CREO UNA VARIABLE AUXILIAR Y APUNTA NULL ME LANZA UNA VIOLACION DE SEGMENTO*/
 
 
 

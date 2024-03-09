@@ -24,8 +24,6 @@
 struct _Object {
   Id id;                    /*!< Id number of the object, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the object */
-  char description[WORD_SIZE +1]; /*!< Description of the object */
-  Bool portable;              /*!< Whether the object is portable or not */
 };
 
 /** object_create allocates memory for a new object 
@@ -47,9 +45,7 @@ Object* object_create(Id id) {
   /* Initialization of an empty object*/
   newObject->id = id;
   newObject->name[0] = '\0';
-  newObject->description[0] = '\0';
-  newObject->portable = FALSE;
-
+  
   return newObject;
 }
 
@@ -81,31 +77,12 @@ Status object_set_name(Object* object, char* name) {
   return OK;
 }
 
-Status object_set_description(Object* object, char* description) {
-  if (!object || !description) {
-    return ERROR;
-  }
-
-  if (!strcpy(object->description, description)) {
-    return ERROR;
-  }
-  return OK;
-}
-
 
 const char* object_get_name(Object* object) {
   if (!object) {
     return NULL;
   }
   return object->name;
-}
-
-Status object_set_portable(Object* object, Bool value) {
-  if (!object) {
-    return ERROR;
-  }
-  object->portable = value;
-  return OK;
 }
 
 Status object_print(Object* object) {

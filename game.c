@@ -87,10 +87,54 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   game->characters[0]=character_create(1);
-  game->n_characters++;
   if(game->characters[0] == NULL){
       return ERROR;
   }
+  game->n_characters++;
+
+  if(!character_set_hp(game->characters[0],3)){
+    return ERROR;
+
+  }
+
+  if(!character_set_name((game->characters[0]), "/*'\'*/'*\'")){
+    return ERROR;
+  }
+
+  if(!character_set_message((game->characters[0]), "Hi")){
+    return ERROR;
+  }
+
+  if(!character_set_friendly((game->characters[0]), FALSE)){
+    return ERROR;
+  }
+  
+  space_set_character_id(game->spaces[0], 1);
+
+  game->characters[1]=character_create(2);
+  if(game->characters[1] == NULL){
+      return ERROR;
+  }
+  game->n_characters++;
+
+  if(!character_set_hp(game->characters[1],5)){
+    return ERROR;
+
+  }
+
+  if(!character_set_name((game->characters[1]), "-/(9)\\-")){
+    return ERROR;
+  }
+
+  if(!character_set_message((game->characters[1]), "POOOO")){
+    return ERROR;
+  }
+
+  if(!character_set_friendly((game->characters[1]), TRUE)){
+    return ERROR;
+  }
+
+   space_set_character_id(game->spaces[1], 2);
 
   game->player = player_create(1);
   if( game->player == NULL){
@@ -156,8 +200,25 @@ Id game_get_space_character_id(Space *space){
 
 }
 
+Character *game_get_character(Game *game, Id id){
 
-Space *game_get_space(Game *game, Id id) {
+  int i;
+  if(!game){
+    return NULL;
+  }
+
+  for(i=0;i<game->n_characters;i++){
+    if(character_get_id(game->characters[i]) == game_get_space_character_id(game_get_space(game, id))){
+
+      return game->characters[i];
+
+
+    }
+  }
+  return NULL;
+}
+
+Space *game_get_space(Game *game, Id id){
   int i = 0;
 
   if (id == NO_ID) {
@@ -265,9 +326,7 @@ Id game_get_object_location(Game *game, Object *object){
     }
 
   }
-
   return NO_ID;
-
  }
 
 
@@ -299,6 +358,18 @@ Status game_set_last_command(Game *game, Command command) {
 
   return OK;
 }
+
+Status game_get_last_command_status(Game *game){ return game->last_cmd_status;}
+
+Status game_set_last_command_status(Game *game, Status status) {
+  
+  /* It is setting the last command in the game structure to the
+  introduced command */
+  game->last_cmd_status = status;
+
+  return OK;
+}
+
 
 Bool game_get_finished(Game *game) { return game->finished; }
 

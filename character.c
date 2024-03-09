@@ -23,7 +23,7 @@ struct _Character {
   Id id;/*!< Id number of the Character, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the Character */ 
   char message[WORD_SIZE +1];              
-  unsigned int hp; /*!<Health points of the Character*/
+  int hp; /*!<Health points of the Character*/
   Bool friendly;
 };
 
@@ -150,8 +150,6 @@ if (!character){
 
 return character->friendly;
 }
-
-
 
 
 
