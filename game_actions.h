@@ -23,6 +23,6 @@
  * @param cmd The command received from the user
  * @return OK, if everything goes well or ERROR if there was some mistake
  **/
-Status game_actions_update(Game *game, Command cmd);
+Status game_actions_update(Game *game, Command *command);
 
 #endif

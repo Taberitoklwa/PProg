@@ -8,15 +8,21 @@
  * @copyright GNU Public License
  */
 
+
+#include "game.h"
+#include "types.h"
 #ifndef COMMAND_H
 #define COMMAND_H
 
 #define N_CMDT 2 /*Number of types of commands*/
 #define N_CMD 11 /*Number of commands*/
 
+
 typedef enum { CMDS, CMDL } CommandType; /*Enumeration for command type (short or long)*/
 
-typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, LEFT, RIGHT, TAKE, DROP, ATTACK, CHAT } Command; /*Enumeration for command values*/
+typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, LEFT, RIGHT, TAKE, DROP, ATTACK, CHAT } Cmd; /*Enumeration for command values*/
+
+typedef struct _Command Command; 
 
 /**
  * @brief Reads user input and returns the corresponding command
@@ -27,6 +33,14 @@ typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, LEFT, RIGHT, TAKE, DROP, 
  * @return The command value corresponding to the user input, or NO_CMD if no valid command is found
  **/
 
-Command command_get_user_input();
+void command_get_user_input(Command *command);
+
+Command *command_create(); 
+
+Status command_destroy(Command *command);
+
+Cmd command_get_cmd(Command *command);
+
+char *command_get_target(Command *command);
 
 #endif

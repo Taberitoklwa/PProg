@@ -16,7 +16,7 @@ anthill: game_reader.o character.o command.o game.o game_actions.o game_loop.o g
 game_loop.o: game_loop.c command.h game.h space.h types.h game_actions.h graphic_engine.h
 	$(CC) $(CFLAGS) -c $< $(IFLAGS)
 
-command.o: command.c command.h
+command.o: command.c command.h types.h
 	$(CC) $(CFLAGS) -c $< $(IFLAGS)
 
 game_reader.o: game_reader.c game_reader.h
