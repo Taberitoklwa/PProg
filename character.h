@@ -60,7 +60,7 @@ Status Character_set_name(Character* Character, char* name);
  * @return  a string with the name of the Character
  */
 
-const char* Character_get_name(Character* Character);
+const char* character_get_name(Character* Character);
 
 Status character_set_hp(Character *character, int hp);
 
