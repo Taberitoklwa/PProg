@@ -72,6 +72,7 @@ int main(int argc, char **argv) {
   return 1;
 }
 
+
 void test1_character_create(){
     int result;
     Character *c;

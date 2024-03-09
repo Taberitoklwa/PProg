@@ -8,8 +8,8 @@
  * @copyright GNU Public License
  */
 
-#ifndef Player_H
-#define Player_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include "types.h"
 
@@ -64,6 +64,7 @@ const char* player_get_name(Player* player);
 
 /**
  * @brief Sets the location of a player to a given ID.
+ * @author Diego Tabero & Marcos Leo Sonck
  * 
  * @param player, pointer to a Player struct.
  * @param id, the location where the player is being set.
@@ -75,6 +76,7 @@ Status player_set_location(Player *player, Id id);
 
 /**
  * @brief Returns the location of a player.
+ *  @author Diego Tabero & Marcos Leo Sonck
  * 
  * @param player, pointer to a Player struct.
  * 
@@ -101,7 +103,25 @@ Status player_set_object(Player* player, Id id);
  */
 Id player_get_object(Player* player);
 
+/**
+ * @brief It gets whether the Player has an object, if so, returns its Id
+ * @author Diego Tabero & Marcos Leo Sonck
+ *
+ * @param Player, pointer to the Player
+ * @param hp the amount of health points that you want to set for the player. It is an integer value that should be greater than 0.
+ * @return  OK, if everything goes well or ERROR if there was some mistake
+ */
+
 Status player_set_health(Player* player, int hp);
+
+/**
+ * @brief  Returns the health points of a player if the player exists.
+ * @author Diego Tabero & Marcos Leo Sonck
+ *
+ * @param Player, pointer to the Player
+ *
+ * @return the health points (hp) of the player. If the player pointer is NULL, return ERROR
+ */
 
 int player_get_health(Player* player);
 

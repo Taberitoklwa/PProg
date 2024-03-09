@@ -57,6 +57,16 @@ Id set_get_id(Set *set, int i);
 int set_get_nids(Set *set);
 
 /**
+ * @brief Retrieve the array of ids saved in the set
+ * @author Diego Tabero & Marcos Leo Sonck
+ *
+ * @param, set a pointer to the set
+ * @return the ID at the specified index `i` within the set.
+ */
+
+Id * set_get_ids(Set *set);
+
+/**
  * @brief Adds an ID if it isn´t already in the Set
  * @author Diego Tabero & Marcos Leo Sonck
  *
@@ -82,7 +92,7 @@ Status set_del_id(Set *set, Id id);
  * @param set, pointer to a set structure containing a collection of IDs
  * @param id, that we are checking for in the set. 
  * 
- * @return, index of the element in the set's array of IDs that matches the given ID. If not found
+ * @return, index of the element in the set's array of IDs that matches the given ID. If not found returns -1
  */
 
 int set_id_belongs(Set *set, Id id);
@@ -108,14 +118,12 @@ Bool set_is_full(Set *set);
 /**
  * @brief It prints the set information
  * @author Diego Tabero & Marcos Leo Sonck
- *
- * This fucntion shows the number of ids and prints all the ids of the ids that contains
+ 
  * @param, set a pointer to the  set
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status set_print(Set *set);
 
-Id * set_get_ids(Set *set);
 
 #endif
 
