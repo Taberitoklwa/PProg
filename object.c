@@ -45,8 +45,7 @@ Object* object_create(Id id) {
   /* Initialization of an empty object*/
   newObject->id = id;
   newObject->name[0] = '\0';
-  newObject->description[0] = '\0';
-  newObject->portable = FALSE;
+
 
   return newObject;
 }

@@ -183,6 +183,30 @@ Character *game_get_character(Game *game, Id id){
   return NULL;
 }
 
+Id game_get_character_location(Game *game, Character *character){
+
+  Id character_id=NO_ID;
+  int i;
+
+
+  if(!game){
+    return NO_ID;
+  }
+
+  character_id=character_get_id(character);
+
+  for(i=0;i<game->n_spaces;i++){
+    if(character_id == game_get_space_character_id(game->spaces[i])){
+
+      return space_get_id(game->spaces[i]);
+
+    }
+  }
+
+  return NO_ID;
+
+}
+
 
 Space *game_get_space(Game *game, Id id) {
   int i = 0;
@@ -313,6 +337,27 @@ Status game_set_object_location(Game* game, Object* object, Id id) {
   return OK;
 }
 
+Set *game_get_objects_in_space(Game *game, Id id){
+
+  Space *space = NULL;
+
+  if(!game || id == NO_ID){
+    return NULL;
+  }
+
+  space = game_get_space(game, id);
+
+  if(!space){
+    return NULL;
+  }
+  
+  return space_get_set_of_objects(space);
+
+
+}
+
+
+
 Cmd game_get_command_cmd(Game *game,Command *command){
 
   if(!game || !command){
@@ -346,7 +391,7 @@ Status game_set_last_command(Game *game, Cmd cmd) {
   return OK;
 }
 
-Cmd game_get_last_command_status(Game *game){ return game->last_cmd_status;}
+Status game_get_last_command_status(Game *game){ return game->last_cmd_status;}
 
 Status game_set_last_command_status(Game *game, Status status) {
   

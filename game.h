@@ -119,6 +119,7 @@ Id game_get_player_location(Game *game);
 
 Status game_set_player_location(Game *game, Id id);
 
+Id game_get_character_location(Game *game, Character *character);
 /**
  * @brief It adds an object to the game.
 
@@ -227,6 +228,9 @@ int game_get_set_nids(Game *game,Set* objects);
 
 Status game_set_last_command(Game *game, Cmd cmd);
 
+Status game_set_last_command_status(Game *game, Status status);
+
+Status game_get_last_command_status(Game *game);
 /**
  * @brief It is used to retrieve the current state of the game
 

@@ -52,7 +52,7 @@ void command_get_user_input(Command *command)
       }
     }
 
-    if(cmd == ATTACK){
+    if(cmd == TAKE){
 
       token = strtok(NULL," \n");
 
