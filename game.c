@@ -97,7 +97,7 @@ Status game_create_from_file(Game *game, char *filename) {
 
   }
 
-  if(!character_set_name((game->characters[0]), "/*'\'*/'*\'")){
+  if(!character_set_name((game->characters[0]), "/\\00/\\")){
     return ERROR;
   }
 
@@ -122,7 +122,7 @@ Status game_create_from_file(Game *game, char *filename) {
 
   }
 
-  if(!character_set_name((game->characters[1]), "-/(9)\\-")){
+  if(!character_set_name((game->characters[1]), "^0m")){
     return ERROR;
   }
 
@@ -134,7 +134,7 @@ Status game_create_from_file(Game *game, char *filename) {
     return ERROR;
   }
 
-   space_set_character_id(game->spaces[1], 2);
+  space_set_character_id(game->spaces[1], 2);
 
   game->player = player_create(1);
   if( game->player == NULL){
@@ -216,6 +216,30 @@ Character *game_get_character(Game *game, Id id){
     }
   }
   return NULL;
+}
+
+Id game_get_character_location(Game *game, Character *character){
+
+  Id character_id=NO_ID;
+  int i;
+
+
+  if(!game){
+    return NO_ID;
+  }
+
+  character_id=character_get_id(character);
+
+  for(i=0;i<game->n_spaces;i++){
+    if(character_id == game_get_space_character_id(game->spaces[i])){
+
+      return space_get_id(game->spaces[i]);
+
+    }
+  }
+
+  return NO_ID;
+
 }
 
 Space *game_get_space(Game *game, Id id){

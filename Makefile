@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall -pedantic -ansi -g -DDEBUG
+CFLAGS=-Wall -pedantic -ansi -g
 CLIB= -lscreen -L.
-TEST= space_test set_test 
+TEST= space_test set_test character_test
 IFLAGS=-I.
 
 .PHONY: valgrind clean_objects clean_program clean all
@@ -58,7 +58,7 @@ character_test.o: character_test.c character.h types.h test.h
 
 #############################################
 
-test: space_test set_test
+test: space_test set_test character_test
 
 space_test: space_test.o space.o set.o 
 	$(CC) $(CFLAGS) -o $@ $^ -L.
