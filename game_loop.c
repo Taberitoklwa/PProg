@@ -89,6 +89,7 @@ void game_loop_run(Game game, Graphic_engine *gengine) {
     graphic_engine_paint_game(gengine, &game); /*Paints the game on the screen using graphic engine*/
     command_get_user_input(game.command); /*Gets user input command*/
     game_actions_update(&game, game.command); /*Updates game state based on user command*/
+    cmd = game_get_command_cmd(&game, game.command);
   }
 }
 

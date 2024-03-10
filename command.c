@@ -54,12 +54,16 @@ void command_get_user_input(Command *command)
 
     if(cmd == TAKE){
 
-      token = strtok(NULL," \n");
+      if((token = strtok(NULL," \n")) != NULL){
 
-      if(token[0] == 'O' || token[0] == 'o'){
+        if(token[0] == 'O' || token[0] == 'o'){
         strncpy(command->target,token,3);
 
       }
+
+      }
+
+      
 
     }
 
@@ -79,6 +83,8 @@ Command *command_create(){
   command =  (Command*) malloc(sizeof(Command));
 
   command->cmd = NO_CMD;
+
+  strcpy(command->target, "NOID");
 
   return command;
 }

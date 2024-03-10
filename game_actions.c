@@ -46,7 +46,7 @@ void game_actions_chat(Game *game);
 Status game_actions_update(Game *game, Command* command) {
 
   Cmd cmd = game_get_command_cmd(game,command);
-  char* target = game_get_command_target(game,command);
+  char *target = game_get_command_target(game,command);
 
 
   game_set_last_command(game, cmd);
@@ -247,7 +247,7 @@ void game_actions_next(Game *game) {
 void game_actions_take(Game *game, char* object){
 
   /* Declaring variables and initializing them with the default value NO_ID or NULL(pointer) */
-
+  Status status = ERROR;
   Set *objects = NULL;
   Id *objectids = NULL;
   Id target = NO_ID;
@@ -291,11 +291,13 @@ void game_actions_take(Game *game, char* object){
 
       space_del_object(space, objectids[i]);
 
+      status = OK;
+
     }
 
   }
 
-  game->last_cmd_status=OK;
+  game->last_cmd_status= status;
   return;
 }
 
