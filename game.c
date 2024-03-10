@@ -273,6 +273,7 @@ Object **game_get_objects(Game *game){
     return game->objects;
 }
 
+
 int game_get_num_objects(Game *game){
 
   int i;

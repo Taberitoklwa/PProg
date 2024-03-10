@@ -25,12 +25,12 @@
 typedef struct _Game {
   Player* player; /*!< Id number of the object location */
   Object* objects[MAX_OBJECTS]; /*!< Id number of the player location */
-  int n_objects;
+  int n_objects; /*<Number of objects */
   Character* characters[MAX_CHARACTERS];
   int n_characters;
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
-  Command *command; 
+  Command *command; /*!<Command Struct */
   Bool finished; /*!< Whether it is finished or not>!*/
 } Game;
 
@@ -218,10 +218,6 @@ Id game_get_character_location(Game *game, Character *character);
  */
 int game_get_num_objects(Game *game);
 
-
-/*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/
-
-
 Object **game_get_objects(Game *game);
 
 Set *game_get_objects_in_space(Game *game, Id id);
@@ -263,6 +259,8 @@ char *game_get_command_target(Game *game);
  * @return OK, if everuthing goes well or ERROR if there was some mistake
  */
 Status game_command_clean_target(Game *game);
+
+
 
 Bool game_get_finished(Game *game);
 
@@ -316,8 +314,6 @@ Id *game_get_set_ids(Game *game, Set *set);
  *         Returns -1 if the game or set is NULL, or if the set is not associated with the game.
  */
 int game_get_set_nids(Game *game, Set *set);
-
-
 
 /** 
  * @brief It prints information about the current state of a game
