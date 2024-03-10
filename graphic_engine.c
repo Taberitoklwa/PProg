@@ -125,12 +125,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
 
       if(game_get_character(game, id_back)!=NULL && (character_get_hp(game_get_character(game, id_back))>0)){
 
-        auxprinted=sprintf(str, "  |  m0^  %6s  %3d|", character_get_name(game_get_character(game, id_back)), (int)id_back);
+        auxprinted=sprintf(str, "  |       %6s  %3d|", character_get_name(game_get_character(game, id_back)), (int)id_back);
 
       }
       else{
 
-        auxprinted=sprintf(str, "  |  m0^          %3d|", (int)id_back);
+        auxprinted=sprintf(str, "  |               %3d|", (int)id_back);
 
       }
       screen_area_puts(ge->map, str);
@@ -138,7 +138,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
 
       sprintf(str, "  |                  |");
       screen_area_puts(ge->map, str);
-      auxprinted=sprintf(str, "  |%s            ", objs);
+      auxprinted=sprintf(str, "  |%s ", objs);
       for(;auxprinted<WIDTH_LINE; auxprinted++, strcat(str, " "));
       strcat(str, "|");
       screen_area_puts(ge->map, str);
@@ -185,19 +185,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
       screen_area_puts(ge->map, str);
 
       if (id_east != NO_ID && id_west != NO_ID){
-        auxprinted=sprintf(str, "<-|  %s", objs);
+        auxprinted=sprintf(str, "<-|%s", objs);
         for(; auxprinted<WIDTH_LINE; strcat(str, " "), auxprinted++);
         strcat(str, "|-->");
         screen_area_puts(ge->map, str);
       }
       else if(id_west != NO_ID){
-        auxprinted=sprintf(str, "<-|  %s", objs);
+        auxprinted=sprintf(str, "<-|%s", objs);
         for(; auxprinted<WIDTH_LINE; strcat(str, " "), auxprinted++);
         strcat(str, "|");
         screen_area_puts(ge->map, str);
       }
       else if(id_east != NO_ID){
-        auxprinted=sprintf(str, "  |  %s  ", objs);
+        auxprinted=sprintf(str, "  |%s  ", objs);
         for(; auxprinted<WIDTH_LINE; strcat(str, " "), auxprinted++);
         strcat(str, "|-->");
         screen_area_puts(ge->map, str);
@@ -237,12 +237,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
 
       if(game_get_character(game, id_next)!=NULL && (character_get_hp(game_get_character(game, id_next))>0)){
 
-        sprintf(str, "  |  m0^  %6s  %3d|", character_get_name(game_get_character(game, id_next)), (int)id_next);
+        sprintf(str, "  |       %6s  %3d|", character_get_name(game_get_character(game, id_next)), (int)id_next);
 
       }
       else{
 
-        sprintf(str, "  |  m0^          %3d|", (int)id_next);
+        sprintf(str, "  |               %3d|", (int)id_next);
 
       }
       screen_area_puts(ge->map, str);
@@ -329,7 +329,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
-  if(game->last_cmd_status == OK ){
+  if(game_get_last_command_status(game) == OK ){
     sprintf(str, " %s (%s):  OK", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
     screen_area_puts(ge->feedback, str);
   }

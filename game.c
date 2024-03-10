@@ -58,13 +58,11 @@ Status game_create(Game *game) {
       game->characters[i] = NULL;
     }
 
-
+  
   /* Assigns default values ​​to the different fields of the structure */
   game->n_characters=0;
   game->n_objects = 0;
-  game->n_spaces = 0;
-  game->last_cmd = NO_CMD;  
-  game->last_cmd_status= ERROR;
+  game->n_spaces = 0; 
   game->finished = FALSE;
 
   return OK;
@@ -145,6 +143,11 @@ Status game_create_from_file(Game *game, char *filename) {
     return ERROR;
   }
 
+  game->command = command_create();
+  if(game->command == NULL){
+    return ERROR;
+  }
+
   /* The player and the object are located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));
 
@@ -185,6 +188,8 @@ Status game_destroy(Game *game) {
   }
 
   player_destroy(game->player);
+
+  command_destroy(game->command);
 
 
   return OK;
@@ -298,6 +303,15 @@ Status game_set_player_location(Game *game, Id id) {
   return OK;
 }
 
+Player *game_get_player(Game *game){
+
+  if(!game){
+    return NULL;
+  }
+
+  return game->player;
+}
+
 Status game_add_object(Game *game, Object *object){
 
   if ((object == NULL) || (game == NULL)) {
@@ -388,52 +402,50 @@ Status game_set_object_location(Game* game, Object* object, Id id) {
 }
 
 
-Cmd game_get_command_cmd(Game *game,Command *command){
+Cmd game_get_command_cmd(Game *game){
 
-  if(!game || !command){
+  if(!game){
     return NO_CMD;
   }
 
-  return command_get_cmd(command);
+  return command_get_cmd(game->command);
 
 }
 
 
-char *game_get_command_target(Game *game,Command *command){
+char *game_get_command_target(Game *game){
 
-  if(!game || !command){
+  if(!game){
     return NULL;
   }
 
-  return command_get_target(command);
+  return command_get_target(game->command);
 
 }
-Cmd game_get_last_command(Game *game) { return game->last_cmd; }
+Cmd game_get_last_command(Game *game) {  return command_get_last_cmd(game->command); }
 
 /*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/
 
 
 Status game_set_last_command(Game *game, Cmd cmd) {
-  
-  /* It is setting the last command in the game structure to the
-  introduced command */
-  game->last_cmd = cmd;
-
-  return OK;
+  return command_set_last_cmd(game->command,cmd);
 }
 
-Status game_get_last_command_status(Game *game){ return game->last_cmd_status;}
+Status game_get_last_command_status(Game *game){ return command_get_last_cmd_status(game->command);}
 
 Status game_set_last_command_status(Game *game, Status status) {
-  
-  /* It is setting the last command in the game structure to the
-  introduced command */
-  game->last_cmd_status = status;
 
-  return OK;
+  return command_set_last_cmd_status(game->command,status);
 }
 
+Status game_command_clean_target(Game *game){
 
+  if(!game){
+    return ERROR;
+  }
+
+  return  command_clean_target(game->command);;
+}
 
 Bool game_get_finished(Game *game) { return game->finished; }
 

@@ -120,7 +120,7 @@ Status set_del_id(Set *set, Id id){
 
     set->ids[i]=set->ids[set->n_ids-1];
     set->ids[set->n_ids-1]=NO_ID;
-    i=set_id_belongs(set, id);
+   
 
     (set->n_ids)--;
 

@@ -31,7 +31,7 @@ void game_actions_left(Game *game);
 
 void game_actions_right(Game *game);
 
-void game_actions_take(Game *game, char* object);
+void game_actions_take(Game *game);
 
 void game_actions_drop(Game *game);
 
@@ -43,10 +43,9 @@ void game_actions_chat(Game *game);
    Game actions implementation
 */
 
-Status game_actions_update(Game *game, Command* command) {
+Status game_actions_update(Game *game) {
 
-  Cmd cmd = game_get_command_cmd(game,command);
-  char *target = game_get_command_target(game,command);
+  Cmd cmd = game_get_command_cmd(game);
 
   game_set_last_command(game, cmd);
   
@@ -76,7 +75,7 @@ Status game_actions_update(Game *game, Command* command) {
       game_actions_right(game);
 
     case TAKE:
-      game_actions_take(game,target);
+      game_actions_take(game);
       break;
 
     case DROP:
@@ -242,7 +241,7 @@ void game_actions_next(Game *game) {
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
 
  */
-void game_actions_take(Game *game, char* object){
+void game_actions_take(Game *game){
 
   /* Declaring variables and initializing them with the default value NO_ID or NULL(pointer) */
   Status status = ERROR;
@@ -253,11 +252,18 @@ void game_actions_take(Game *game, char* object){
   int nobjects, i;
   Id player_location_id = NO_ID;
   Space * space = NULL;
-  game->last_cmd_status=ERROR;
+
+  game_set_last_command_status(game, ERROR);
 
   player_location_id = game_get_player_location(game);
 
   if (NO_ID == player_location_id) {
+    return;
+  }
+
+  space = game_get_space(game,player_location_id);
+
+  if(!space){
     return;
   }
 
@@ -275,7 +281,7 @@ void game_actions_take(Game *game, char* object){
 
   nobjects = game_get_set_nids(game,objects);
 
-  strcpy(targetstr,object+1);
+  strcpy(targetstr,game_get_command_target(game)+1);
   
   target = atoi(targetstr);
   
@@ -295,7 +301,10 @@ void game_actions_take(Game *game, char* object){
 
   }
 
-  game->last_cmd_status= status;
+  game_command_clean_target(game);
+
+  game_set_last_command_status(game,status);
+
   return;
 }
 
@@ -310,23 +319,26 @@ void game_actions_drop(Game *game) {
   Id object_id = NO_ID;
   Id playerlocation_id = NO_ID;
   Space *space = NULL;
-  game->last_cmd_status=ERROR;
+  Status status = ERROR;
 
   object_id = player_get_object(game->player);
 
   if(object_id == NO_ID) {
+    game_set_last_command_status(game,status);
     return;
   }
 
   playerlocation_id = game_get_player_location(game);
 
   if(playerlocation_id == NO_ID) {
+    game_set_last_command_status(game,status);
     return;
   }
 
   space = game_get_space(game, playerlocation_id);
 
   if(space == NULL) {
+    game_set_last_command_status(game,status);
     return;
   }
 
@@ -340,7 +352,8 @@ void game_actions_drop(Game *game) {
 
   space_add_object(space,object_id);  
 
-  game->last_cmd_status=OK;
+  status=OK;
+  game_set_last_command_status(game,status);
   return;
 }
 
@@ -350,9 +363,10 @@ void game_actions_attack(Game *game){
   Player *player = NULL;
   Id character_location = NO_ID;
   int attack, php, chp;
-  srand(time(NULL));
-  
-  player = game->player;
+
+  game_set_last_command_status(game, ERROR);
+
+  player = game_get_player(game);
 
   if(!player){
     return;
@@ -395,7 +409,7 @@ void game_actions_attack(Game *game){
 
   }
 
-
+  
   game_set_last_command_status(game, OK);
   return;
 }
@@ -403,7 +417,8 @@ void game_actions_attack(Game *game){
 void game_actions_chat(Game *game) {
   Id player_location_id = NO_ID; /*Initializes an id to NO_ID*/
   Id character_location_id = NO_ID; /*Initializes space id to NO_ID*/
-  game->last_cmd_status=ERROR;
+
+  game_set_last_command_status(game, ERROR);
 
   player_location_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (player_location_id == NO_ID) {

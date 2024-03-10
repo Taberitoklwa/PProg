@@ -19,8 +19,10 @@
 #define TARG_LENGHT 5
 
 struct _Command {
-  Cmd cmd;
+  Cmd cmd, last_cmd;
   char target[TARG_LENGHT+1];
+  Status last_cmd_status;
+
 };
 
 /*Array to map command enum values to their string representations*/
@@ -52,26 +54,21 @@ void command_get_user_input(Command *command)
       }
     }
 
-    if(cmd == TAKE){
+    if(cmd == TAKE){ /*If the command introduced by the user is TAKE, it looks for the target*/
 
       if((token = strtok(NULL," \n")) != NULL){
 
-        if(token[0] == 'O' || token[0] == 'o'){
-        strncpy(command->target,token,3);
+        if(token[0] == 'O' || token[0] == 'o'){ /*If the next token starts by o or O, it copies the input to the target in the command structure*/
+          strncpy(command->target,token,3);
 
+        }
       }
-
-      }
-
-      
-
     }
-
   }
 
   command->cmd = cmd;
 
-  return; /*Returns the identified commannd*/
+  return; 
 }
 
 
@@ -84,10 +81,56 @@ Command *command_create(){
 
   command->cmd = NO_CMD;
 
+  command->last_cmd = NO_CMD;
+
+  command->last_cmd_status = ERROR;
+
   strcpy(command->target, "NOID");
 
   return command;
 }
+
+Status command_set_last_cmd(Command *command, Cmd cmd){
+
+  if(!command){
+    return ERROR;
+  }
+
+  command->last_cmd = cmd;
+
+  return OK;
+}
+
+Cmd command_get_last_cmd(Command *command){
+
+  if(!command){
+    return ERROR;
+  }
+
+  return command->last_cmd;
+}
+
+Status command_set_last_cmd_status(Command *command,Status status){
+
+  if(!command){
+    return ERROR;
+  }
+
+  command->last_cmd_status = status;
+
+  return OK;
+}
+
+Status command_get_last_cmd_status(Command *command){
+
+  if(!command){
+    return ERROR;
+  }
+
+  return command->last_cmd_status;
+}
+
+
 
 Status command_destroy(Command* command){
   if (!command) {
@@ -117,4 +160,20 @@ char *command_get_target(Command *command){
 
   return command->target;
 
+}
+
+Status command_clean_target(Command *command){
+
+  int i;
+
+  if(!command){
+    return ERROR;
+  }
+
+  for(i=0;i<3;i++){
+    command->target[i]= ' ';
+  }
+
+  return OK;
+  
 }
