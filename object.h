@@ -2,7 +2,7 @@
  * @brief It defines the object interface
  *
  * @file object.h
- * @author Recurso1
+ * @author Diego Tabero & Marcos Leo Sonck
  * @version 3.5
  * @date 6-02-2024
  * @copyright GNU Public License
@@ -60,16 +60,6 @@ Status object_set_name(Object* object, char* name);
  * @return  a string with the name of the object
  */
 const char* object_get_name(Object* object);
-
-/**
- * @brief It sets whether the object has an object or not
- * @author Diego Tabero & Marcos Leo Sonck
- *
- * @param object a pointer to the object
- * @param value a boolean, specifying if in the object there is an object (TRUE) or not (FALSE)
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status object_set_portable(Object* object, Bool value);
 
 /**
  * @brief It prints the object information

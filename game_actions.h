@@ -13,7 +13,6 @@
 
 #include "command.h"
 #include "game.h"
-#include "types.h"
 
 /**
  * @brief Updates the game state based on the user command
@@ -24,6 +23,6 @@
  * @param cmd The command received from the user
  * @return OK, if everything goes well or ERROR if there was some mistake
  **/
-Status game_actions_update(Game *game, Command cmd);
+Status game_actions_update(Game *game);
 
 #endif

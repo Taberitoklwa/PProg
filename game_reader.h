@@ -12,38 +12,27 @@
 #ifndef GAMEREADER_H
 #define GAMEREADER_H
 
-#include "types.h"
+
 #include "game.h"
 
 /**
  * @brief It loads new space.
 
- * @param game, pointer to Game structure
+ * @param game,  pointer to a `Game` structure, which represents the current state of the game being played
  * @param filename, pointer to char, (string) with the filename
  * @return OK, if everything goes well or ERROR if there was some mistake
  
  */
-Status game_load_spaces(Game *game, char *filename);
-
+Status game_reader_load_spaces(Game *game, char *filename);
 
 /**
- * @brief It adds a space to the game.
+ * @brief It loads new objects.
 
- * @param game, pointer to Game structure
+ * @param game,  pointer to a `Game` structure, which represents the current state of the game being played
  * @param filename, pointer to char, (string) with the filename
  * @return OK, if everything goes well or ERROR if there was some mistake
+ 
  */
-
-Status game_add_space(Game *game, Space *space);
-
-/**
- * @brief It is used to get the ID of the space located at a specific position in the game
-
- * @param game, pointer to Game structure
- * @param position, integer
- * @return ID of the space at the specified position
- */
-
-Id game_get_space_id_at(Game *game, int position);
+Status game_reader_load_objects(Game *game, char *filename);
 
 #endif

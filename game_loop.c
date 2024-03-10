@@ -10,20 +10,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "command.h"
-#include "game.h"
+#include "game.h" 
 #include "game_actions.h"
 #include "graphic_engine.h"
+
 /**
  * @brief Initializes the game loop
  *
  * This function initializes the game and graphic engine for the game loop.
  *
- * @param game Pointer to the game object
- * @param gengine Double pointer to the graphic engine object
- * @param file_name The name of the file containing game data
- * @return 0 if initialization is successful, 1 otherwise
+ * @param game, pointer to the game object
+ * @param gengine, double pointer to the graphic engine object
+ * @param file_name, name of the file containing game data
+ * @return, 0 if initialization is successful, 1 otherwise
  **/
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
 /**
@@ -32,8 +34,8 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
  * This function runs the main game loop, which continuously paints the game on the screen,
  * gets user input, and updates the game state accordingly until the game finishes or the user exits.
  *
- * @param game The game object
- * @param gengine Pointer to the graphic engine object
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ * @param gengine, pointer to the graphic engine object
  **/
 void game_loop_run(Game game, Graphic_engine *gengine);
 /**
@@ -41,51 +43,53 @@ void game_loop_run(Game game, Graphic_engine *gengine);
  *
  * This function cleans up memory and resources used by the game and graphic engine after the game loop ends.
  *
- * @param game The game object
- * @param gengine Pointer to the graphic engine object
+ * @param game, game object
+ * @param gengine, pointer to the graphic engine object
  **/
 void game_loop_cleanup(Game game, Graphic_engine *gengine);
 
 
 int main(int argc, char *argv[]) {
-  Game game; /*Decalres a game object*/
-  Graphic_engine *gengine; /*Declares a pointer to a graphic engine object*/
+  Game game; 
+  Graphic_engine *gengine;
+  srand(time(NULL));
 
-  if (argc < 2) { /*Checks if the correct number of command line arguments are provided */
-    fprintf(stderr, "Use: %s <game_data_file>\n", argv[0]); /*Prints error message*/
+  if (argc < 2) { 
+    fprintf(stderr, "Use: %s <game_data_file>\n", argv[0]); 
     return 1;
   }
 
-  if (!game_loop_init(&game, &gengine, argv[1])) { /*Calls function to initialize game loop*/
-    game_loop_run(game, gengine); /*Runs game loop*/
-    game_loop_cleanup(game, gengine); /*Cleans up resources after the game loop*/
+  if (!game_loop_init(&game, &gengine, argv[1])) { 
+    game_loop_run(game, gengine); 
+    game_loop_cleanup(game, gengine); 
   }
 
   return 0;
 }
 
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
-  if (game_create_from_file(game, file_name) == ERROR) { /*Creates game object from file*/
-    fprintf(stderr, "Error while initializing game.\n"); /*Prints error message*/
+  if (game_create_from_file(game, file_name) == ERROR) { 
+    fprintf(stderr, "Error while initializing game.\n"); 
     return 1;
   }
 
-  if ((*gengine = graphic_engine_create()) == NULL) { /*Creates graphic engine object*/
-    fprintf(stderr, "Error while initializing graphic engine.\n"); /*Prints error message*/
-    game_destroy(game); /*Destroys game object*/
-    return 1;
+  if ((*gengine = graphic_engine_create()) == NULL) {
+    fprintf(stderr, "Error while initializing graphic engine.\n"); 
+    game_destroy(game); 
   }
 
   return 0;
 }
 
 void game_loop_run(Game game, Graphic_engine *gengine) {
-  Command command = NO_CMD; /*Declares a command variable initialized to NO_CMD*/
+  
+  Cmd cmd = game_get_command_cmd(&game);
 
-  while ((command != EXIT) && (game_get_finished(&game) == FALSE)) { /*Loop until exit command is received or game is finished */
+  while ((cmd != EXIT) && (game_get_finished(&game) == FALSE)) { /*Loop until exit command is received or game is finished */
     graphic_engine_paint_game(gengine, &game); /*Paints the game on the screen using graphic engine*/
-    command = command_get_user_input(); /*Gets user input command*/
-    game_actions_update(&game, command); /*Updates game state based on user command*/
+    command_get_user_input(game.command); /*Gets user input command*/
+    game_actions_update(&game); /*Updates game state based on user command*/
+    cmd = game_get_command_cmd(&game);
   }
 }
 

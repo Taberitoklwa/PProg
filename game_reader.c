@@ -22,15 +22,15 @@
  */
 
 
-Status game_load_spaces(Game *game, char *filename) {
+Status game_reader_load_spaces(Game *game, char *filename) {
 
-  FILE *file = NULL; /* It is declaring and initializing a pointer variable `file` of type `FILE` to `NULL`*/
+  FILE *file = NULL; 
   char line[WORD_SIZE] = ""; 
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;/* Is declaring and initializing variables of type `Id` with the default value `NO_ID`.*/
-  Space *space = NULL; /*It initializes the pointer to the space structure to null*/
-  Status status = OK;/* It is declaring and initializing a Status variable to OK*/
+  Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
+  Space *space = NULL;
+  Status status = OK;
 
 
  /* Error Control */
@@ -82,36 +82,59 @@ Status game_load_spaces(Game *game, char *filename) {
   fclose(file);
 
   return status;
-
-
 }
-/*
- game_add_space increases the number of spaces
-*/
 
-Status game_add_space(Game *game, Space *space) {
+
+Status game_reader_load_objects(Game *game, char *filename) {
+
+  FILE *file = NULL; 
+  char line[WORD_SIZE] = ""; 
+  char name[WORD_SIZE] = "";
+  char *toks = NULL;
+  Id id = NO_ID, space = NO_ID;
+  Object *object = NULL;
+  Status status = OK;
+
+
+ /* Error Control */
+  if (!filename) {
+    return ERROR;
+  }
+  
+  file = fopen(filename, "r");
   /* Error Control */
-  if ((space == NULL) || (game->n_spaces >= MAX_SPACES)) {
+  if (file == NULL) {
     return ERROR;
   }
 
-  game->spaces[game->n_spaces] = space;
-  game->n_spaces++;
-
-  return OK;
-}
-
-/*
- game_get_space_id_at Returns the id of the space you are currently on
- 
-*/
-
-Id game_get_space_id_at(Game *game, int position) {
+  /* Reading lines from a file and parsing them (strtok) to extract information about game
+  objects. */
+  while (fgets(line, WORD_SIZE, file)) {
+    if (strncmp("#o:", line, 3) == 0) {
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
+      toks = strtok(NULL, "|");
+      strcpy(name, toks);
+      toks = strtok(NULL, "|");
+      space = atol(toks);
+      
+#ifdef DEBUG
+      printf("Leido: %ld|%s|%ld\n", id, name, space);
+#endif
+      object = object_create(id);
+      if (object != NULL) {
+        game_set_object_location(game, object, space);
+        object_set_name(object, name);
+        game_add_object(game,object);
+      }
+    }
+  }
   /* Error Control */
-  if (position < 0 || position >= game->n_spaces) {
-    return NO_ID;
+  if (ferror(file)) {
+    status = ERROR;
   }
 
-  return space_get_id(game->spaces[position]);
-}
+  fclose(file);
 
+  return status;
+}
