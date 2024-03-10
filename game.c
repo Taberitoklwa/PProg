@@ -283,9 +283,6 @@ int game_get_num_objects(Game *game){
 
   for(i=0; i< MAX_OBJECTS && game->objects[i]!=NULL; i++);
 
-
-  /*i o i-1*/
-
   return i;
 
 }
@@ -324,28 +321,7 @@ Status game_add_object(Game *game, Object *object){
   return OK;
 
 }
-/*
 
-
-Id game_get_object_location(Game *game){ 
-
-  int i = 0;
-
-  for (i = 0; i < game->n_spaces; i++) {
-    if (space_get_object(game->spaces[i]) != NO_ID ){
-
-      When it finds that there is an object id returns the ID of the space 
-
-      return space_get_id(game->spaces[i]);
-    }
-  }
-  
-  return NO_ID;
-  
- }
-
-
-*/
 
 Id game_get_object_location(Game *game, Object *object){ 
 
@@ -500,10 +476,20 @@ void game_print(Game *game) {
     return;
   }
 
-  /*if (object_print(game->object) == ERROR){
-    return;
-  }
-  */
+  for(i=0; i<game->n_objects; i++){
 
-  /*printf("=> Object location: %d\n", (int)game_get_object_location(game));*/
+    if((object_print(game->objects[i]) == ERROR)){
+      return;
+    }
+
+  }
+
+  for(i=0; i<game->n_objects; i++){
+
+    if((character_print(game->characters[i]) == ERROR)){
+      return;
+    }
+
+  }
+
 }

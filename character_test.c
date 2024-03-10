@@ -1,6 +1,4 @@
 /**
- * @brief It tests set module
- *
  * @file set_test.c
  * @author Diego Tabero & Marcos Leo
  * @version 3.0
@@ -66,6 +64,8 @@ int main(int argc, char **argv) {
   if (all || test == 20) test2_character_set_friendly();
   if (all || test == 21) test1_character_get_friendly();
   if (all || test == 22) test2_character_get_friendly();
+  if (all || test == 23) test1_character_print();
+  if (all || test == 24) test2_character_print();
 
   PRINT_PASSED_PERCENTAGE;
 
@@ -231,4 +231,16 @@ void test2_character_get_friendly(){
   PRINT_TEST_RESULT(character_get_friendly(c) == TRUE);
   character_destroy(c);
 
+}
+
+void test1_character_print(){
+  Character* character = character_create(1);
+  character_set_name(character, "Spider");
+  character_set_message(character, "Hi");
+  PRINT_TEST_RESULT(character_print(character) == OK);
+  character_destroy(character);
+}
+
+void test2_character_print(){
+  PRINT_TEST_RESULT(character_print(NULL) == ERROR);
 }

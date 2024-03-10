@@ -19,6 +19,7 @@
 #include "space.h"
 #include "types.h"
 
+#define MAX_LENGTH 256
 #define MAX_OBJECTS_SPACE 3  
 #define WIDTH_LINE 21
 #define WIDTH_MAP 48
@@ -78,14 +79,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
   /* Assigns default values ​​to the different Id type variables, pointers, chars etc. */
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_east = NO_ID, id_west= NO_ID, obj_loc = NO_ID, idaux=NO_ID;
   Space *space_act = NULL;
-  char objs[255]="";
-  char str[500]="";
+  char objs[MAX_LENGTH];
+  char str[WORD_SIZE+1];
   int objsinspace=0, auxprinted=0;
   Cmd last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
   Object **objects;
   int nobjects;
-  extern char *cmd_to_str[N_CMD][N_CMDT];
   int i;
 
   last_cmd = game_get_last_command(game);

@@ -1,6 +1,6 @@
-/** 
+/**
  * @brief It declares the tests for the character module
- * 
+ *
  * @file character_test.h
  * @author Diego Tabero & Marcos Leo Sonck
  */
@@ -162,4 +162,19 @@ void test1_character_get_friendly();
  */
 void test2_character_get_friendly();
 
-#endif
+/**
+ * @brief Test function for character information printing
+ * @pre A pointer to a character.
+ * @post Function returns OK, indicating success
+ */
+
+void test1_character_print();
+/**
+ * @brief Test function for character information printing
+ * @pre A null pointer to a character.
+ * @post Function returns 0, indicating an error.
+ */
+
+void test2_character_print();
+
+#endif 

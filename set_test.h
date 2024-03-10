@@ -1,3 +1,4 @@
+
 /** 
  * @brief It declares the tests for the set module
  * 
@@ -171,5 +172,18 @@ void test1_set_get_ids();
  * @post The function returns a null pointer, indicating an empty set.
  */
 void test2_set_get_ids();
+
+/**
+ * @brief Test function for printing the set
+ * @pre A valid pointer to a set 
+ * @post The function returns OK
+ */
+void test1_set_print();
+/**
+ * @brief Test function for printing the set
+ * @pre A null pointer
+ * @post The function returns ERROR
+ */
+void test2_set_print();
 
 #endif

@@ -67,6 +67,9 @@ int main(int argc, char **argv) {
   if (all || test == 21) test2_set_set_is_full();
   if (all || test == 22) test1_set_get_ids();
   if (all || test == 23) test1_set_get_ids();
+  if (all || test == 24) test1_set_print();
+  if (all || test == 25) test2_set_print();
+
 
   PRINT_PASSED_PERCENTAGE;
 
@@ -254,5 +257,12 @@ void test2_set_get_ids() {
   set_destroy(s);
 }
 
+void test1_set_print(){
+  Set* set = set_create();
+  PRINT_TEST_RESULT(set_print(set) == OK);
+  set_destroy(set);
+}
 
-
+void test2_set_print(){
+  PRINT_TEST_RESULT(set_print(NULL) == ERROR);
+}

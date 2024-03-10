@@ -128,6 +128,7 @@ void game_actions_exit(Game *game) {}
 void game_actions_next(Game *game) {
   Id current_id = NO_ID; /*Initializes an id to NO_ID*/
   Id space_id = NO_ID; /*Initializes space id to NO_ID*/
+  game_set_last_command_status(game, ERROR);
 
   space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (space_id == NO_ID) {
@@ -157,6 +158,7 @@ void game_actions_next(Game *game) {
   void game_actions_back(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
+    game_set_last_command_status(game, ERROR);
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -187,6 +189,7 @@ void game_actions_next(Game *game) {
   void game_actions_left(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
+    game_set_last_command_status(game, ERROR);
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -217,6 +220,7 @@ void game_actions_next(Game *game) {
   void game_actions_right(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
+    game_set_last_command_status(game, ERROR);
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -434,5 +438,4 @@ void game_actions_chat(Game *game) {
   game_set_last_command_status(game, OK);
   return;
 }
-
 
