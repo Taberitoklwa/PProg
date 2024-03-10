@@ -30,7 +30,8 @@ typedef struct _Game {
   int n_characters;
   Space *spaces[MAX_SPACES];/*!<It is declaring an array of pointers to `Space` objects.This array is used to store the different spaces in the game.>!*/
   int n_spaces; /*!<It is declaring an integer that contains the number of spaces>!*/
-  Command last_cmd; /*!<Last command that has been introduced>!*/
+  Cmd last_cmd; /*!<Last command that has been introduced>!*/
+  Command *command; 
   Status last_cmd_status;
   Bool finished; /*!< Whether it is finished or not>!*/
 } Game;
@@ -75,7 +76,7 @@ Status game_add_space(Game *game, Space *space);
  
  */
 
-Status game_actions_update(Game *game, Command cmd);
+Status game_actions_update(Game *game, Command *command);
 
 /**
  * @brief It destroys the game by by successive calls to the space_destroy function that frees the allocated memory.
@@ -175,6 +176,8 @@ int game_get_num_objects(Game *game);
 
 Object **game_get_objects(Game *game);
 
+Set *game_get_objects_in_space(Game *game, Id id);
+
 /**
  * @brief Retrieves the last command that was executed in the game
 
@@ -182,26 +185,13 @@ Object **game_get_objects(Game *game);
  * @return a command type variable
  */
 
-Command game_get_last_command(Game *game);
+Cmd game_get_last_command(Game *game);
 
-/**
- * @brief It is used to set the last command that was executed in the game
+Status game_set_last_command(Game *game, Cmd cmd);
 
- * @param game, pointer to a `Game` structure, which represents the current state of the game being played
- * @param  command, last read command
- * @return OK, if everything goes well or ERROR if there was some mistake
- 
- */
+Cmd game_get_command_cmd(Game *game,Command *command);
 
-Status game_set_last_command(Game *game, Command command);
-
-/**
- * @brief It is used to retrieve the current state of the game
-
- * @param game, pointer to a  Game structure, which represents the current state of the game being played
- * @return It returns a boolean value `finished`
- * 
- */
+char *game_get_command_target(Game *game,Command *command);
 
 
 Bool game_get_finished(Game *game);
@@ -220,6 +210,11 @@ Status game_get_last_command_status(Game *game);
  */
 
 Status game_set_finished(Game *game, Bool finished);
+
+Id * game_get_set_ids(Game *game,Set *set);
+
+int game_get_set_nids(Game *game,Set* set);
+
 
 /** 
  * @brief It prints information about the current state of a game

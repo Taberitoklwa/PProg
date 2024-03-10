@@ -81,7 +81,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
   char objs[255]="";
   char str[500]="";
   int objsinspace=0, auxprinted=0;
-  Command last_cmd = UNKNOWN;
+  Cmd last_cmd = UNKNOWN;
+  extern char *cmd_to_str[N_CMD][N_CMDT];
   Object **objects;
   int nobjects;
   extern char *cmd_to_str[N_CMD][N_CMDT];

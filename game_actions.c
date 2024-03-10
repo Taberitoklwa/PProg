@@ -31,7 +31,7 @@ void game_actions_left(Game *game);
 
 void game_actions_right(Game *game);
 
-void game_actions_take(Game *game);
+void game_actions_take(Game *game, char* object);
 
 void game_actions_drop(Game *game);
 
@@ -43,9 +43,13 @@ void game_actions_chat(Game *game);
    Game actions implementation
 */
 
-Status game_actions_update(Game *game, Command cmd) {
+Status game_actions_update(Game *game, Command* command) {
+
+  Cmd cmd = game_get_command_cmd(game,command);
+  char *target = game_get_command_target(game,command);
+
   game_set_last_command(game, cmd);
-  game_set_last_command_status(game, ERROR);
+  
 
   switch (cmd) {
     case UNKNOWN:
@@ -70,10 +74,9 @@ Status game_actions_update(Game *game, Command cmd) {
 
     case RIGHT:
       game_actions_right(game);
-      break;
 
     case TAKE:
-      game_actions_take(game);
+      game_actions_take(game,target);
       break;
 
     case DROP:
@@ -94,6 +97,7 @@ Status game_actions_update(Game *game, Command cmd) {
 
   return OK;
 }
+
 
 /**
    Calls implementation for each action
@@ -238,21 +242,18 @@ void game_actions_next(Game *game) {
  * @param game, pointer to a `Game` structure, which represents the current state of the game being played
 
  */
-void game_actions_take(Game *game){
+void game_actions_take(Game *game, char* object){
 
   /* Declaring variables and initializing them with the default value NO_ID or NULL(pointer) */
-
-  Id object_id = NO_ID;
+  Status status = ERROR;
+  Set *objects = NULL;
+  Id *objectids = NULL;
+  Id target = NO_ID;
+  char targetstr[10]; 
+  int nobjects, i;
   Id player_location_id = NO_ID;
-  Id object_location_id = NO_ID;
   Space * space = NULL;
-  
-
-  object_id = object_get_id(game->objects[0]);
-
-  if (NO_ID == object_id) {
-    return;
-  }
+  game->last_cmd_status=ERROR;
 
   player_location_id = game_get_player_location(game);
 
@@ -260,35 +261,41 @@ void game_actions_take(Game *game){
     return;
   }
 
-  object_location_id = game_get_object_location(game, game->objects[0]);
+  objects = game_get_objects_in_space(game, player_location_id);
 
-   if (NO_ID == object_location_id) {
-    return;
-  }
-
-  if( object_location_id!=player_location_id) {
-    return;
-  }
-
-  space = game_get_space(game, object_location_id);
-
-  if(!space) {
+  if(!objects) {
     return;
   }
   
+  objectids = game_get_set_ids(game,objects);
 
-  /*Function call that sets the object ID of the player to an ID, indicating that the player is currently holding an object. */
+  if(!objectids){
+    return;
+  }
 
-  player_set_object(game->player, object_id);
+  nobjects = game_get_set_nids(game,objects);
 
-  /*Sets the object ID of the current space to NO_ID, indicating that there is no object in that space because the player has taken it.*/
+  strcpy(targetstr,object+1);
+  
+  target = atoi(targetstr);
+  
+  for(i=0;i<nobjects;i++){
 
-  /*pace_set_object(space,NO_ID);*/
+    if(objectids[i] == target){
 
-  space_del_object(space, object_id);
+      player_set_object(game->player, objectids[i]);
 
-  game_set_last_command_status(game, OK);
+      /*Eliminates the object from the space*/
 
+      space_del_object(space, objectids[i]);
+
+      status = OK;
+
+    }
+
+  }
+
+  game->last_cmd_status= status;
   return;
 }
 
@@ -324,6 +331,7 @@ void game_actions_drop(Game *game) {
   }
 
 
+
   /*Function call that sets the object ID of the player to NO_ID, indicating that the player is not currently holding an object. */
   
   player_set_object(game->player, NO_ID);
@@ -332,7 +340,7 @@ void game_actions_drop(Game *game) {
 
   space_add_object(space,object_id);  
 
-  game_set_last_command_status(game, OK);
+  game->last_cmd_status=OK;
   return;
 }
 

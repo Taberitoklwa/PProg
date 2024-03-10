@@ -218,6 +218,24 @@ int space_object_position_in_space(Space *space, Id id){
 }
 
 
+
+Id *space_get_objects(Space *space){
+    if( !space){
+        return NULL;
+
+    }
+    return set_get_ids(space->objects_id);
+}
+
+Set *space_get_set_of_objects(Space* space) {
+  if (!space) {
+    return NULL;
+  }
+
+  return space->objects_id;
+  
+}
+
 Status space_print(Space* space) {
   Id idaux = NO_ID;
 

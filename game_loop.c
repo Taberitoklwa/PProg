@@ -10,11 +10,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "command.h"
-#include "game.h"
+#include "game.h" 
 #include "game_actions.h"
 #include "graphic_engine.h"
+
 /**
  * @brief Initializes the game loop
  *
@@ -50,6 +52,7 @@ void game_loop_cleanup(Game game, Graphic_engine *gengine);
 int main(int argc, char *argv[]) {
   Game game; 
   Graphic_engine *gengine;
+  srand(time(NULL));
 
   if (argc < 2) { 
     fprintf(stderr, "Use: %s <game_data_file>\n", argv[0]); 
@@ -79,12 +82,14 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
 }
 
 void game_loop_run(Game game, Graphic_engine *gengine) {
-  Command command = NO_CMD; 
+  
+  Cmd cmd = game_get_command_cmd(&game, game.command);
 
-  while ((command != EXIT) && (game_get_finished(&game) == FALSE)) { /*Loop until exit command is received or game is finished */
+  while ((cmd != EXIT) && (game_get_finished(&game) == FALSE)) { /*Loop until exit command is received or game is finished */
     graphic_engine_paint_game(gengine, &game); /*Paints the game on the screen using graphic engine*/
-    command = command_get_user_input(); /*Gets user input command*/
-    game_actions_update(&game, command); /*Updates game state based on user command*/
+    command_get_user_input(game.command); /*Gets user input command*/
+    game_actions_update(&game, game.command); /*Updates game state based on user command*/
+    cmd = game_get_command_cmd(&game, game.command);
   }
 }
 

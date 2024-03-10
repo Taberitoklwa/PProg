@@ -206,6 +206,10 @@ int space_get_n_objects(Space *space);
 
 int space_object_position_in_space(Space *space, Id id);
 
+Set *space_get_set_object(Space* space);
+
+Set *space_get_set_of_objects(Space* space);
+
 /**
  * @brief It prints the space information
  * @author Profesores PPROG
