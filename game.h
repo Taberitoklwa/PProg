@@ -138,6 +138,7 @@ Status game_set_player_location(Game *game, Id id);
  */
 Status game_add_object(Game *game, Object *object);
 
+
 /**
  * @brief  It is used to get the current location of the object in the game
 
@@ -221,6 +222,10 @@ int game_get_num_objects(Game *game);
 Object **game_get_objects(Game *game);
 
 Set *game_get_objects_in_space(Game *game, Id id);
+
+Id game_set_get_id(Game *game,Set *set, int i);
+
+ 
 
 /**
  * @brief Retrieves the last command that was executed in the game

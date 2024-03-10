@@ -364,6 +364,14 @@ Set *game_get_objects_in_space(Game *game, Id id){
 
 }
 
+Id game_set_get_id(Game *game,Set *set, int i){
+
+  if(!game || !set){
+    return NO_ID;
+  }
+
+    return set_get_id(set,i);
+}
 
 Status game_set_object_location(Game* game, Object* object, Id id) {
  

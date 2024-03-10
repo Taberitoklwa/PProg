@@ -69,10 +69,8 @@ Status set_destroy(Set *set)
 
 Id set_get_id(Set *set, int i){
 
-    if(!set || i<0){
-
-        return ERROR;
-
+    if(!set || i<0 || i>(set->n_ids-1)){
+        return NO_ID;
     }
 
     return set->ids[i];
@@ -149,6 +147,8 @@ int set_id_belongs(Set *set, Id id){
     return -1;
 
 }
+
+
 
 Bool set_is_empty(Set *set){
 
