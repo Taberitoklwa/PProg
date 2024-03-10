@@ -108,7 +108,7 @@ Status game_reader_load_objects(Game *game, char *filename) {
   }
 
   /* Reading lines from a file and parsing them (strtok) to extract information about game
-  spaces. */
+  objects. */
   while (fgets(line, WORD_SIZE, file)) {
     if (strncmp("#o:", line, 3) == 0) {
       toks = strtok(line + 3, "|");

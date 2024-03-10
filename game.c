@@ -87,10 +87,54 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   game->characters[0]=character_create(1);
-  game->n_characters++;
   if(game->characters[0] == NULL){
       return ERROR;
   }
+  game->n_characters++;
+
+  if(!character_set_hp(game->characters[0],3)){
+    return ERROR;
+
+  }
+
+  if(!character_set_name((game->characters[0]), "/\\00/\\")){
+    return ERROR;
+  }
+
+  if(!character_set_message((game->characters[0]), "Hi")){
+    return ERROR;
+  }
+
+  if(!character_set_friendly((game->characters[0]), FALSE)){
+    return ERROR;
+  }
+  
+  space_set_character_id(game->spaces[0], 1);
+
+  game->characters[1]=character_create(2);
+  if(game->characters[1] == NULL){
+      return ERROR;
+  }
+  game->n_characters++;
+
+  if(!character_set_hp(game->characters[1],5)){
+    return ERROR;
+
+  }
+
+  if(!character_set_name((game->characters[1]), "^0m")){
+    return ERROR;
+  }
+
+  if(!character_set_message((game->characters[1]), "POOOO")){
+    return ERROR;
+  }
+
+  if(!character_set_friendly((game->characters[1]), TRUE)){
+    return ERROR;
+  }
+
+  space_set_character_id(game->spaces[1], 2);
 
   game->player = player_create(1);
   if( game->player == NULL){
@@ -164,20 +208,41 @@ Character *game_get_character(Game *game, Id id){
   }
 
   for(i=0;i<game->n_characters;i++){
-
-    if(character_get_id(game->characters[i]) == id){
+    if(character_get_id(game->characters[i]) == game_get_space_character_id(game_get_space(game, id))){
 
       return game->characters[i];
 
 
     }
   }
-
   return NULL;
 }
 
+Id game_get_character_location(Game *game, Character *character){
 
-Space *game_get_space(Game *game, Id id) {
+  Id character_id=NO_ID;
+  int i;
+
+
+  if(!game){
+    return NO_ID;
+  }
+
+  character_id=character_get_id(character);
+
+  for(i=0;i<game->n_spaces;i++){
+    if(character_id == game_get_space_character_id(game->spaces[i])){
+
+      return space_get_id(game->spaces[i]);
+
+    }
+  }
+
+  return NO_ID;
+
+}
+
+Space *game_get_space(Game *game, Id id){
   int i = 0;
 
   if (id == NO_ID) {

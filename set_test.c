@@ -122,6 +122,7 @@ void test1_set_get_nids() {
   set_add_id(s, 5);
   set_add_id(s, 7);
   PRINT_TEST_RESULT(set_get_nids(s) == 2);
+  set_destroy(s);
 }
 
 void test2_set_get_nids() {
@@ -149,6 +150,7 @@ void test3_set_add_id() {
   s=set_create();
   set_add_id(s, 6);
   PRINT_TEST_RESULT(set_add_id(s, 6) == ERROR);
+  set_destroy(s);
 }
 
 void test1_set_del_id() {

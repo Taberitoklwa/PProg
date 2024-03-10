@@ -28,7 +28,7 @@ struct _Space {
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
   Set *objects_id;              /*!< Whether the space has an object or not */
-  Id character;
+  Id character;  /*!< Id of the character located in the space */
 };
 
 /** space_create allocates memory for a new space
@@ -91,22 +91,13 @@ Status space_set_name(Space* space, char* name) {
   return OK;
 }
 
-Id space_get_character_id(Space *space){
-
-  if(!space){
-    return NO_ID;
-  }
-
-  return space->character;
-
-}
-
 const char* space_get_name(Space* space) {
   if (!space) {
     return NULL;
   }
   return space->name;
 }
+
 
 Status space_set_north(Space* space, Id id) {
   if (!space || id == NO_ID) {
@@ -168,7 +159,26 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-/***********************************************************/
+Id space_get_character_id(Space *space){
+
+  if(!space){
+    return NO_ID;
+  }
+
+  return space->character;
+
+}
+
+Status space_set_character_id(Space *space, Id id){
+
+  if(!space){
+    return ERROR;
+  }
+
+  space->character=id;
+
+  return OK;
+}
 
 Status space_add_object(Space* space, Id id) {
   if (!space ||id==NO_ID) {
@@ -198,36 +208,6 @@ int space_get_n_objects(Space *space){
     return set_get_nids(space->objects_id);
 }
 
-/*
-* Gets an array of objects
-*/
-Id *space_get_objects(Space *space){
-    if( !space){
-        return NULL;
-
-    }
-    return set_get_ids(space->objects_id);
-}
-
-Set *space_get_set_of_objects(Space* space) {
-  if (!space) {
-    return NULL;
-  }
-
-  return space->objects_id;
-  
-}
-
-Id space_get_object(Space* space, int i) {
-
-  if(!space || i>0){
-    return NO_ID;
-  }
-
-  return set_get_id(space->objects_id, i); 
-
-}
-
 int space_object_position_in_space(Space *space, Id id){
 
   if(!space || id==NO_ID){
@@ -237,36 +217,6 @@ int space_object_position_in_space(Space *space, Id id){
   return set_id_belongs(space->objects_id, id);
 }
 
-
-Bool space_object_in_space(Space *space, Id id){
-
-  if(!space || id==NO_ID){
-    return -1;
-  }
-
-  if (set_id_belongs(space->objects_id, id)>=0){
-    return TRUE;
-  }
-  else{
-    return FALSE;
-  }
-}
-
-Status space_set_objectset(Space *space, Set* set){
-
-if(!space || !set){
-  return ERROR;
-}
-
-space->objects_id=set;
-
-return OK;
-
-}
-
-
-
-/******************************************************************/
 
 Status space_print(Space* space) {
   Id idaux = NO_ID;

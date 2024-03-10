@@ -24,7 +24,7 @@
 
 typedef struct _Game {
   Player* player; /*!< Id number of the object location */
-   Object* objects[MAX_OBJECTS]; /*!< Id number of the player location */
+  Object* objects[MAX_OBJECTS]; /*!< Id number of the player location */
   int n_objects;
   Character* characters[MAX_CHARACTERS];
   int n_characters;
@@ -165,6 +165,8 @@ Status  game_set_object_location(Game *game, Object*object, Id id);
 Id game_get_space_character_id(Space *space);
 
 Character *game_get_character(Game *game, Id id);   
+
+Id game_get_character_location(Game *game, Character *character);
 
 int game_get_num_objects(Game *game);
 

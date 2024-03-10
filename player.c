@@ -24,7 +24,7 @@ struct _Player {
   char name[WORD_SIZE + 1]; /*!< Name of the Player */                
   Id location; /*!<Id of the players location*/
   Id object;  /*!< Whether the Player has an object an if so, which one */
-  int hp;
+  int hp;  /*!< Health points of the player */
 };
 
 /** Player_create allocates memory for a new Player
@@ -60,32 +60,6 @@ Status player_destroy(Player *player) {
   player = NULL;
   return OK;
 }
-
-Status player_set_health(Player* player, int hp){
-
-    if(!player || hp<0){
-        return ERROR;
-    }
-
-    player->hp=hp;
-
-    return OK;
-
-}
-
-int player_get_health(Player* player){
-
-    if(!player){
-        return ERROR;
-    }
-
-    
-
-    return player->hp;
-
-}
-
-
 
 Id player_get_id(Player* player) {
   if (!player) {
@@ -144,6 +118,28 @@ Id player_get_object(Player *player) {
     return NO_ID;
   }
   return player->object;
+}
+
+Status player_set_health(Player* player, int hp){
+
+    if(!player || hp<0){
+        return ERROR;
+    }
+
+    player->hp=hp;
+
+    return OK;
+
+}
+
+int player_get_health(Player* player){
+
+    if(!player){
+        return ERROR;
+    }
+
+    return player->hp;
+
 }
 
 Status player_print(Player* player) {

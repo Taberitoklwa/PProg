@@ -340,7 +340,7 @@ void game_actions_attack(Game *game){
   Space *space = NULL;
   Character * npc = NULL;
   Player *player = NULL;
-  Id character = NO_ID;
+  Id character_location = NO_ID;
   int attack, php, chp;
   srand(time(NULL));
   
@@ -356,9 +356,9 @@ void game_actions_attack(Game *game){
     return;
   }
 
-  character = game_get_space_character_id(space);
+  character_location = space_get_id(space);
 
-  npc = game_get_character(game,character);
+  npc = game_get_character(game,character_location);
 
   if(!npc){
     return;

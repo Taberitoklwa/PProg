@@ -4,7 +4,7 @@
  * @file set.c
  * @author Diego Tabero & Marcos Leo Sonck
  * @version 3.5
- * @date 6-01-2024
+ * @date 27-02-2024
  * @copyright GNU Public License
  */
 
@@ -22,8 +22,8 @@
 
 struct _Set
 {
-    Id ids[MAX_ID];
-    int n_ids;
+    Id ids[MAX_ID];  /*!< Ids array containing object ids */
+    int n_ids; /*!< Number of arrays saved in the set */
 };
 
 /** set_create allocates memory for a new set
