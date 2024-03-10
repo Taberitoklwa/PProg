@@ -250,6 +250,7 @@ Status game_set_last_command(Game *game, Cmd cmd);
  */
 Cmd game_get_command_cmd(Game *game);
 
+Command *game_get_command(Game *game);
 
 /**
  * @brief returns the target of the command being executed
@@ -295,18 +296,6 @@ Status game_get_last_command_status(Game *game);
  */
 
 Status game_set_finished(Game *game, Bool finished);
-
-/**
- * @brief Retrieves the IDs contained in a set associated with a game.
- *
- * This function retrieves the IDs contained within the specified set that is associated with the given game.
- *
- * @param game Pointer to the game structure.
- * @param set Pointer to the set whose IDs are to be retrieved.
- * @return Pointer to an array of IDs contained in the set associated with the game.
- *         Returns NULL if the game or set is NULL, or if the set is not associated with the game.
- */
-Id *game_get_set_ids(Game *game, Set *set);
 
 /**
  * @brief Retrieves the number of IDs contained in a set associated with a game.

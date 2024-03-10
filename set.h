@@ -57,16 +57,6 @@ Id set_get_id(Set *set, int i);
 int set_get_nids(Set *set);
 
 /**
- * @brief Retrieve the array of ids saved in the set
- * @author Diego Tabero & Marcos Leo Sonck
- *
- * @param, set a pointer to the set
- * @return the ID at the specified index `i` within the set.
- */
-
-Id * set_get_ids(Set *set);
-
-/**
  * @brief Adds an ID if it isn´t already in the Set
  * @author Diego Tabero & Marcos Leo Sonck
  *

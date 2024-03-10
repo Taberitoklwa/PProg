@@ -173,14 +173,6 @@ Bool set_is_full(Set *set){
 
 }
 
-Id * set_get_ids(Set *set){
-    if (!set){
-        return NULL;
-    }
-    return set->ids;
-}
-
-
 Status set_print(Set *set)
 {
 

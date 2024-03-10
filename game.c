@@ -397,6 +397,15 @@ Cmd game_get_command_cmd(Game *game){
 
 }
 
+Command *game_get_command(Game *game){
+
+  if(!game){
+    return NULL;
+  }
+
+  return game->command;
+
+}
 
 char *game_get_command_target(Game *game){
 
@@ -438,21 +447,6 @@ Status game_set_finished(Game *game, Bool finished) {
   game->finished = finished;
 
   return OK;
-}
-
-Id * game_get_set_ids(Game *game,Set *set){
-    
-  Id *ids = NULL;
-
-  if(!game || !set){
-    return NULL;
-  }
-
-  ids = set_get_ids(set);
-    
-
-    return ids;
-   
 }
 
 int game_get_set_nids(Game *game,Set* set){

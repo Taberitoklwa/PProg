@@ -87,7 +87,7 @@ void game_loop_run(Game game, Graphic_engine *gengine) {
 
   while ((cmd != EXIT) && (game_get_finished(&game) == FALSE)) { /*Loop until exit command is received or game is finished */
     graphic_engine_paint_game(gengine, &game); /*Paints the game on the screen using graphic engine*/
-    command_get_user_input(game.command); /*Gets user input command*/
+    command_get_user_input(game_get_command(&game)); /*Gets user input command*/
     game_actions_update(&game); /*Updates game state based on user command*/
     cmd = game_get_command_cmd(&game);
   }
