@@ -130,6 +130,10 @@ void game_actions_next(Game *game) {
   Id space_id = NO_ID; /*Initializes space id to NO_ID*/
   game_set_last_command_status(game, ERROR);
 
+  if(!game){
+    return;
+  }
+
   space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
   if (space_id == NO_ID) {
     return;
@@ -159,6 +163,10 @@ void game_actions_next(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
     game_set_last_command_status(game, ERROR);
+
+    if(!game){
+      return;
+    }
 
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
@@ -191,6 +199,10 @@ void game_actions_next(Game *game) {
     Id space_id = NO_ID; 
     game_set_last_command_status(game, ERROR);
 
+    if(!game){
+      return;
+    }
+
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
     if (NO_ID == space_id) {
@@ -222,6 +234,10 @@ void game_actions_next(Game *game) {
     Id space_id = NO_ID; 
     game_set_last_command_status(game, ERROR);
 
+    if(!game){
+      return;
+    }
+
     space_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
 
     if (NO_ID == space_id) {
@@ -247,16 +263,18 @@ void game_actions_next(Game *game) {
  */
 void game_actions_take(Game *game){
 
-  /* Declaring variables and initializing them with the default value NO_ID or NULL(pointer) */
-  Status status = ERROR;
   Set *objects = NULL;
   Id target = NO_ID;
   char targetstr[10]; 
-  int nobjects, i;
+  int nobjects, i; 
   Id player_location_id = NO_ID;
   Space * space = NULL;
 
   game_set_last_command_status(game, ERROR);
+
+  if(!game){
+    return;
+  }
 
   player_location_id = game_get_player_location(game);
 
@@ -269,6 +287,8 @@ void game_actions_take(Game *game){
   if(!space){
     return;
   }
+
+  /*MIRAAAAAAAAAAAAAAR**/
 
   objects = game_get_objects_in_space(game, player_location_id);
 
@@ -292,15 +312,13 @@ void game_actions_take(Game *game){
 
       space_del_object(space, game_set_get_id(game,objects,i));
 
-      status = OK;
-
     }
 
   }
 
   game_command_clean_target(game);
 
-  game_set_last_command_status(game,status);
+  game_set_last_command_status(game,OK);
 
   return;
 }
@@ -316,22 +334,30 @@ void game_actions_drop(Game *game) {
   Id object_id = NO_ID;
   Id playerlocation_id = NO_ID;
   Space *space = NULL;
+  Status status = ERROR;
 
-  object_id = player_get_object(game->player);
+  if(!game){
+    return;
+  }
+
+  object_id = player_get_object(game_get_player(game));
 
   if(object_id == NO_ID) {
+    game_set_last_command_status(game,status);
     return;
   }
 
   playerlocation_id = game_get_player_location(game);
 
   if(playerlocation_id == NO_ID) {
+    game_set_last_command_status(game,status);
     return;
   }
 
   space = game_get_space(game, playerlocation_id);
 
   if(space == NULL) {
+    game_set_last_command_status(game,status);
     return;
   }
 
@@ -345,8 +371,9 @@ void game_actions_drop(Game *game) {
 
   space_add_object(space,object_id);  
 
-  
-  game_set_last_command_status(game,OK);
+  status=OK;
+  game_set_last_command_status(game,status);
+
   return;
 }
 
@@ -411,6 +438,10 @@ void game_actions_chat(Game *game) {
   Id player_location_id = NO_ID; /*Initializes an id to NO_ID*/
   Id character_location_id = NO_ID; /*Initializes space id to NO_ID*/
 
+  if(!game){
+    return;
+  }
+
   game_set_last_command_status(game, ERROR);
 
   player_location_id = game_get_player_location(game); /*Sets space_id to the id of the location of the player*/
@@ -418,11 +449,15 @@ void game_actions_chat(Game *game) {
     return;
   }
 
+
   character_location_id = game_get_space_character_id(game_get_space(game, player_location_id)); 
   if (character_location_id == NO_ID) {
     return;
   }
 
+  if(character_get_friendly(game_get_character(game, player_location_id))!=TRUE){
+    return;
+  }
 
   game_set_last_command_status(game, OK);
   return;

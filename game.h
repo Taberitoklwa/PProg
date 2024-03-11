@@ -138,7 +138,6 @@ Status game_set_player_location(Game *game, Id id);
  */
 Status game_add_object(Game *game, Object *object);
 
-
 /**
  * @brief  It is used to get the current location of the object in the game
 
@@ -203,8 +202,7 @@ Character *game_get_character(Game *game, Id id);
  *
  * @param game Pointer to the game structure.
  * @param character Pointer to the character whose location ID is to be retrieved.
- * @return The location ID of the character.
- *         Returns NO_ID if the character or game is NULL, or if the character is not found in the game.
+ * @return The location ID of the character. Returns NO_ID if the character or game is NULL, or if the character is not found in the game.
  */
 Id game_get_character_location(Game *game, Character *character);
 
@@ -219,13 +217,40 @@ Id game_get_character_location(Game *game, Character *character);
  */
 int game_get_num_objects(Game *game);
 
-Object **game_get_objects(Game *game);
+/**
+ * @brief Gets an id of a set at a especified position
+ *
+ * @param game Pointer to the game structure.
+ * @param set Poinyer to the set structure
+ * @param i, index in the set
+ * @return Id especified in the set.
+ */
+Id game_set_get_id(Game *game,Set *set, int i);
+
+/**
+ * @brief Returns the object at a specified index in a game's object array
+ * 
+ * @param game pointer to the `Game` struct
+ * @param i Index of the object in the game's object array that you want to retrieve.
+ * 
+ * @return Returns the object at index i in the objects array. If the Game pointer is NULL or if the index i is out of bounds then it returns NULL
+ */
+Object *game_get_object_at(Game *game, int i);
+
 
 Set *game_get_objects_in_space(Game *game, Id id);
 
-Id game_set_get_id(Game *game,Set *set, int i);
+/**
+ * @brief Returns the character at a specified index in a game's character array
+ * 
+ * @param game pointer to the `Game` struct
+ * @param i Index of the object in the game's character array that you want to retrieve.
+ * 
+ * @return Returns the character at index i in the objects array. If the Game pointer is NULL or if the index i is out of bounds then it returns NULL
+ */
+Character *game_get_character_at(Game *game, int i);
 
- 
+Command *game_get_command(Game *game);
 
 /**
  * @brief Retrieves the last command that was executed in the game
@@ -250,8 +275,6 @@ Status game_set_last_command(Game *game, Cmd cmd);
  */
 Cmd game_get_command_cmd(Game *game);
 
-Command *game_get_command(Game *game);
-
 /**
  * @brief returns the target of the command being executed
  * @param command,  pointer to a Command structure
@@ -265,10 +288,6 @@ char *game_get_command_target(Game *game);
  * @return OK, if everuthing goes well or ERROR if there was some mistake
  */
 Status game_command_clean_target(Game *game);
-
-
-
-Bool game_get_finished(Game *game);
 
 /**
  * @brief sets the status of the last command
@@ -285,6 +304,17 @@ Status game_set_last_command_status(Game *game, Status status);
  * @return the status output of the last command
  */
 Status game_get_last_command_status(Game *game);
+
+/**
+ * @brief It is used to get the finished status of the game
+ * 
+ * @param game, pointer to a Game structure, which represents the current state of the game being played
+
+ * @return true or false wether the game is finished or not
+ 
+ */
+
+Bool game_get_finished(Game *game);
 
 /**
  * @brief It is used to set is used to set the finished status of the game
@@ -304,8 +334,7 @@ Status game_set_finished(Game *game, Bool finished);
  *
  * @param game Pointer to the game structure.
  * @param set Pointer to the set whose number of IDs is to be retrieved.
- * @return The number of IDs contained in the set associated with the game.
- *         Returns -1 if the game or set is NULL, or if the set is not associated with the game.
+ * @return The number of IDs contained in the set associated with the game. Returns -1 if the game or set is NULL, or if the set is not associated with the game.
  */
 int game_get_set_nids(Game *game, Set *set);
 

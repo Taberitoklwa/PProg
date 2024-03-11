@@ -9,3 +9,18 @@ Modificar la estructura de command--
 Mirar exhaustivamente el test del space Preguntar si hy q modificarlo respecto a la nueva iteracion
 
 Preguntar para ver como redimensionar el mapa sin que varie dependiendo de si hay objetos o no
+
+
+estructura publica
+
+if(!game)
+
+controlar argumentos de entrada 
+
+ver que todas las funciones tienen test
+
+
+
+
+miraaaaaaaar bieeen set_objects in spacd
+funciones que devuelven seeet

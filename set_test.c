@@ -65,10 +65,8 @@ int main(int argc, char **argv) {
   if (all || test == 19) test2_set_set_is_empty();
   if (all || test == 20) test2_set_set_is_full();
   if (all || test == 21) test2_set_set_is_full();
-  if (all || test == 22) test1_set_get_ids();
-  if (all || test == 23) test1_set_get_ids();
-  if (all || test == 24) test1_set_print();
-  if (all || test == 25) test2_set_print();
+  if (all || test == 22) test1_set_print();
+  if (all || test == 23) test2_set_print();
 
 
   PRINT_PASSED_PERCENTAGE;
@@ -115,7 +113,7 @@ void test1_set_set_get_id() {
 
 void test2_set_set_get_id() {
   Set *s=NULL;
-  PRINT_TEST_RESULT(set_get_id(s, 0) == ERROR);
+  PRINT_TEST_RESULT(set_get_id(s, 0) == NO_ID);
   set_destroy(s);
 }
 
@@ -240,20 +238,6 @@ void test2_set_set_is_full() {
   }
 
   PRINT_TEST_RESULT(set_is_full(s) == TRUE);
-  set_destroy(s);
-}
-
-void test1_set_get_ids() {
-  Set *s;
-  s = set_create();
-  PRINT_TEST_RESULT(set_get_ids(s) != NULL);
-  set_destroy(s);
-}
-
-void test2_set_get_ids() {
-  Set *s=NULL;
-
-  PRINT_TEST_RESULT(set_get_ids(s) == NULL);
   set_destroy(s);
 }
 

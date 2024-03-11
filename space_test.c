@@ -81,6 +81,8 @@ if (all || test == 34) test1_space_object_position_in_space();
 if (all || test == 35) test2_space_object_position_in_space();
 if (all || test == 36) test1_space_get_character_id();
 if (all || test == 37) test2_space_get_character_id();
+if (all || test == 38) test1_space_set_character_id();
+if (all || test == 39) test2_space_set_character_id();
 if (all || test == 40) test1_space_print();
 if (all || test == 41) test2_space_print();
 
@@ -318,6 +320,19 @@ void test1_space_get_character_id(){
 
 void test2_space_get_character_id(){
   PRINT_TEST_RESULT(space_get_character_id(NULL) == NO_ID);
+}
+
+/*It is the same function as test1_space_get_character_*/
+
+void test1_space_set_character_id(){
+  Space* space = space_create(1);
+  space_set_character_id(space,1);
+  PRINT_TEST_RESULT(space_get_character_id(space) == 1);
+  space_destroy(space);
+}
+
+void test2_space_set_character_id(){
+  PRINT_TEST_RESULT(space_set_character_id(NULL, 1) == ERROR);
 }
 
 void test1_space_print(){

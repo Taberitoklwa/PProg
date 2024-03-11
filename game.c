@@ -148,7 +148,7 @@ Status game_create_from_file(Game *game, char *filename) {
     return ERROR;
   }
 
-  /* The player and the object are located in the first space */
+  /* The player is located in the first space*/
   game_set_player_location(game, game_get_space_id_at(game, 0));
 
   return OK;
@@ -195,6 +195,78 @@ Status game_destroy(Game *game) {
   return OK;
 }
 
+
+Space *game_get_space(Game *game, Id id){
+  int i = 0;
+
+  if (id == NO_ID) {
+    return NULL;
+  }
+
+  for (i = 0; i < game->n_spaces; i++) {
+    if (id == space_get_id(game->spaces[i])) {
+
+      /*When it finds that the space id matches one of the defined spaces it returns a pointer to the space structure*/
+
+      return game->spaces[i];
+    }
+  }
+
+  return NULL;
+}
+
+
+Id game_set_get_id(Game *game,Set *set, int i){
+
+  if(!game || !set){
+    return NO_ID;
+  }
+
+    return set_get_id(set,i);
+}
+
+Object *game_get_object_at(Game *game, int i){
+    if (!game || i>game->n_objects-1){
+        return NULL;
+    }
+    return game->objects[i];
+}
+
+int game_get_num_objects(Game *game){
+
+  int i;
+
+  if(!game){
+    return -1;
+  }
+
+  for(i=0; i< MAX_OBJECTS && game->objects[i]!=NULL; i++);
+
+  return i;
+
+}
+
+Id game_get_player_location(Game *game) { return player_get_location(game->player);}
+
+Status game_set_player_location(Game *game, Id id) {
+  if (!game || id == NO_ID) {
+    return ERROR;
+  }
+
+  player_set_location(game->player, id);
+
+  return OK;
+}
+
+Player *game_get_player(Game *game){
+
+  if(!game){
+    return NULL;
+  }
+
+  return game->player;
+}
+
 Id game_get_space_character_id(Space *space){
 
   if(!space){
@@ -223,6 +295,17 @@ Character *game_get_character(Game *game, Id id){
   return NULL;
 }
 
+Character *game_get_character_at(Game *game, int i){
+
+  if(!game || i>game->n_characters-1){
+    return NULL;
+  }
+
+  return game->characters[i];
+
+}
+
+
 Id game_get_character_location(Game *game, Character *character){
 
   Id character_id=NO_ID;
@@ -247,69 +330,6 @@ Id game_get_character_location(Game *game, Character *character){
 
 }
 
-Space *game_get_space(Game *game, Id id){
-  int i = 0;
-
-  if (id == NO_ID) {
-    return NULL;
-  }
-
-  for (i = 0; i < game->n_spaces; i++) {
-    if (id == space_get_id(game->spaces[i])) {
-
-      /*When it finds that the space id matches one of the defined spaces it returns a pointer to the space structure*/
-
-      return game->spaces[i];
-    }
-  }
-
-  return NULL;
-}
-
-Object **game_get_objects(Game *game){
-    if (!game){
-        return NULL;
-    }
-    return game->objects;
-}
-
-
-int game_get_num_objects(Game *game){
-
-  int i;
-
-  if(!game){
-    return -1;
-  }
-
-  for(i=0; i< MAX_OBJECTS && game->objects[i]!=NULL; i++);
-
-  return i;
-
-}
-
-
-Id game_get_player_location(Game *game) { return player_get_location(game->player);}
-
-Status game_set_player_location(Game *game, Id id) {
-  if (id == NO_ID) {
-    return ERROR;
-  }
-
-  player_set_location(game->player, id);
-
-  return OK;
-}
-
-Player *game_get_player(Game *game){
-
-  if(!game){
-    return NULL;
-  }
-
-  return game->player;
-}
-
 Status game_add_object(Game *game, Object *object){
 
   if ((object == NULL) || (game == NULL)) {
@@ -327,8 +347,13 @@ Status game_add_object(Game *game, Object *object){
 Id game_get_object_location(Game *game, Object *object){ 
 
   int i = 0;
+   Id object_id;
 
-  Id object_id=object_get_id(object);
+  if(!game || !object){
+    return NO_ID;
+  }
+
+  object_id=object_get_id(object);
 
   
 
@@ -342,8 +367,19 @@ Id game_get_object_location(Game *game, Object *object){
 
   }
   return NO_ID;
- }
+}
 
+ int game_get_set_nids(Game *game,Set* set){
+
+   if(!game || !set){
+    return 0;
+  }
+
+ return set_get_nids(set);
+
+}
+
+/*****************MIRRAAAAAAAAAAAR*/
 
 Set *game_get_objects_in_space(Game *game, Id id){
 
@@ -364,18 +400,10 @@ Set *game_get_objects_in_space(Game *game, Id id){
 
 }
 
-Id game_set_get_id(Game *game,Set *set, int i){
-
-  if(!game || !set){
-    return NO_ID;
-  }
-
-    return set_get_id(set,i);
-}
 
 Status game_set_object_location(Game* game, Object* object, Id id) {
  
-  if (id == NO_ID || !object) {
+  if (!game || id == NO_ID || !object) {
     return ERROR;
   }
 
@@ -384,6 +412,16 @@ Status game_set_object_location(Game* game, Object* object, Id id) {
   space_add_object(game_get_space(game, id), object_get_id(object));
   
   return OK;
+}
+
+Command *game_get_command(Game *game){
+
+  if(!game){
+    return NULL;
+  }
+
+  return game->command;
+
 }
 
 
@@ -397,15 +435,6 @@ Cmd game_get_command_cmd(Game *game){
 
 }
 
-Command *game_get_command(Game *game){
-
-  if(!game){
-    return NULL;
-  }
-
-  return game->command;
-
-}
 
 char *game_get_command_target(Game *game){
 
@@ -417,8 +446,6 @@ char *game_get_command_target(Game *game){
 
 }
 Cmd game_get_last_command(Game *game) {  return command_get_last_cmd(game->command); }
-
-/*Command game_get_last_command_status(Game *game) {return game->last_cmd_status;}*/
 
 
 Status game_set_last_command(Game *game, Cmd cmd) {
@@ -449,16 +476,6 @@ Status game_set_finished(Game *game, Bool finished) {
   return OK;
 }
 
-int game_get_set_nids(Game *game,Set* set){
-
-   if(!game || !set){
-    return 0;
-  }
-
- return set_get_nids(set);
-
-}
-
 void game_print(Game *game) {
   int i = 0;
 
@@ -487,7 +504,7 @@ void game_print(Game *game) {
 
   }
 
-  for(i=0; i<game->n_objects; i++){
+  for(i=0; i<game->n_characters; i++){
 
     if((character_print(game->characters[i]) == ERROR)){
       return;

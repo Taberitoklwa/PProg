@@ -56,6 +56,7 @@ Id set_get_id(Set *set, int i);
 
 int set_get_nids(Set *set);
 
+
 /**
  * @brief Adds an ID if it isn´t already in the Set
  * @author Diego Tabero & Marcos Leo Sonck
@@ -86,8 +87,6 @@ Status set_del_id(Set *set, Id id);
  */
 
 int set_id_belongs(Set *set, Id id);
-
-
 
 /**
  * @brief Checks if a given Set is empty.

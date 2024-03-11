@@ -158,8 +158,6 @@ Status character_set_friendly(Character *character, Bool value)
   return OK;
 }
 
-/*Mirar*/
-
 Bool character_get_friendly(Character *character)
 {
 

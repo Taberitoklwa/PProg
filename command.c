@@ -162,6 +162,8 @@ char *command_get_target(Command *command){
 
 }
 
+/**MIRAAAAAAAAAAAR*/
+
 Status command_clean_target(Command *command){
 
   int i;

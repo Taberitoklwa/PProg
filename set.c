@@ -75,6 +75,7 @@ Id set_get_id(Set *set, int i){
 
     return set->ids[i];
 
+
 }
 
 int set_get_nids(Set *set){
@@ -147,8 +148,6 @@ int set_id_belongs(Set *set, Id id){
     return -1;
 
 }
-
-
 
 Bool set_is_empty(Set *set){
 

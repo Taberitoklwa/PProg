@@ -41,8 +41,6 @@ Graphic_engine *graphic_engine_create() {
     return ge;
   }
 
-
-
   screen_init(HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + HEIGHT_FDB + 4, WIDTH_MAP + WIDTH_DES + 3);
   ge = (Graphic_engine *)malloc(sizeof(Graphic_engine));
   if (ge == NULL) {
@@ -81,12 +79,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
   Space *space_act = NULL;
   char objs[MAX_LENGTH];
   char str[WORD_SIZE+1];
-  int objsinspace=0, auxprinted=0;
+  int  nobjects=0, objsinspace=0, auxprinted=0, i=0;
   Cmd last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  Object **objects;
-  int nobjects;
-  int i;
 
   last_cmd = game_get_last_command(game);
   /* Paint the in the map area */
@@ -98,7 +93,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
     id_west = space_get_west(space_act);
     id_next = space_get_south(space_act);
 
-    objects = game_get_objects(game);
     nobjects = game_get_num_objects(game);
 
     /*Mirar primitivas de object_get_id*/
@@ -112,8 +106,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
         break;
       }
 
-      if (game_get_object_location(game, game->objects[i]) == id_back){
-        sprintf(str, "0%ld,", object_get_id(game->objects[i]));
+      if (game_get_object_location(game, game_get_object_at(game, i)) == id_back){
+        sprintf(str, "0%ld,", object_get_id(game_get_object_at(game, i)));
         strcat(objs, str);  
         objsinspace++;
       }
@@ -157,8 +151,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
         break;
       }
 
-      if (game_get_object_location(game, game->objects[i]) == id_act){
-      sprintf(str, "0%ld,", object_get_id(game->objects[i]));
+
+      if (game_get_object_location(game, game_get_object_at(game, i)) == id_act){
+      sprintf(str, "0%ld,", object_get_id(game_get_object_at(game, i)));
       strcat(objs, str);
       objsinspace++;
       }
@@ -222,8 +217,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
         break;
       } 
 
-      if (game_get_object_location(game, game->objects[i]) == id_next){
-      sprintf(str, "0%ld,", object_get_id(game->objects[i]));
+      if (game_get_object_location(game, game_get_object_at(game, i)) == id_next){
+      sprintf(str, "0%ld,", object_get_id(game_get_object_at(game, i)));
       strcat(objs, str);
       objsinspace++;
       }
@@ -266,8 +261,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
     sprintf(str, " Objects location: ");
     screen_area_puts(ge->descript, str);
       for(i=0; i<nobjects; i++){
-        if((obj_loc=game_get_object_location(game, objects[i]))!=NO_ID){
-              sprintf(str, " O%ld: %ld", object_get_id(objects[i]), obj_loc);
+        if((obj_loc=game_get_object_location(game, game_get_object_at(game, i)))!=NO_ID){
+              sprintf(str, " O%ld: %ld", object_get_id(game_get_object_at(game, i)), obj_loc);
               screen_area_puts(ge->descript, str);
         } 
 
@@ -282,7 +277,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
 
   for(i=0; i<game->n_characters; i++){
   
-    sprintf(str, " %s: %d (%d)", character_get_name(game->characters[i]), (int)game_get_character_location(game, game->characters[i]), character_get_hp(game->characters[i]));
+    sprintf(str, " %s: %d (%d)", character_get_name(game_get_character_at(game,i)), (int)game_get_character_location(game, game_get_character_at(game,i)), character_get_hp(game_get_character_at(game,i)));
     screen_area_puts(ge->descript, str);
 
   }
@@ -316,8 +311,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
   /*MIRAAAAR BIEN, SI CREO UNA VARIABLE AUXILIAR Y APUNTA NULL ME LANZA UNA VIOLACION DE SEGMENTO*/
 
 
-
-
   /* Paint in the banner area */
   screen_area_puts(ge->banner, " The anthill game ");
 
@@ -337,7 +330,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
     sprintf(str, " %s (%s): ERROR", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
     screen_area_puts(ge->feedback, str);
   }
-
 
 
   /* Dump to the terminal */

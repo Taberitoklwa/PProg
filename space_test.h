@@ -315,6 +315,21 @@ void test1_space_get_character_id();
 void test2_space_get_character_id();
 
 /**
+ * @test Test function for getting the character id
+ * @pre Pointer to space
+ * @pre Character set in the space
+ * @post Output== Character Id 
+ */
+void test1_space_set_character_id();
+
+/**
+ * @test Test function for setting the character id
+ * @pre pointer to NULL
+ * @post Output== ERROR
+ */
+void test2_space_set_character_id();
+
+/**
  * @test Test function for printing the Space information
  * @pre pointer to space
  * @post Output== OK 
