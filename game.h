@@ -108,8 +108,6 @@ Space *game_get_space(Game *game, Id id);
 Id game_get_player_location(Game *game);
 
 
-
-
 /**
  * @brief It returns the pointer to the player
 
@@ -171,7 +169,7 @@ Object* game_get_object(Game *game, Id id);
  
  */
 
-Status  game_set_object_location(Game *game, Object*object, Id id);
+Status game_set_object_location(Game *game, Object*object, Id id);
 
 /**
  * @brief Retrieves the character ID associated with a space.
@@ -250,6 +248,12 @@ Set *game_get_objects_in_space(Game *game, Id id);
  */
 Character *game_get_character_at(Game *game, int i);
 
+/**
+ * @brief Retrieves the command structure that was executed in the game
+
+ * @param game, pointer to a `Game` structure, which represents the current state of the game being played
+ * @return a command type variable
+ */
 Command *game_get_command(Game *game);
 
 /**
@@ -313,7 +317,6 @@ Status game_get_last_command_status(Game *game);
  * @return true or false wether the game is finished or not
  
  */
-
 Bool game_get_finished(Game *game);
 
 /**

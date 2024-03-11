@@ -124,7 +124,7 @@ Status game_create_from_file(Game *game, char *filename) {
     return ERROR;
   }
 
-  if(!character_set_message((game->characters[1]), "POOOO")){
+  if(!character_set_message((game->characters[1]), "Hi")){
     return ERROR;
   }
 
@@ -297,7 +297,7 @@ Character *game_get_character(Game *game, Id id){
 
 Character *game_get_character_at(Game *game, int i){
 
-  if(!game || i>game->n_characters-1){
+  if( i>game->n_characters-1){
     return NULL;
   }
 
@@ -369,7 +369,7 @@ Id game_get_object_location(Game *game, Object *object){
   return NO_ID;
 }
 
- int game_get_set_nids(Game *game,Set* set){
+int game_get_set_nids(Game *game,Set* set){
 
    if(!game || !set){
     return 0;
@@ -378,8 +378,6 @@ Id game_get_object_location(Game *game, Object *object){
  return set_get_nids(set);
 
 }
-
-/*****************MIRRAAAAAAAAAAAR*/
 
 Set *game_get_objects_in_space(Game *game, Id id){
 
@@ -407,7 +405,7 @@ Status game_set_object_location(Game* game, Object* object, Id id) {
     return ERROR;
   }
 
-  /* It is setting the object location in the game structure to the
+  /* It is setting the object location in the space structure to the
   given id */
   space_add_object(game_get_space(game, id), object_get_id(object));
   
@@ -448,9 +446,7 @@ char *game_get_command_target(Game *game){
 Cmd game_get_last_command(Game *game) {  return command_get_last_cmd(game->command); }
 
 
-Status game_set_last_command(Game *game, Cmd cmd) {
-  return command_set_last_cmd(game->command,cmd);
-}
+Status game_set_last_command(Game *game, Cmd cmd) {return command_set_last_cmd(game->command,cmd);}
 
 Status game_get_last_command_status(Game *game){ return command_get_last_cmd_status(game->command);}
 

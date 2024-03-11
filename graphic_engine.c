@@ -107,10 +107,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
       }
 
       if (game_get_object_location(game, game_get_object_at(game, i)) == id_back){
-        sprintf(str, "0%ld,", object_get_id(game_get_object_at(game, i)));
-        strcat(objs, str);  
+        sprintf(str, "0%ld ", object_get_id(game_get_object_at(game, i)));
+        strcat(objs, str); 
         objsinspace++;
       }
+
 
     }
 
@@ -153,10 +154,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
 
 
       if (game_get_object_location(game, game_get_object_at(game, i)) == id_act){
-      sprintf(str, "0%ld,", object_get_id(game_get_object_at(game, i)));
+      sprintf(str, "0%ld ", object_get_id(game_get_object_at(game, i)));
       strcat(objs, str);
       objsinspace++;
       }
+
     }
 
 
@@ -218,14 +220,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game){
       } 
 
       if (game_get_object_location(game, game_get_object_at(game, i)) == id_next){
-      sprintf(str, "0%ld,", object_get_id(game_get_object_at(game, i)));
+      sprintf(str, "0%ld ", object_get_id(game_get_object_at(game, i)));
       strcat(objs, str);
       objsinspace++;
       }
+
     }
 
     if (id_next != NO_ID) {
-      sprintf(str, "        v");
+      sprintf(str, "          v");
       screen_area_puts(ge->map, str);
       sprintf(str, "  +------------------+");
       screen_area_puts(ge->map, str);

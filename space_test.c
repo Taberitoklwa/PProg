@@ -90,7 +90,7 @@ if (all || test == 41) test2_space_print();
 
   PRINT_PASSED_PERCENTAGE;
 
-  return 1;
+  return 0;
 }
 
 void test1_space_create() {

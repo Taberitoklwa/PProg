@@ -162,19 +162,15 @@ char *command_get_target(Command *command){
 
 }
 
-/**MIRAAAAAAAAAAAR*/
-
 Status command_clean_target(Command *command){
-
-  int i;
 
   if(!command){
     return ERROR;
   }
 
-  for(i=0;i<3;i++){
-    command->target[i]= ' ';
-  }
+  strcpy(command->target, " ");
+
+  
 
   return OK;
   

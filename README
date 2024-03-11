@@ -1,0 +1,5 @@
+Compilar juego: make
+Compilar tests: make test
+Ejecutar juego: make runanthill | make runcastle
+Ejecutar tests: make run_space_test | make run_set_test | make run_set_character_test
+Limpiar ejecutables: make clean

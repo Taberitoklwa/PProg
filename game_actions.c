@@ -73,6 +73,7 @@ Status game_actions_update(Game *game) {
 
     case RIGHT:
       game_actions_right(game);
+      break;
 
     case TAKE:
       game_actions_take(game);
@@ -219,16 +220,6 @@ void game_actions_next(Game *game) {
 
   }
 
-   /**
- * @brief Handles the left command in the game
- * 
- * This function updates the player's location to the next space to the west if possible
- * 
- * @param game A pointer to the Game struct, which contains information about the current state of the
- * game.
-
- */
-
   void game_actions_right(Game *game) {
     Id current_id = NO_ID;
     Id space_id = NO_ID; 
@@ -288,8 +279,6 @@ void game_actions_take(Game *game){
     return;
   }
 
-  /*MIRAAAAAAAAAAAAAAR**/
-
   objects = game_get_objects_in_space(game, player_location_id);
 
   if(!objects) {
@@ -306,29 +295,29 @@ void game_actions_take(Game *game){
 
     if(game_set_get_id(game,objects,i) == target){
 
-      player_set_object(game->player, game_set_get_id(game,objects,i));
+      if(!(player_set_object(game->player, game_set_get_id(game,objects,i)))){
+        return;
+      }
 
       /*Eliminates the object from the space*/
+      
 
-      space_del_object(space, game_set_get_id(game,objects,i));
+      if(!(space_del_object(space, game_set_get_id(game,objects,i)))){
+        return;
+      }
+
+      game_set_last_command_status(game,OK);
 
     }
 
   }
 
-  game_command_clean_target(game);
-
-  game_set_last_command_status(game,OK);
+  if(!game_command_clean_target(game)){
+    return;
+  }
 
   return;
 }
-
-/**
- * @brief Allows the player to drop an object they are currently holding in the game, placing it in the current space they are in.
- * 
- * @param game, pointer to a `Game` structure, which represents the current state of the game being played
- *
- */
 
 void game_actions_drop(Game *game) {
   Id object_id = NO_ID;
@@ -435,8 +424,8 @@ void game_actions_attack(Game *game){
 }
 
 void game_actions_chat(Game *game) {
-  Id player_location_id = NO_ID; /*Initializes an id to NO_ID*/
-  Id character_location_id = NO_ID; /*Initializes space id to NO_ID*/
+  Id player_location_id = NO_ID; 
+  Id character_location_id = NO_ID; 
 
   if(!game){
     return;
